@@ -36,7 +36,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.EasyTeamUp.NoActionBar"></activity>
+            android:theme="@style/Theme.EasyTeamUp.NoActionBar" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true"
