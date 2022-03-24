@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#990000"
+    android:backgroundTint="#990000"
+    tools:context=".ui.shared.DetailsFragment">
+
+    <TextView
+        android:id="@+id/nameDetailsView"
+        android:layout_width="415dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Event Title"
+        android:textAlignment="center"
+        android:textColor="#FFCC00"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/statusPublicDetailsView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:text="Status: Public"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameDetailsView" />
+
+    <TextView
+        android:id="@+id/descriptionDetailsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:text="We need 3 team members for a CSCI-310 project to create an Android app."
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusPublicDetailsView" />
+
+
+    <TextView
+        android:id="@+id/ownerDetailsText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Owner:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionDetailsView" />
+
+    <TextView
+        android:id="@+id/locationDetailsText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Location:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ownerDetailsText" />
+
+    <TextView
+        android:id="@+id/timeOptionsDetailsText"
+        android:layout_width="125dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Time Options:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationDetailsText" />
+
+    <TextView
+        android:id="@+id/finalTimeDetailsText"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Final Time:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeOptionsDetailsText" />
+
+    <TextView
+        android:id="@+id/participantsDetailsText"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Participants:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsText" />
+
+    <TextView
+        android:id="@+id/ownerDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:text="John Doe"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/ownerDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionDetailsView" />
+
+    <TextView
+        android:id="@+id/locationDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="USC Leavey Library"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/locationDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/ownerDetailsView" />
+
+    <TextView
+        android:id="@+id/timeOptionsDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="10:00-12:00"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/timeOptionsDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/locationDetailsView" />
+
+    <TextView
+        android:id="@+id/finalTimeDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="TBD"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/finalTimeDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/timeOptionsDetailsText" />
+
+    <TextView
+        android:id="@+id/participantsDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="Jane Doe, Peter Piper"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/participantsDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsView" />
+
+    <Button
+        android:id="@+id/confirmProfileChangesButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Edit Profile"
+        android:textColor="#990000"
+        android:onClick="onClickEventDetailsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

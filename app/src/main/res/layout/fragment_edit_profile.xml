@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#990000"
+    android:backgroundTint="#990000"
+    tools:context=".ui.profile.EditProfileFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="169dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="15dp"
+        android:text="Edit Profile"
+        android:textColor="#FFCC00"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/editProfilePicLayout"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:backgroundTint="@color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="70dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+        <ImageView
+            android:id="@+id/imageButton"
+            android:layout_width="136dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="profilePicture"
+            android:src="@drawable/no_prof_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/editProfilePicButton"
+            android:layout_width="145dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#FFCC00"
+            android:onClick="onClickSetProfilePic"
+            android:text="Select Image"
+            android:textColor="#990000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nameProfileText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Name:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProfilePicLayout" />
+
+    <TextView
+        android:id="@+id/usernameProfileText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Username:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameProfileText" />
+
+    <TextView
+        android:id="@+id/emailProfileText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Email:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameProfileText" />
+
+    <TextView
+        android:id="@+id/phoneProfileText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Phone:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailProfileText" />
+
+    <TextView
+        android:id="@+id/otherInfoProfileText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="About Me:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneProfileText" />
+
+    <EditText
+        android:id="@+id/nameProfileView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:text="John Doe"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/nameProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/editProfilePicLayout" />
+
+    <EditText
+        android:id="@+id/usernameProfileView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="jdoe"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/usernameProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/nameProfileView" />
+
+    <EditText
+        android:id="@+id/emailProfileView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="john.doe@usc.edu"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/emailProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/usernameProfileView" />
+
+    <EditText
+        android:id="@+id/phoneProfileView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="1234567890"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:inputType="phone"
+        android:digits="0123456789+"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/phoneProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/emailProfileView" />
+
+    <EditText
+        android:id="@+id/otherInfoProfileView"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="Junior CS major"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp"
+        android:gravity="top"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/otherInfoProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/phoneProfileView" />
+
+    <Button
+        android:id="@+id/confirmProfileChangesButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Save Changes"
+        android:textColor="#990000"
+        android:onClick="onClickSaveEdits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otherInfoProfileView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
