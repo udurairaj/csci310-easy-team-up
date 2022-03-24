@@ -13,14 +13,14 @@ public class Notification {
     private User recipient;
     private Event event;
     private String message;
-    private com.example.project2.NotificationHandler notificationHandler;
+    private NotificationHandler notificationHandler;
     private String[] typeToMessage = { "A new participant has joined your event, ",
             " is scheduled for ", "Changes have been made to the event you joined, ",
             "A participant has withdrawn from your event, " };
     private NotificationCompat.Builder builder = null;
 
     public Notification(Event event, User recipient, int type, Intent intent, Context context,
-                        com.example.project2.NotificationHandler notificationHandler) {
+                        NotificationHandler notificationHandler) {
         this.recipient = recipient;
         this.event = event;
         if (type == 1) {
@@ -33,7 +33,7 @@ public class Notification {
                 (context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         builder = new NotificationCompat.Builder
                 (context, NotificationChannel.DEFAULT_CHANNEL_ID)
-                .setSmallIcon(R.drawable.app_icon)
+                //.setSmallIcon(R.drawable.app_icon)
                 .setContentTitle("Easy Team Up")
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
