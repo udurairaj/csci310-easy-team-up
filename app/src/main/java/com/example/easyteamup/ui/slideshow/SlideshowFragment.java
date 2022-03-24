@@ -9,12 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentSlideshowBinding;
 
 
 public class SlideshowFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
