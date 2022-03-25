@@ -2,7 +2,6 @@ package com.example.easyteamup.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,10 +15,9 @@ import com.example.easyteamup.UserTable;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private User loginUser = null;
-    private User signupUser = null;
     private Boolean successLogin = true;
     private Boolean successSignup = true;
+    UserTable userTable = new UserTable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +39,21 @@ public class LoginActivity extends AppCompatActivity {
             passwordField.setError("Please enter your password.");
             successLogin = false;
         }
-        loginUser = new User(username, password);
-        int valid = loginUser.validate();
-        if (valid >= 0 && successLogin) {
-            //User u = null;
-            // u = DATABASE FUNCTION TO GET USER FROM USERID
-
-            User u = new User("Uma Durairaj", "uduraira@usc.edu", "1234567890", "uduraira", "", "CS major");
-            u.setUserID(9876);
-
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            i.putExtra("user", u);
-            startActivity(i);
+        User loginUser = userTable.contains(username);
+        if (successLogin && loginUser != null) {
+            if (loginUser.getPassword().equals(User.hash(password))) {
+                User u = userTable.getUser(loginUser.getUserID());
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("user", u);
+                startActivity(i);
+            }
+            else {
+                passwordField.setError("Incorrect password. Please try again.");
+            }
         }
         else {
             AlertDialog.Builder loginFail = new AlertDialog.Builder(this);
-            loginFail.setMessage("Incorrect username or password. Please try again.");
+            loginFail.setMessage("Account not found. Please try again.");
             loginFail.setTitle("Error");
             loginFail.setPositiveButton("Close", null);
             loginFail.create().show();
@@ -74,11 +71,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordField.getText().toString();
         String name = nameField.getText().toString();
         String email = emailField.getText().toString();
+
         if (username.length() == 0) {
             usernameField.setError("Please enter your username.");
             successSignup = false;
         }
-        // ELSE IF USERNAME EXISTS IN DB, ERROR
+        else if (userTable.contains(username) != null) {
+            usernameField.setError("Username taken.");
+            successSignup = false;
+        }
 
         if (password.length() == 0) {
             passwordField.setError("Please enter your password.");
@@ -96,15 +97,16 @@ public class LoginActivity extends AppCompatActivity {
             emailField.setError("Please enter your email.");
             successSignup = false;
         }
-        // ELSE IF EMAIL EXISTS IN DB, ERROR
+        else if (userTable.containsEmail(email) != null) {
+            emailField.setError("Account with this email already exists.");
+            successSignup = false;
+        }
 
         if (successSignup) {
-            signupUser = new User(name, email, username, password);
-            // ADD USER TO DATABASE AND GET USER ID
-            // User u = GET USER FROM DB BY USER ID
+            User signupUser = new User(name, email, username, password);
+            User u = userTable.getUser(userTable.addUser(signupUser));
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            // CHANGE signupUser param to user from DB
-            i.putExtra("user", signupUser);
+            i.putExtra("user", u);
             startActivity(i);
         }
         else {

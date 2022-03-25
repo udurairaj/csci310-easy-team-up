@@ -6,18 +6,23 @@ import java.util.ArrayList;
 public class Event implements Serializable {
 
     private int eventID;
-    private User owner;
+    private int owner;
     private String eventName;
     private Boolean statusPublic;
     private String description;
-    private ArrayList<User> participants;
+    private ArrayList<Integer> participants;
     private ArrayList<TimeSlot> timeOptions;
     private NotificationHandler notificationHandler;
     private Location location;
     private TimeSlot finalTime;
     private TimeGenerator generator;
+    private UserTable userTable;
 
-    public Event(User owner, String eventName, Boolean statusPublic) {
+    public Event() {
+
+    }
+
+    public Event(int owner, String eventName, Boolean statusPublic) {
         this.owner = owner;
         this.eventName = eventName;
         this.statusPublic = statusPublic;
@@ -28,14 +33,15 @@ public class Event implements Serializable {
         this.location = null;
         this.finalTime = null;
         this.generator = new TimeGenerator(this);
+        this.userTable = new UserTable();
     }
 
     public int getEventID() { return eventID; }
-    public User getOwner() { return owner; }
+    public int getOwner() { return userTable.getUser(owner).getUserID(); }
     public String getEventName() { return eventName; }
     public Boolean getStatusPublic() { return statusPublic; }
     public String getDescription() { return description; }
-    public ArrayList<User> getParticipants() { return participants; }
+    public ArrayList<Integer> getParticipants() { return participants; }
     public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
     public NotificationHandler getNotificationHandler() { return notificationHandler; }
     public Location getLocation() { return location; }
@@ -47,13 +53,13 @@ public class Event implements Serializable {
     public void setDescription(String description) { this.description = description; }
     public void setLocation(Location location) { this.location = location; }
 
-    public void addParticipant(User user) { participants.add(user); }
+    public void addParticipant(User user) { participants.add(user.getUserID()); }
     public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
     public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 
     public void generateFinalTime() {
         finalTime = generator.generate();
-//         FEATURE 1: notification to participants
+        // FEATURE 1: notification to participants
     }
 
     public void invite(User user) {

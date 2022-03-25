@@ -31,14 +31,14 @@ public class NotificationHandler implements Serializable {
             Notification n = new Notification
                     (event, event.getOwner(), 1, intent, context,this);
             n.send(context);
-            for (User u : event.getParticipants()) {
+            for (int u : event.getParticipants()) {
                 Notification notif = new Notification
                         (event, u, 1, intent, context,this);
                 notif.send(context);
             }
         }
         else if (type == 2) {
-            for (User u : event.getParticipants()) {
+            for (int u : event.getParticipants()) {
                 Notification notif = new Notification
                         (event, u, 2, intent, context,this);
                 notif.send(context);

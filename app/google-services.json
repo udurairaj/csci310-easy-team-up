@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "90193775926",
+    "firebase_url": "https://easy-team-up-eac26-default-rtdb.firebaseio.com",
+    "project_id": "easy-team-up-eac26",
+    "storage_bucket": "easy-team-up-eac26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90193775926:android:238dcba313d7c77d8c3797",
+        "android_client_info": {
+          "package_name": "com.example.easyteamup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90193775926-ca0llg27ll44jpq2048u4sahs65um89a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR6RAnid19Et6PAC6-GOQ0AGmq2DZQYyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90193775926-ca0llg27ll44jpq2048u4sahs65um89a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public static Bundle infoBundle = new Bundle();
+    public static UserTable userTable = new UserTable();
+    public static EventTable eventTable = new EventTable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

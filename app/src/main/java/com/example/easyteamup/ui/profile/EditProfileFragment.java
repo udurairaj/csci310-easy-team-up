@@ -114,6 +114,7 @@ public class EditProfileFragment extends Fragment {
             usernameEdit.setError("Username is required");
             success = false;
         }
+        //else if (MainActivity.userTable)
         // ELSE IF USERNAME FOUND IN DB, ERROR
         else {
             user.setUsername(editedUsername);
