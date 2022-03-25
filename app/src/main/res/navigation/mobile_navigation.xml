@@ -26,9 +26,7 @@
         <action
             android:id="@+id/action_nav_create_to_setDueFragment"
             app:destination="@id/setDueFragment" />
-        <action
-            android:id="@+id/action_nav_create_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+
     </fragment>
 
     <fragment
@@ -53,7 +51,7 @@
         tools:layout="@layout/fragment_set_due" />
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.easyteamup.MapsFragment"
+        android:name="com.example.easyteamup.ui.shared.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
 </navigation>
