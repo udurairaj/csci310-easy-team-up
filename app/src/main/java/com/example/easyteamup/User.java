@@ -15,7 +15,7 @@ public class User implements Serializable {
     private String password;
     private String profilePic;
     private String otherInfo;
-    //private Event[] events;
+    private int[] events;
 
     public User() {
 
@@ -35,12 +35,6 @@ public class User implements Serializable {
         this.profilePic = null;
         this.otherInfo = null;
         this.password = hash(password);
-        if (this.password != null) {
-            // ADD USER TO DB
-        }
-        else {
-            // ERROR
-        }
     }
 
     // constructor for user from database info
@@ -62,34 +56,20 @@ public class User implements Serializable {
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
     public String getUsername() { return username; }
+    public String getPassword() { return password; }
     public String getProfilePic() { return profilePic; }
     public String getOtherInfo() { return otherInfo; }
+    public int[] getEvents() { return events; }
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
     public void setPhone(String phone) { this.phone = phone; }
     public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) {
-        String hashedPass = hash(password);
-        if (hashedPass != null) {
-            // UPDATE USER DB PASSWORD
-        }
-        else {
-            // ERROR MESSAGE
-        }
-    }
+    public void setPassword(String password) { this.password = hash(password); }
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
     public void setOtherInfo(String otherInfo) { this.otherInfo = otherInfo; }
 
-    public int validate() {
-        // SEARCH DB FOR USERNAME
-        // CHECK THAT HASHED PW MATCHES DB PASSWORD
-        // RETURN USER ID IF FOUND
-        return 1;
-        //OTHERWISE RETURN -1
-    }
-
-    private String hash(String password) {
+    public static String hash(String password) {
         String hashedPass = null;
         try {
             SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
