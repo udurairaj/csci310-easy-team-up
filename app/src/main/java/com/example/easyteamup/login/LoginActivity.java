@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             usernameField.setError("Please enter your username.");
             successSignup = false;
         }
-        else if (userTable.contains(username) == null) {
+        else if (userTable.contains(username) != null) {
             usernameField.setError("Username taken.");
             successSignup = false;
         }
