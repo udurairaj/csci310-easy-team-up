@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class Notification {
 
-    private User recipient;
+    private int recipient;
     private Event event;
     private String message;
     private NotificationHandler notificationHandler;
@@ -19,7 +19,7 @@ public class Notification {
             "A participant has withdrawn from your event, " };
     private NotificationCompat.Builder builder = null;
 
-    public Notification(Event event, User recipient, int type, Intent intent, Context context,
+    public Notification(Event event, int recipient, int type, Intent intent, Context context,
                         NotificationHandler notificationHandler) {
         this.recipient = recipient;
         this.event = event;
