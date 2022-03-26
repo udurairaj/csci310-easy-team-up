@@ -54,4 +54,11 @@
         android:name="com.example.easyteamup.ui.shared.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@id/listFragment"
+        android:name="com.example.easyteamup.ui.shared.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list"
+
+        />
 </navigation>
