@@ -3,8 +3,10 @@ package com.example.easyteamup;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setTitle("Easy Team Up");
 
-
+        //Fragment fragment = new MapFragment();
         setSupportActionBar(binding.appBarMain.toolBar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
