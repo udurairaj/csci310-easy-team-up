@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    public static int userID = 0;
     public static Bundle infoBundle = new Bundle();
     public static UserTable userTable = new UserTable();
 //    public static EventTable eventTable = new EventTable();
@@ -29,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
-        User user = (User)i.getSerializableExtra("user");
-        infoBundle.putSerializable("user", user);
+        i.getIntExtra("userID", userID);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
