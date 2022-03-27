@@ -24,7 +24,7 @@ public class Notification {
         this.recipient = recipient;
         this.event = event;
         if (type == 1) {
-            this.message = event.getEventName() + typeToMessage[type] + event.getFinalTime();
+           // this.message = event.getEventName() + typeToMessage[type] + event.getFinalTime();
         }
         else {
             this.message = typeToMessage[type] + event.getEventName();

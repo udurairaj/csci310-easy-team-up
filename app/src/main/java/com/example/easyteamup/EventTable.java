@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.easyteamup.Event;
+import com.example.easyteamup.OnIntegerChangeListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +23,7 @@ public class EventTable {
     private DatabaseReference rootRef;
     private int nextID;
     private Map<String, Event> map;
+    private OnIntegerChangeListener listener;
 
     public EventTable() {
         this.database = FirebaseDatabase.getInstance();
@@ -36,6 +39,10 @@ public class EventTable {
                         Log.i("DATA", "ADDING");
                         Event event = child.getValue(Event.class);
                         map.put(Integer.toString(event.getEventID()), event);
+                        if(listener != null)
+                        {
+                            listener.onIntegerChanged(map.size());
+                        }
                     }
                 }
                 else {
@@ -51,6 +58,10 @@ public class EventTable {
                     Event event = child.getValue(Event.class);
                     if (!map.containsKey(Integer.toString(event.getEventID()))) {
                         map.put(Integer.toString(event.getEventID()), event);
+                        if(listener != null)
+                        {
+                            listener.onIntegerChanged(map.size());
+                        }
                     }
                 }
             }
@@ -60,6 +71,11 @@ public class EventTable {
                 Log.e("Error", error.toString());
             }
         });
+    }
+
+    public void setOnIntegerChangeListener(OnIntegerChangeListener listener)
+    {
+        this.listener = listener;
     }
 
     public int addEvent(Event event) {
@@ -73,11 +89,19 @@ public class EventTable {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Event event = snapshot.getValue(Event.class);
                 map.put(Integer.toString(event.getEventID()), event);
+                if(listener != null)
+                {
+                    listener.onIntegerChanged(map.size());
+                }
             }
             public void onCancelled(DatabaseError dbError) {
                 Log.e("Error", dbError.toString());
             }
         });
+        if(listener != null)
+        {
+            listener.onIntegerChanged(map.size());
+        }
         return nextID++;
     }
 
@@ -85,6 +109,10 @@ public class EventTable {
         DatabaseReference ref = rootRef.child(Integer.toString(ID));
         ref.removeValue();
         map.remove(Integer.toString(ID));
+        if(listener != null)
+        {
+            listener.onIntegerChanged(map.size());
+        }
     }
 
     public Event getEvent(int ID) {
@@ -94,6 +122,10 @@ public class EventTable {
     public void editEvent(Event event) {
         DatabaseReference ref = rootRef.child(Integer.toString(event.getEventID()));
         ref.setValue(event);
+        if(listener != null)
+        {
+            listener.onIntegerChanged(map.size());
+        }
     }
 
     public int size() {
