@@ -1,5 +1,6 @@
 package com.example.easyteamup.ui.profile;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -87,85 +88,35 @@ public class ProfileFragment extends Fragment {
         }
         ImageView profilePicView = (ImageView)view.findViewById(R.id.imageButton);
         if (user.getProfilePic() != null) {
-            storageRef = FirebaseStorage.getInstance().getReference().child("images/" + user.getProfilePic() + ".jpeg");
-            File localFile = null;
-            try {
-                localFile = File.createTempFile("images", "jpg");
-            } catch (IOException e) {
-                Toast.makeText(getContext(), "Error loading image.", Toast.LENGTH_SHORT);
-            }
-            if (localFile != null) {
-                File finalLocalFile = localFile;
-                storageRef.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                profilePicView.setImageBitmap(BitmapFactory.decodeFile(finalLocalFile.getAbsolutePath()));
-                                Toast.makeText(getContext(), "Profile loaded.", Toast.LENGTH_LONG).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        profilePicView.setImageResource(R.drawable.no_prof_pic);
-                        Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-//            storageRef.getDownloadUrl()
-//                    .addOnSuccessListener(uri -> {
-//                        Glide.with(this)
-//                                .load(uri)
-//                                .into(profilePicView);
-//                    });
-//            Glide.with(getContext())
-//                    //.using(new FirebaseImageLoader())
-//                    .load(storageRef)
-//                    //.placeholder(R.drawable.no_prof_pic)
-//                    .into(profilePicView);
-//            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                @Override
-//                public void onSuccess(Uri uri) {
-//                    profilePicView.setImageURI(uri);
-//                    Toast.makeText(getContext(), "Profile loaded.", Toast.LENGTH_LONG).show();
-//                }
-//            final long ONE_MEGABYTE = 1024 * 1024;
-//            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                @Override
-//                public void onSuccess(byte[] bytes) {
-//                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                    profilePicView.setImageBitmap(bmp);
-//
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    profilePicView.setImageResource(R.drawable.no_prof_pic);
-//                    Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
-//                }
-//            });
+            storageRef = FirebaseStorage.getInstance().getReference().child("images").child(user.getProfilePic());
+            String filePath = getContext().getFilesDir().getPath().toString() + "/" + user.getProfilePic() + ".jpeg";
+            Log.d("path", filePath);
+            File image = new File(filePath);
+            storageRef.getFile(image)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getContext(), "Profile loaded.", Toast.LENGTH_LONG).show();
+                            final long ONE_MEGABYTE = 1024 * 1024;
+                            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    profilePicView.setImageBitmap(bmp);
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
+                        }
+                    });
         }
         else {
             profilePicView.setImageResource(R.drawable.no_prof_pic);
         }
-//        File image = new File(user.getProfilePic() + ".jpeg");
-//        storageRef.getFile(image)
-//                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                        Toast.makeText(getContext(), "Profile loaded.", Toast.LENGTH_LONG).show();
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        profilePicView.setImageURI(Uri.parse(user.getProfilePic()));
-//    }
-//        else {
-//        profilePicView.setImageResource(R.drawable.no_prof_pic);
-//    }
+
         TextView otherInfoView = (TextView)view.findViewById(R.id.otherInfoProfileView);
         if (user.getOtherInfo() != null) {
             otherInfoView.setText(user.getOtherInfo());

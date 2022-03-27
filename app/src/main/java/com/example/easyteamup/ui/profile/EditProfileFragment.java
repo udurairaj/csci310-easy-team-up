@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +31,12 @@ import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -88,7 +92,30 @@ public class EditProfileFragment extends Fragment {
             phoneEdit.setText(user.getPhone());
         }
         if (user.getProfilePic() != null) {
-            profilePicEdit.setImageURI(Uri.parse(user.getProfilePic()));
+            storageRef = FirebaseStorage.getInstance().getReference().child("images").child(user.getProfilePic());
+            String filePath = getContext().getFilesDir().getPath().toString() + "/" + user.getProfilePic() + ".jpeg";
+            Log.d("path", filePath);
+            File image = new File(filePath);
+            storageRef.getFile(image)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getContext(), "Profile loaded.", Toast.LENGTH_LONG).show();
+                            final long ONE_MEGABYTE = 1024 * 1024;
+                            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    profilePicEdit.setImageBitmap(bmp);
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
+                }
+            });
         }
         else {
             profilePicEdit.setImageResource(R.drawable.no_prof_pic);
