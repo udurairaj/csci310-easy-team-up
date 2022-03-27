@@ -1,11 +1,16 @@
 package com.example.easyteamup.ui.profile;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,14 +20,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentProfileBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class EditProfileFragment extends Fragment {
+
+    private StorageReference storageRef = null;
+    private ProgressDialog progress = null;
+    String filename = "";
 
     User user = null;
     Boolean success = true;
@@ -44,6 +63,7 @@ public class EditProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = (User) MainActivity.infoBundle.getSerializable("user");
+        storageRef = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -166,10 +186,37 @@ public class EditProfileFragment extends Fragment {
                 public void onActivityResult(Uri result) {
                     if (result != null) {
                         profilePicEdit.setImageURI(result);
-                        user.setProfilePic(result.toString());
+                        progress = new ProgressDialog(getContext());
+                        progress.setTitle("Uploading image...");
+                        progress.show();
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+                        Date now = new Date();
+                        filename = format.format(now);
+
+                        storageRef = FirebaseStorage.getInstance().getReference("images/" + filename);
+                        storageRef.putFile(result)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                if (progress.isShowing()) { progress.dismiss(); }
+                                Toast.makeText(getContext(), "Image saved successfully.", Toast.LENGTH_LONG);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if (progress.isShowing()) { progress.dismiss(); }
+                                Toast.makeText(getContext(), "Issue saving image. Try again.", Toast.LENGTH_LONG);
+                            }
+                        });
+                        if (filename.equals("")) {
+                            user.setProfilePic(null);
+                        }
+                        else {
+                            user.setProfilePic(filename);
+                        }
                     }
                     else {
-                        Toast tryAgainToast = Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

@@ -11,6 +11,7 @@
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/content_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_create.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_details.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_list.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_maps.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_profile.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_set_due.xml" value="0.5541666666666667" />
@@ -29,7 +30,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.12734082397003746" />
-        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.2923044840494792" />
+        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.20158081054687502" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.28229166666666666" />

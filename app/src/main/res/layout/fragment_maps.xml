@@ -15,19 +15,12 @@
         android:layout_width="143dp"
         android:layout_height="64dp"
         android:backgroundTint="#FFCC00"
-        android:text="Button"
+        android:text="List View"
         android:textColor="#990000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapView" />
-
-    <fragment
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/google_map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
-
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -37,6 +30,26 @@
         android:contentDescription="@string/menu_map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <fragment
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/google_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+
+    <TextView
+        android:id="@+id/mapViewTitle"
+        android:layout_width="153dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="15dp"
+        android:text="Map View"
+        android:textColor="#FFCC00"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
