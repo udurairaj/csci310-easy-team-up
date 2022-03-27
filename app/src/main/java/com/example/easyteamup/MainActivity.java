@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     public static Bundle infoBundle = new Bundle();
     public static UserTable userTable = new UserTable();
-//    public static EventTable eventTable = new EventTable();
+    public static EventTable eventTable = new EventTable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_profile, R.id.nav_create, R.id.nav_slideshow)
+                R.id.nav_profile, R.id.nav_create, R.id.nav_userEventDisplay)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

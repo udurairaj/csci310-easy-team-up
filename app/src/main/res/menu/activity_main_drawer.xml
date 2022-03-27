@@ -13,9 +13,9 @@
             android:icon="@drawable/ic_create"
             android:title="@string/menu_create" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_userEventDisplay"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_userEventDisplay" />
         <item
             android:id="@+id/mapsFragment"
             android:icon="@drawable/ic_menu_gallery"
