@@ -2,6 +2,7 @@ package com.example.easyteamup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -30,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
-        i.getIntExtra("userID", userID);
+        User user = (User)i.getSerializableExtra("user");
+        infoBundle.putSerializable("user", user);
+//        userID = i.getIntExtra("userID", -1);
+//        infoBundle.putInt("userID", userID);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
