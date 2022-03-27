@@ -17,19 +17,19 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
-import com.example.easyteamup.databinding.FragmentProfileBinding;
 
 public class OtherProfileFragment extends Fragment {
 
     private User user = null;
+    private User clicked_user = null;
     Boolean viewOtherUser = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) MainActivity.infoBundle.getSerializable("user");
+        user = MainActivity.userTable.getUser(MainActivity.userID);
         if (MainActivity.infoBundle.containsKey("clicked_user")) {
-            user = (User)MainActivity.infoBundle.getSerializable("clicked_user");
+            clicked_user = (User)MainActivity.infoBundle.getSerializable("clicked_user");
             viewOtherUser = true;
         }
     }
@@ -61,30 +61,30 @@ public class OtherProfileFragment extends Fragment {
 
     protected void displayProfile(View view) {
         TextView nameView = (TextView)view.findViewById(R.id.nameProfileView);
-        nameView.setText(user.getName());
+        nameView.setText(clicked_user.getName());
         TextView userIDView = (TextView)view.findViewById(R.id.userIDProfileView);
-        userIDView.setText(String.valueOf(user.getUserID()));
+        userIDView.setText(String.valueOf(clicked_user.getUserID()));
         TextView usernameView = (TextView)view.findViewById(R.id.usernameProfileView);
-        usernameView.setText(user.getUsername());
+        usernameView.setText(clicked_user.getUsername());
         TextView emailView = (TextView)view.findViewById(R.id.emailProfileView);
-        emailView.setText(user.getEmail());
+        emailView.setText(clicked_user.getEmail());
         TextView phoneView = (TextView)view.findViewById(R.id.phoneProfileView);
-        if (user.getPhone() != null) {
-            phoneView.setText(user.getPhone());
+        if (clicked_user.getPhone() != null) {
+            phoneView.setText(clicked_user.getPhone());
         }
         else {
             phoneView.setText("");
         }
         ImageView profilePicView = (ImageView)view.findViewById(R.id.imageButton);
-        if (user.getProfilePic() != null) {
-            profilePicView.setImageURI(Uri.parse(user.getProfilePic()));
+        if (clicked_user.getProfilePic() != null) {
+            profilePicView.setImageURI(Uri.parse(clicked_user.getProfilePic()));
         }
         else {
             profilePicView.setImageResource(R.drawable.no_prof_pic);
         }
         TextView otherInfoView = (TextView)view.findViewById(R.id.otherInfoProfileView);
-        if (user.getOtherInfo() != null) {
-            otherInfoView.setText(user.getOtherInfo());
+        if (clicked_user.getOtherInfo() != null) {
+            otherInfoView.setText(clicked_user.getOtherInfo());
         }
         else {
             otherInfoView.setText("");

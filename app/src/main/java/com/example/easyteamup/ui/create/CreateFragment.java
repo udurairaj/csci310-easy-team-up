@@ -50,7 +50,7 @@ public class CreateFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) MainActivity.infoBundle.getSerializable("user");
+        user = MainActivity.userTable.getUser(MainActivity.userID);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -112,9 +112,7 @@ public class CreateFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-                // searchedInviteUser = DB CONTAINS USERID
-                searchedInviteUser = new User("Erica De Guzman", "ed139@usc.edu", "3749288483", "edguz", "", "CS student looking for team");
-                searchedInviteUser.setUserID(123);
+                searchedInviteUser = MainActivity.userTable.getUser(Integer.parseInt(s));
 
                 displayInvitedUserButton.setVisibility(View.VISIBLE);
                 invitedUsersCreate.setVisibility(View.INVISIBLE);
@@ -247,8 +245,7 @@ public class CreateFragment extends Fragment {
     }
 
     public void restorePageEntries() {
-        MainActivity.infoBundle.putSerializable("user", (User)MainActivity.infoBundle.getSerializable("main_user"));
-        MainActivity.infoBundle.remove("main_user");
+        MainActivity.infoBundle.remove("clicked_user");
 
         if (MainActivity.infoBundle.containsKey("temp_event_name")) {
             String tempName = MainActivity.infoBundle.getString("temp_event_name");

@@ -1,9 +1,7 @@
 package com.example.easyteamup.ui.profile;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
@@ -30,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -41,7 +37,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) MainActivity.infoBundle.getSerializable("user");
+        if (MainActivity.infoBundle.containsKey("user")) {
+            user = (User)MainActivity.infoBundle.getSerializable("user");
+            MainActivity.userID = user.getUserID();
+        }
+        else {
+            user = MainActivity.userTable.getUser(MainActivity.userID);
+        }
         storageRef = FirebaseStorage.getInstance().getReference();
     }
 
@@ -67,6 +69,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (MainActivity.infoBundle.containsKey("user")) {
+            MainActivity.infoBundle.remove("user");
+        }
         binding = null;
     }
 
@@ -127,7 +132,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public void onClickEditProfile(View view) {
-        MainActivity.infoBundle.putSerializable("user", user);
         Fragment editFrag = new EditProfileFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);

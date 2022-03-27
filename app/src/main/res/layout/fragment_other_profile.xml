@@ -178,4 +178,16 @@
         app:layout_constraintStart_toEndOf="@+id/otherInfoProfileText"
         app:layout_constraintTop_toBottomOf="@+id/phoneProfileView" />
 
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Uninvite User"
+        android:textColor="#990000"
+        android:onClick="onClickEditProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otherInfoProfileView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
