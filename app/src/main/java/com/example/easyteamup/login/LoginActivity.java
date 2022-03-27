@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 //            startActivity(i);
 //        }
         User loginUser = userTable.contains(username);
-        Log.d("1", loginUser.getName() + "," + loginUser.getPassword());
         if (successLogin && loginUser != null) {
             if (loginUser.getPassword().equals(password)) {
             //if (loginUser.getPassword().equals(User.hash(password))) {
@@ -121,11 +120,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             i.putExtra("user", u);
             startActivity(i);
-
-//            User signupUser = new User(name, email, username, password);
-//            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-//            i.putExtra("user", signupUser);
-//            startActivity(i);
         }
         else {
             AlertDialog.Builder loginFail = new AlertDialog.Builder(this);

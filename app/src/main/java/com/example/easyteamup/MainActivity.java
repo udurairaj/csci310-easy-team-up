@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = getIntent();
         User user = (User)i.getSerializableExtra("user");
         infoBundle.putSerializable("user", user);
-//        userID = i.getIntExtra("userID", -1);
-//        infoBundle.putInt("userID", userID);
+        userID = user.getUserID();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

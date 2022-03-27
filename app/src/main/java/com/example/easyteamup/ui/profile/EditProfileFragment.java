@@ -66,7 +66,7 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) MainActivity.infoBundle.getSerializable("user");
+        user = MainActivity.userTable.getUser(MainActivity.userID);
         storageRef = FirebaseStorage.getInstance().getReference();
     }
 
@@ -198,7 +198,6 @@ public class EditProfileFragment extends Fragment {
 
         if (success) {
             MainActivity.userTable.editUser(user);
-            MainActivity.infoBundle.putSerializable("user", user);
             Fragment profFrag = new ProfileFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.nav_host_fragment_content_main, profFrag);
