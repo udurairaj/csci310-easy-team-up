@@ -1,19 +1,20 @@
 package com.example.easyteamup.ui.create;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,16 +23,19 @@ import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentCreateBinding;
+import com.example.easyteamup.ui.profile.OtherProfileFragment;
+import com.example.easyteamup.ui.profile.ProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 import com.example.easyteamup.ui.shared.SetDueFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CreateFragment extends Fragment {
 
     private FragmentCreateBinding binding;
     private User user = null;
+    private User searchedInviteUser = null;
+    private Event eventInProgress = null;
 
     EditText nameCreate = null;
     EditText descriptionCreate = null;
@@ -40,7 +44,8 @@ public class CreateFragment extends Fragment {
     TextView dueTimeTextView = null;
     androidx.appcompat.widget.SearchView inviteCreate = null;
     TextView invitedUsersCreate = null;
-    Button displayInvitedUserButton = null;
+    ArrayList<Integer> invitedUsersTemp = new ArrayList<>();
+    TextView displayInvitedUserButton = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,8 @@ public class CreateFragment extends Fragment {
         dueTimeTextView = (TextView) root.findViewById(R.id.dueTimeEventView);
         inviteCreate = (androidx.appcompat.widget.SearchView) root.findViewById(R.id.inviteEventSearch);
         invitedUsersCreate = (TextView)root.findViewById(R.id.invitedUsersEventView);
-        displayInvitedUserButton = (Button)root.findViewById(R.id.inviteSearchDisplayButton);
+        invitedUsersCreate.setVisibility(View.VISIBLE);
+        displayInvitedUserButton = (TextView)root.findViewById(R.id.inviteSearchDisplayButton);
         displayInvitedUserButton.setVisibility(View.GONE);
 
         restorePageEntries();
@@ -105,14 +111,18 @@ public class CreateFragment extends Fragment {
         inviteCreate.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                User u = null;
-                // u = DB CONTAINS USERID
-                if (u != null) {
-                    displayInvitedUserButton.setText(u.getName());
-                    displayInvitedUserButton.setVisibility(View.VISIBLE);
+
+                // searchedInviteUser = DB CONTAINS USERID
+                searchedInviteUser = new User("Erica De Guzman", "ed139@usc.edu", "3749288483", "edguz", "", "CS student looking for team");
+                searchedInviteUser.setUserID(123);
+
+                displayInvitedUserButton.setVisibility(View.VISIBLE);
+                invitedUsersCreate.setVisibility(View.INVISIBLE);
+                if (searchedInviteUser != null) {
+                    displayInvitedUserButton.setText(searchedInviteUser.getName());
                 }
                 else {
-                    displayInvitedUserButton.setText("User not found");
+                    displayInvitedUserButton.setText("User not found. Click here to try again.");
                 }
                 return true;
             }
@@ -122,11 +132,50 @@ public class CreateFragment extends Fragment {
                 return false;
             }
         });
-        inviteCreate.setOnCloseListener(new androidx.appcompat.widget.SearchView.OnCloseListener() {
+
+        displayInvitedUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onClose() {
+            public void onClick(View view) {
                 displayInvitedUserButton.setVisibility(View.GONE);
-                return false;
+
+                if (searchedInviteUser != null) {
+                    invitedUsersTemp.add(searchedInviteUser.getUserID());
+                    if (invitedUsersCreate.getText() != "None") {
+                        SpannableString ss = new SpannableString( searchedInviteUser.getUserID() + "-" + searchedInviteUser.getName());
+                        ClickableSpan cs = new ClickableSpan() {
+                            @Override
+                            public void onClick(@NonNull View view) {
+                                savePageEntries();
+                                int endIndex = ss.toString().indexOf("-") + 1;
+                                char[] clickedUserId = new char[endIndex - 1];
+                                ss.getChars(0, endIndex-1, clickedUserId, 0);
+                                int userId = Integer.parseInt(new String(clickedUserId));
+                                User clickedUser = new User("Erica De Guzman", "ed139@usc.edu", "3749288483", "edguz", "", "CS student looking for team");
+                                clickedUser.setUserID(123);
+                                //User clickedUser = GET USER FROM DB USING USERID INT
+                                MainActivity.infoBundle.putSerializable("clicked_user", clickedUser);
+                                Fragment otherProfFrag = new OtherProfileFragment();
+                                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, otherProfFrag);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }
+                        };
+                        invitedUsersCreate.setMovementMethod(LinkMovementMethod.getInstance());
+                        if (invitedUsersCreate.getText().toString().equals("None")) {
+                            ss.setSpan(cs, invitedUsersTemp.size()-1, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            invitedUsersCreate.setText(ss);
+                        }
+                        else {
+                            ss.setSpan(cs, invitedUsersTemp.size()+1, searchedInviteUser.getName().length() + String.valueOf(searchedInviteUser.getUserID()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            invitedUsersCreate.setText(invitedUsersCreate.getText() + ", " + ss);
+                        }
+                    }
+                    else {
+                        invitedUsersCreate.setText(searchedInviteUser.getName());
+                    }
+                }
+                invitedUsersCreate.setVisibility(View.VISIBLE);
             }
         });
 
@@ -145,6 +194,7 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.remove("temp_event_statuspublic");
         MainActivity.infoBundle.remove("temp_event_otherinfo");
         MainActivity.infoBundle.remove("duetime");
+        MainActivity.infoBundle.remove("invited_user");
 
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
@@ -157,14 +207,16 @@ public class CreateFragment extends Fragment {
         }
         // READ LOCATION HERE
         // READ TIME SLOTS HERE
-        // READ SET DUE TIME HERE FROM INTENT
+        String dueTime = MainActivity.infoBundle.getString("duetime");
 
         // CREATE EVENT WITH ALL INFO
-        Event event = new Event(user.getUserID(), createdName, status);
-        // ADD EVENT TO DB
+        eventInProgress = new Event(user.getUserID(), createdName, status);
+        // ADD EVENT TO DB (int eventID = addToDB)
+        // GET EVENT FROM DB BY ID
+        // EDIT EVENT TO ADD LOCATION, TIME SLOTS, DUE TIME, INVITED USERS (PARTICIPANTS), etc.
 
         // SAVE EVENT LOCALLY
-        MainActivity.infoBundle.putSerializable("event", event);
+        MainActivity.infoBundle.putSerializable("event", eventInProgress);
         // SWITCH FRAGMENTS
         Fragment detailsFrag = new DetailsFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -195,6 +247,9 @@ public class CreateFragment extends Fragment {
     }
 
     public void restorePageEntries() {
+        MainActivity.infoBundle.putSerializable("user", (User)MainActivity.infoBundle.getSerializable("main_user"));
+        MainActivity.infoBundle.remove("main_user");
+
         if (MainActivity.infoBundle.containsKey("temp_event_name")) {
             String tempName = MainActivity.infoBundle.getString("temp_event_name");
             nameCreate.setText(tempName);

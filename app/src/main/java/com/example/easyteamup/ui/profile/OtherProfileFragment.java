@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,9 +19,8 @@ import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentProfileBinding;
 
-public class ProfileFragment extends Fragment {
+public class OtherProfileFragment extends Fragment {
 
-    private FragmentProfileBinding binding;
     private User user = null;
     Boolean viewOtherUser = false;
 
@@ -28,36 +28,35 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = (User) MainActivity.infoBundle.getSerializable("user");
+        if (MainActivity.infoBundle.containsKey("clicked_user")) {
+            user = (User)MainActivity.infoBundle.getSerializable("clicked_user");
+            viewOtherUser = true;
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         Button editButton = (Button)root.findViewById(R.id.editProfileButton);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickEditProfile(view);
-            }
-        });
-
-
         if (viewOtherUser) {
-            editButton.setVisibility(View.INVISIBLE);
+            displayProfile(root);
+
         }
-
-        displayProfile(root);
-
+        else {
+            AlertDialog.Builder viewProfFail = new AlertDialog.Builder(getContext());
+            viewProfFail.setMessage("Something went wrong. Please try again.");
+            viewProfFail.setTitle("Error");
+            viewProfFail.setPositiveButton("Close", null);
+            viewProfFail.create().show();
+        }
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     protected void displayProfile(View view) {
@@ -92,14 +91,5 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void onClickEditProfile(View view) {
-        MainActivity.infoBundle.putSerializable("user", user);
-        Fragment editFrag = new EditProfileFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-
-    public ProfileFragment() {}
+    public OtherProfileFragment() {}
 }

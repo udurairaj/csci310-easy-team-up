@@ -11,6 +11,6 @@ public class Invitation {
     }
 
     public void changeState(int state) {
-        // later
+        // Feature 3
     }
 }

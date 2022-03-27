@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public static Bundle infoBundle = new Bundle();
-//    public static UserTable userTable = new UserTable();
+    public static UserTable userTable = new UserTable();
 //    public static EventTable eventTable = new EventTable();
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Easy Team Up");
 
         //Fragment fragment = new MapFragment();
-        setSupportActionBar(binding.appBarMain.toolBar);
+        setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each

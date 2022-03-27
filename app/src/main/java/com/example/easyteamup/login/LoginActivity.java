@@ -2,6 +2,7 @@ package com.example.easyteamup.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -17,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Boolean successLogin = true;
     private Boolean successSignup = true;
-    //UserTable userTable = new UserTable();
+    UserTable userTable = new UserTable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +41,29 @@ public class LoginActivity extends AppCompatActivity {
             successLogin = false;
         }
 
-        User loginUser = new User(username, password);
-        if (successLogin) {
-            User u = new User("Uma Durairaj", "uduraira@usc.edu", "1234567890", "uduraira", "", "CS major");
-            u.setUserID(9876);
-
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            i.putExtra("user", u);
-            startActivity(i);
-        }
-//        User loginUser = userTable.contains(username);
-//        if (successLogin && loginUser != null) {
-//            if (loginUser.getPassword().equals(User.hash(password))) {
-//                User u = userTable.getUser(loginUser.getUserID());
-//                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-//                i.putExtra("user", u);
-//                startActivity(i);
-//            }
-//            else {
-//                passwordField.setError("Incorrect password. Please try again.");
-//            }
+//        User loginUser = new User(username, password);
+//        if (successLogin) {
+//            User u = new User("Uma Durairaj", "uduraira@usc.edu", "1234567890", "uduraira", "", "CS major");
+//            u.setUserID(9876);
+//
+//            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//            i.putExtra("user", u);
+//            startActivity(i);
 //        }
+        User loginUser = userTable.contains(username);
+        Log.d("1", loginUser.getName() + "," + loginUser.getPassword());
+        if (successLogin && loginUser != null) {
+            if (loginUser.getPassword().equals(password)) {
+            //if (loginUser.getPassword().equals(User.hash(password))) {
+                User u = userTable.getUser(loginUser.getUserID());
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("user", u);
+                startActivity(i);
+            }
+            else {
+                passwordField.setError("Incorrect password. Please try again.");
+            }
+        }
         else {
             AlertDialog.Builder loginFail = new AlertDialog.Builder(this);
             loginFail.setMessage("Account not found. Please try again.");
@@ -86,10 +89,10 @@ public class LoginActivity extends AppCompatActivity {
             usernameField.setError("Please enter your username.");
             successSignup = false;
         }
-//        else if (userTable.contains(username) != null) {
-//            usernameField.setError("Username taken.");
-//            successSignup = false;
-//        }
+        else if (userTable.contains(username) != null) {
+            usernameField.setError("Username taken.");
+            successSignup = false;
+        }
 
         if (password.length() == 0) {
             passwordField.setError("Please enter your password.");
@@ -107,22 +110,22 @@ public class LoginActivity extends AppCompatActivity {
             emailField.setError("Please enter your email.");
             successSignup = false;
         }
-//        else if (userTable.containsEmail(email) != null) {
-//            emailField.setError("Account with this email already exists.");
-//            successSignup = false;
-//        }
+        else if (userTable.containsEmail(email) != null) {
+            emailField.setError("Account with this email already exists.");
+            successSignup = false;
+        }
 
         if (successSignup) {
-//            User signupUser = new User(name, email, username, password);
-//            User u = userTable.getUser(userTable.addUser(signupUser));
-//            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-//            i.putExtra("user", u);
-//            startActivity(i);
-
             User signupUser = new User(name, email, username, password);
+            User u = userTable.getUser(userTable.addUser(signupUser));
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            i.putExtra("user", signupUser);
+            i.putExtra("user", u);
             startActivity(i);
+
+//            User signupUser = new User(name, email, username, password);
+//            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//            i.putExtra("user", signupUser);
+//            startActivity(i);
         }
         else {
             AlertDialog.Builder loginFail = new AlertDialog.Builder(this);

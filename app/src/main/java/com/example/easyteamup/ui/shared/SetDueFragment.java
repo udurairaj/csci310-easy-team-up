@@ -1,11 +1,7 @@
 package com.example.easyteamup.ui.shared;
 
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -14,15 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.example.easyteamup.Event;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
-import com.example.easyteamup.User;
 import com.example.easyteamup.ui.create.CreateFragment;
 
 public class SetDueFragment extends Fragment {

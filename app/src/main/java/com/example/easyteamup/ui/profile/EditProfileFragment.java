@@ -150,6 +150,7 @@ public class EditProfileFragment extends Fragment {
         }
 
         if (success) {
+            MainActivity.userTable.editUser(user);
             MainActivity.infoBundle.putSerializable("user", user);
             Fragment profFrag = new ProfileFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

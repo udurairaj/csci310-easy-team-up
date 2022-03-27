@@ -1,5 +1,7 @@
 package com.example.easyteamup;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,11 +22,6 @@ public class User implements Serializable {
     public User() {
 
     }
-    // constructor for temp user for logging in
-    public User(String username, String password) {
-        this.username = username;
-        this.password = hash(password);
-    }
 
     // constructor for basic user with minimal info (sign up)
     public User(String name, String email, String username, String password) {
@@ -34,7 +31,8 @@ public class User implements Serializable {
         this.phone = null;
         this.profilePic = null;
         this.otherInfo = null;
-        this.password = hash(password);
+        //this.password = hash(password);
+        this.password = password;
     }
 
     // constructor for user from database info
@@ -65,31 +63,35 @@ public class User implements Serializable {
     public void setEmail(String email) { this.email = email; }
     public void setPhone(String phone) { this.phone = phone; }
     public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) { this.password = hash(password); }
+//    public void setPassword(String password) { this.password = hash(password); }
+    public void setPassword(String password) { this.password = password; }
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
     public void setOtherInfo(String otherInfo) { this.otherInfo = otherInfo; }
 
-    public static String hash(String password) {
-        String hashedPass = null;
-        try {
-            SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
-            byte[] salt = new byte[16];
-            rand.nextBytes(salt);
-            String saltStr = salt.toString();
-
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(saltStr.getBytes());
-            byte[] bytes = md.digest(password.getBytes());
-
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes) {
-                sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-            }
-            hashedPass = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return hashedPass;
-    }
+//    public static String hash(String password) {
+//        String hashedPass = null;
+//        try {
+////            SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
+////            byte[] salt = new byte[16];
+////            rand.nextBytes(salt);
+////            String saltStr = salt.toString();
+////            Log.d("1", saltStr);
+//
+//            String saltStr = "[B@7e1b587";
+//
+//            MessageDigest md = MessageDigest.getInstance("SHA-1");
+//            md.update(saltStr.getBytes());
+//            byte[] bytes = md.digest(password.getBytes());
+//
+//            StringBuilder sb = new StringBuilder();
+//            for (byte b : bytes) {
+//                sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+//            }
+//            hashedPass = sb.toString();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        return hashedPass;
+//    }
 
 }

@@ -31,11 +31,16 @@ public class UserTable {
         this.rootRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                int lastID = 0;
                 if (task.isSuccessful()) {
                     for (DataSnapshot child : task.getResult().getChildren()) {
                         User user = child.getValue(User.class);
                         map.put(Integer.toString(user.getUserID()), user);
+                        if (user.getUserID() > lastID) {
+                            lastID = user.getUserID();
+                        }
                     }
+                    nextID = lastID + 1;
                 }
                 else {
                     Log.e("firebase", "Error getting data", task.getException());
