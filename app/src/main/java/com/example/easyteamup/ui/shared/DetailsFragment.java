@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.easyteamup.Event;
@@ -27,6 +28,9 @@ public class DetailsFragment extends Fragment {
     User user = null;
     Event event = null;
 
+    TextView invitedUsersText = null;
+    TextView invitedUsersView = null;
+
     public DetailsFragment() {
         // Required empty public constructor
     }
@@ -34,8 +38,8 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) MainActivity.infoBundle.getSerializable("user");
-        event = (Event) MainActivity.infoBundle.getSerializable("event");
+        user = MainActivity.userTable.getUser(MainActivity.userID);
+        //event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.get("event");
     }
 
     @Override
@@ -43,6 +47,14 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_details, container, false);
+
+        invitedUsersText = root.findViewById(R.id.invitedUsersDetailsText);
+        invitedUsersView = root.findViewById(R.id.invitedUsersDetailsView);
+
+        if (MainActivity.userID == event.getOwner()) {
+            invitedUsersText.setVisibility(View.VISIBLE);
+            invitedUsersView.setVisibility(View.VISIBLE);
+        }
 
         // Inflate the layout for this fragment
         return root;

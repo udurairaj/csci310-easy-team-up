@@ -97,6 +97,18 @@
         app:layout_constraintTop_toBottomOf="@+id/timeOptionsDetailsText" />
 
     <TextView
+        android:id="@+id/invitedUsersDetailsText"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Invitees:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsText" />
+
+    <TextView
         android:id="@+id/participantsDetailsText"
         android:layout_width="115dp"
         android:layout_height="48dp"
@@ -105,7 +117,7 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsText" />
+        app:layout_constraintTop_toBottomOf="@+id/invitedUsersDetailsText" />
 
     <TextView
         android:id="@+id/ownerDetailsView"
@@ -162,6 +174,20 @@
         app:layout_constraintTop_toBottomOf="@+id/timeOptionsDetailsText" />
 
     <TextView
+        android:id="@+id/invitedUsersDetailsView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:text="TBD"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/invitedUsersDetailsText"
+        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsText" />
+
+    <TextView
         android:id="@+id/participantsDetailsView"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -172,7 +198,7 @@
         android:textColorHint="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/participantsDetailsText"
-        app:layout_constraintTop_toBottomOf="@+id/finalTimeDetailsView" />
+        app:layout_constraintTop_toBottomOf="@+id/invitedUsersDetailsView" />
 
     <Button
         android:id="@+id/confirmProfileChangesButton"
@@ -180,7 +206,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#FFCC00"
-        android:text="Edit Profile"
+        android:text="Edit Event"
         android:textColor="#990000"
         android:onClick="onClickEventDetailsButton"
         app:layout_constraintEnd_toEndOf="parent"
