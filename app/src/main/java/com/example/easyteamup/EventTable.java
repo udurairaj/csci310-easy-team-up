@@ -119,6 +119,15 @@ public class EventTable {
         return map.get(Integer.toString(ID));
     }
 
+    public Event getEvent(String name) {
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getEventName().compareTo(name) == 0) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     public void editEvent(Event event) {
         DatabaseReference ref = rootRef.child(Integer.toString(event.getEventID()));
         ref.setValue(event);

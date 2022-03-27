@@ -17,7 +17,6 @@ public class Event implements Serializable {
 //    private Location location;
 //    private TimeSlot finalTime;
 //    private TimeGenerator generator;
-    private UserTable userTable;
 
     public Event() {
 
@@ -28,17 +27,17 @@ public class Event implements Serializable {
         this.eventName = eventName;
         this.statusPublic = statusPublic;
         this.description = null;
+        this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
 //        this.timeOptions = new ArrayList<>();
 //        this.notificationHandler = null;
 //        this.location = null;
 //        this.finalTime = null;
 //        this.generator = new TimeGenerator(this);
-        this.userTable = new UserTable();
     }
 
     public int getEventID() { return eventID; }
-    public int getOwner() { return userTable.getUser(owner).getUserID(); }
+    public int getOwner() { return MainActivity.userTable.getUser(owner).getUserID(); }
     public String getEventName() { return eventName; }
     public Boolean getStatusPublic() { return statusPublic; }
     public String getDescription() { return description; }
@@ -56,7 +55,7 @@ public class Event implements Serializable {
 //    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
-    public void addInvitee(int userID) { invitees.add(userID); }
+//    public void addInvitee(int userID) { invitees.add(userID); }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
 //    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 
