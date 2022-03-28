@@ -1,5 +1,7 @@
 package com.example.easyteamup;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -59,7 +61,23 @@ public class Event implements Serializable {
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
     public void setLocation(Location location) { this.location = location; }
 
-    public void addParticipant(User user) { participants.add(user.getUserID()); }
+    public void addParticipant(User user) {
+        if (participants == null) {
+            participants = new ArrayList<>();
+        }
+        participants.add(user.getUserID());
+    }
+
+    public void removeInvitee(User user) {
+        if (participants == null) {
+            return;
+        }
+        if (!participants.contains(user)) {
+            return;
+        }
+        Log.i("REMOVE", "remove");
+        participants.remove(user.getUserID());
+    }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
 //    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 

@@ -208,10 +208,46 @@
         android:backgroundTint="#FFCC00"
         android:text="Edit Event"
         android:textColor="#990000"
-        android:onClick="onClickEventDetailsButton"
+        android:onClick="onClickEditEvent"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
+
+    <LinearLayout
+        android:id="@+id/inviteLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView">
+
+        <Button
+            android:id="@+id/acceptInviteButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#FFCC00"
+            android:text="Accept"
+            android:textColor="#990000"
+            android:onClick="onClickAccept"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <Button
+            android:id="@+id/rejectInviteButton"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#FFCC00"
+            android:text="Reject"
+            android:textColor="#990000"
+            android:onClick="onClickReject"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
