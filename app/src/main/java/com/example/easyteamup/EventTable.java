@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,4 +163,79 @@ public class EventTable {
         }
         return namesList.toArray(names);
     }
+
+    public String[] getOwnEvents() {
+        ArrayList<String> namesList = new ArrayList<>();
+        String[] names = {};
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getOwner() == MainActivity.userID) {
+                TimeSlot finalTime = entry.getValue().getFinalTime();
+                Date now = new Date();
+                if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                    namesList.add(entry.getValue().getEventName());
+                }
+            }
+        }
+        return namesList.toArray(names);
+    }
+
+    public String[] getInvitedEvents() {
+        ArrayList<String> namesList = new ArrayList<>();
+        String[] names = {};
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getInvitees() != null) {
+                if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
+                    TimeSlot finalTime = entry.getValue().getFinalTime();
+                    Date now = new Date();
+                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                        namesList.add(entry.getValue().getEventName());
+                    }
+                }
+            }
+        }
+        return namesList.toArray(names);
+    }
+
+    public String[] getJoinedEvents() {
+        ArrayList<String> namesList = new ArrayList<>();
+        String[] names = {};
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getParticipants() != null) {
+                if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                    TimeSlot finalTime = entry.getValue().getFinalTime();
+                    Date now = new Date();
+                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                        namesList.add(entry.getValue().getEventName());
+                    }
+                }
+            }
+        }
+        return namesList.toArray(names);
+    }
+
+    public String[] getPastEvents() {
+        ArrayList<String> namesList = new ArrayList<>();
+        String[] names = {};
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            TimeSlot finalTime = entry.getValue().getFinalTime();
+            Date now = new Date();
+            if (finalTime != null && now.after(finalTime.dateTimeAsDate())) {
+                if (entry.getValue().getOwner() == MainActivity.userID) {
+                    namesList.add(entry.getValue().getEventName());
+                }
+                else if (entry.getValue().getInvitees() != null) {
+                    if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
+                        namesList.add(entry.getValue().getEventName());
+                    }
+                }
+                else if (entry.getValue().getParticipants() != null) {
+                    if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                        namesList.add(entry.getValue().getEventName());
+                    }
+                }
+            }
+        }
+        return namesList.toArray(names);
+    }
+
 }

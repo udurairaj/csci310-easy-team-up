@@ -13,10 +13,10 @@ public class Event implements Serializable {
     private ArrayList<Integer> participants;
     private TimeSlot dueTime;
     private ArrayList<Integer> invitees;
-//    private ArrayList<TimeSlot> timeOptions;
+    private ArrayList<TimeSlot> timeOptions;
 //    private NotificationHandler notificationHandler;
-//    private Location location;
-//    private TimeSlot finalTime;
+    private Location location;
+    private TimeSlot finalTime;
 //    private TimeGenerator generator;
 
     public Event() {
@@ -31,10 +31,10 @@ public class Event implements Serializable {
         this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
         this.dueTime = null;
-//        this.timeOptions = new ArrayList<>();
+        this.timeOptions = new ArrayList<>();
 //        this.notificationHandler = null;
-//        this.location = null;
-//        this.finalTime = null;
+        this.location = null;
+        this.finalTime = null;
 //        this.generator = new TimeGenerator(this);
     }
 
@@ -46,10 +46,10 @@ public class Event implements Serializable {
     public ArrayList<Integer> getParticipants() { return participants; }
     public TimeSlot getDueTime() { return dueTime; }
     public ArrayList<Integer> getInvitees() { return invitees; }
-//    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
+    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
 //    public NotificationHandler getNotificationHandler() { return notificationHandler; }
-//    public Location getLocation() { return location; }
-//    public TimeSlot getFinalTime() { return finalTime; }
+    public Location getLocation() { return location; }
+    public TimeSlot getFinalTime() { return finalTime; }
 
     public void setEventID(int eventID) { this.eventID = eventID; }
     public void setEventName(String eventName) { this.eventName = eventName; }
@@ -57,7 +57,7 @@ public class Event implements Serializable {
     public void setDescription(String description) { this.description = description; }
     public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
-//    public void setLocation(Location location) { this.location = location; }
+    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }

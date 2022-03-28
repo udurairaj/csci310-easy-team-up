@@ -46,7 +46,11 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.easyteamup.ui.shared.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_editEvent"
+            app:destination="@id/editEvent" />
+    </fragment>
     <fragment
         android:id="@+id/setDueFragment"
         android:name="com.example.easyteamup.ui.shared.SetDueFragment"
@@ -79,4 +83,9 @@
         android:name="com.example.easyteamup.ui.profile.OtherProfileFragment"
         android:label="fragment_other_profile"
         tools:layout="@layout/fragment_other_profile" />
+    <fragment
+        android:id="@+id/editEvent"
+        android:name="com.example.easyteamup.EditEvent"
+        android:label="fragment_edit_event"
+        tools:layout="@layout/fragment_edit_event" />
 </navigation>
