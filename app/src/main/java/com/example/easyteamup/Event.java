@@ -15,7 +15,7 @@ public class Event implements Serializable {
     private ArrayList<Integer> invitees;
 //    private ArrayList<TimeSlot> timeOptions;
 //    private NotificationHandler notificationHandler;
-//    private Location location;
+    private Location location;
 //    private TimeSlot finalTime;
 //    private TimeGenerator generator;
 
@@ -57,7 +57,7 @@ public class Event implements Serializable {
     public void setDescription(String description) { this.description = description; }
     public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
-//    public void setLocation(Location location) { this.location = location; }
+    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
