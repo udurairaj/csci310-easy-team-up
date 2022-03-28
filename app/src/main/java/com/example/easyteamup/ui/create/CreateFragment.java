@@ -3,25 +3,16 @@ package com.example.easyteamup.ui.create;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -35,15 +26,12 @@ import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentCreateBinding;
-import com.example.easyteamup.ui.profile.ProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 import com.example.easyteamup.ui.shared.SetDueFragment;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CreateFragment extends Fragment {
 
@@ -65,6 +53,7 @@ public class CreateFragment extends Fragment {
     TimeSlot duetime = null;
     Location location = null;
     Button timeSlotsButton = null;
+    ArrayList<TimeSlot> timeOptions = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -188,7 +177,7 @@ public class CreateFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 displayInvitedUserButton.setVisibility(View.GONE);
-
+                inviteCreate.setQuery("", false);
                 if (searchedInviteUser != null) {
                     invitedUsersTemp.add(searchedInviteUser.getUserID());
                 }
@@ -241,6 +230,7 @@ public class CreateFragment extends Fragment {
         if (location != null) {
             event.setLocation(location);
         }
+        event.setTimeOptions(timeOptions);
         MainActivity.eventTable.editEvent(event);
 
         // delete temps
@@ -250,6 +240,8 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.remove("duetime");
         MainActivity.infoBundle.remove("temp_invited_users");
         MainActivity.infoBundle.remove("temp_event_location");
+        MainActivity.infoBundle.remove("invitedUsersArray");
+        MainActivity.infoBundle.remove("timeOptionsArray");
 
         if (createSuccess) {
             // SAVE EVENT LOCALLY
@@ -311,11 +303,20 @@ public class CreateFragment extends Fragment {
     }
 
     public void onClickTimeSlots(View view) {
-//        Fragment invitedFrag = new InvitedUsersFragment();
-//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+        savePageEntries();
+
+        String[] timeOptionsStringArray = new String[timeOptions.size()];
+        for (int i = 0; i < timeOptions.size(); i++) {
+            String str = timeOptions.get(i).toStringDateTime() + " (" + timeOptions.get(i).getDuration() + " min)";
+            timeOptionsStringArray[i] = str;
+        }
+        MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
+
+        Fragment timeSlotFrag = new ViewTimeSlotsFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, timeSlotFrag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public void savePageEntries() {
@@ -333,7 +334,7 @@ public class CreateFragment extends Fragment {
         if (location != null) {
             MainActivity.infoBundle.putSerializable("temp_event_location", location);
         }
-        // SAVE TIME SLOTS
+        MainActivity.infoBundle.putSerializable("temp_time_options", timeOptions);
     }
 
     public void restorePageEntries() {
@@ -344,7 +345,7 @@ public class CreateFragment extends Fragment {
         }
         if (MainActivity.infoBundle.containsKey("temp_event_statuspublic")) {
             String tempStatusPublic = MainActivity.infoBundle.getString("temp_event_statuspublic");
-            if (tempStatusPublic == "Public") {
+            if (tempStatusPublic.equals("Public")) {
                 statusPublicSpinner.setSelection(0);
             }
             else {
@@ -374,6 +375,13 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.remove("clicked_user");
         if (MainActivity.infoBundle.containsKey("temp_event_location")) {
             location = (Location)MainActivity.infoBundle.getSerializable("temp_event_location");
+            locationCreate.setQuery(location.getName(), false);
+        }
+        if (MainActivity.infoBundle.containsKey("timeslot")) {
+            timeOptions = (ArrayList<TimeSlot>)MainActivity.infoBundle.getSerializable("temp_time_options");
+            TimeSlot ts = (TimeSlot) MainActivity.infoBundle.getSerializable("timeslot");
+            timeOptions.add(ts);
+            MainActivity.infoBundle.remove("timeslot");
         }
     }
 }

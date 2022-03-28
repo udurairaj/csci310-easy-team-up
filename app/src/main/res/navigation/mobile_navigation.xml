@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_nav_create_to_invitedUsersFragment"
             app:destination="@id/invitedUsersFragment" />
+        <action
+            android:id="@+id/action_nav_create_to_viewTimeSlotsFragment"
+            app:destination="@id/viewTimeSlotsFragment" />
 
     </fragment>
 
@@ -74,7 +77,6 @@
         android:name="com.example.easyteamup.ui.shared.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list"
-
         />
     <fragment
         android:id="@+id/invitedUsersFragment"
@@ -96,9 +98,18 @@
         android:label="fragment_edit_event"
         tools:layout="@layout/fragment_edit_event" />
     <fragment
-        android:id="@+id/setTimeSlotsFragment"
-        android:name="com.example.easyteamup.ui.create.SetTimeSlotsFragment"
-        android:label="fragment_set_time_slots"
-        tools:layout="@layout/fragment_set_time_slots" />
+        android:id="@+id/viewTimeSlotsFragment"
+        android:name="com.example.easyteamup.ui.create.ViewTimeSlotsFragment"
+        android:label="fragment_view_time_slots"
+        tools:layout="@layout/fragment_view_time_slots" >
+        <action
+            android:id="@+id/action_viewTimeSlotsFragment_to_setTimeSlotFragment"
+            app:destination="@id/setTimeSlotFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setTimeSlotFragment"
+        android:name="com.example.easyteamup.ui.create.SetTimeSlotFragment"
+        android:label="fragment_set_time_slot"
+        tools:layout="@layout/fragment_set_time_slot" />
 
 </navigation>

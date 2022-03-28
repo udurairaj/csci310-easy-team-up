@@ -3,6 +3,7 @@ package com.example.easyteamup;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Event implements Serializable {
@@ -81,13 +82,12 @@ public class Event implements Serializable {
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
 //    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 
+    public void setTimeOptions(ArrayList<TimeSlot> list) { this.timeOptions = list; }
+
+
     public void generateFinalTime() {
 //        finalTime = generator.generate();
         // FEATURE 1: notification to participants
-    }
-
-    public void invite(User user) {
-        // FEATURE 2
     }
 
 }
