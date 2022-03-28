@@ -18,7 +18,6 @@ public class Event implements Serializable {
 //    private Location location;
 //    private TimeSlot finalTime;
 //    private TimeGenerator generator;
-    private UserTable userTable;
 
     public Event() {
 
@@ -29,6 +28,7 @@ public class Event implements Serializable {
         this.eventName = eventName;
         this.statusPublic = statusPublic;
         this.description = null;
+        this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
         this.dueTime = null;
 //        this.timeOptions = new ArrayList<>();
@@ -36,7 +36,6 @@ public class Event implements Serializable {
 //        this.location = null;
 //        this.finalTime = null;
 //        this.generator = new TimeGenerator(this);
-        this.userTable = new UserTable();
     }
 
     public int getEventID() { return eventID; }
