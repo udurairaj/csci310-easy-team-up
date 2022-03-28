@@ -11,12 +11,12 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="34dp"
         android:layout_marginTop="15dp"
         android:text="Set Due Time"
         android:textAlignment="center"
         android:textColor="#FFCC00"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,8 @@
         android:id="@+id/dueTimeEventPicker"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView">
@@ -44,7 +45,6 @@
 
         <DatePicker
             android:id="@+id/datePicker"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
