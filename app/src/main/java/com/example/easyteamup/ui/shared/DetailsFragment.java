@@ -114,6 +114,9 @@ public class DetailsFragment extends Fragment {
         if (list == null) {
             return "none";
         }
+        if (list.size() == 0) {
+            return "none";
+        }
         String names= "";
         String nextName;
         for (int i = 0; i < list.size() - 1; i++) {
