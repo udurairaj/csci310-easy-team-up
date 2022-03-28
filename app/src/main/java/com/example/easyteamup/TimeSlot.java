@@ -16,6 +16,8 @@ public class TimeSlot implements Serializable
     private int minute;
     private Calendar cal = null;
 
+    public TimeSlot() {}
+
     // constructor
     public TimeSlot(String datetime)
     {
@@ -23,17 +25,29 @@ public class TimeSlot implements Serializable
         day = Integer.parseInt(datetime.substring(3, 5));
         year = Integer.parseInt(datetime.substring(6, 10));
         hour = Integer.parseInt(datetime.substring(11, 13));
-        minute = Integer.parseInt(datetime.substring(15));
+        minute = Integer.parseInt(datetime.substring(14));
         this.cal = Calendar.getInstance();
         cal.set(year, month, day, hour, minute);
         Log.d("datetime", cal.getTime().toString());
     }
 
-    public Date getDateTime() {
+    public int getMonth() { return month; }
+    public int getDay() { return day; }
+    public int getYear() { return year; }
+    public int getHour() { return hour; }
+    public int getMinute() { return minute; }
+
+    public void setMonth(int month) { this.month = month; }
+    public void setDay(int day) { this.day = day; }
+    public void setYear(int year) { this.year = year; }
+    public void setHour(int hour) { this.hour = hour; }
+    public void setMinute(int minute) { this.minute = minute; }
+
+    public Date dateTimeAsDate() {
         return cal.getTime();
     }
 
-    public String getDateTimeToString()
+    public String toStringDateTime()
     {
         return cal.getTime().toString();
     }

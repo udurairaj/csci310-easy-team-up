@@ -187,6 +187,7 @@ public class CreateFragment extends Fragment {
         MainActivity.eventTable.addEvent(eventInProgress);
         eventInProgress.setDescription(description);
         eventInProgress.setDueTime(duetime);
+        eventInProgress.setInvitees(invitedUsersTemp);
         MainActivity.eventTable.editEvent(eventInProgress);
         // ADD EVENT TO DB (int eventID = addToDB)
         // GET EVENT FROM DB BY ID
@@ -283,7 +284,7 @@ public class CreateFragment extends Fragment {
         }
         if (MainActivity.infoBundle.containsKey("duetime")) {
             duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
-            dueTimeTextView.setText(duetime.getDateTimeToString());
+            dueTimeTextView.setText(duetime.toStringDateTime());
         }
         if (MainActivity.infoBundle.containsKey("temp_invited_users")) {
             invitedUsersTemp = MainActivity.infoBundle.getIntegerArrayList("temp_invited_users");

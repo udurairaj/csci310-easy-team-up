@@ -34,16 +34,21 @@ public class EventTable {
         this.rootRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                int lastID = 0;
                 if (task.isSuccessful()) {
                     for (DataSnapshot child : task.getResult().getChildren()) {
                         Log.i("DATA", "ADDING");
                         Event event = child.getValue(Event.class);
                         map.put(Integer.toString(event.getEventID()), event);
+                        if (event.getEventID() > lastID) {
+                            lastID = event.getEventID();
+                        }
                         if(listener != null)
                         {
                             listener.onIntegerChanged(map.size());
                         }
                     }
+                    nextID = lastID + 1;
                 }
                 else {
                     Log.e("firebase", "Error getting data", task.getException());
