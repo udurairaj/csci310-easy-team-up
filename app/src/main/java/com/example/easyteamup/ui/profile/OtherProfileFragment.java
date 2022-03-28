@@ -2,6 +2,7 @@ package com.example.easyteamup.ui.profile;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +18,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
+import com.example.easyteamup.ui.create.CreateFragment;
 
 public class OtherProfileFragment extends Fragment {
 
-    private User user = null;
     private User clicked_user = null;
     Boolean viewOtherUser = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = MainActivity.userTable.getUser(MainActivity.userID);
         if (MainActivity.infoBundle.containsKey("clicked_user")) {
             clicked_user = (User)MainActivity.infoBundle.getSerializable("clicked_user");
             viewOtherUser = true;
@@ -37,7 +37,7 @@ public class OtherProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_other_profile, container, false);
 
         Button editButton = (Button)root.findViewById(R.id.editProfileButton);
         if (viewOtherUser) {
@@ -62,7 +62,7 @@ public class OtherProfileFragment extends Fragment {
     protected void displayProfile(View view) {
         TextView nameView = (TextView)view.findViewById(R.id.nameProfileView);
         nameView.setText(clicked_user.getName());
-        TextView userIDView = (TextView)view.findViewById(R.id.userIDProfileView);
+        TextView userIDView = (TextView)view.findViewById(R.id.userIDOtherProfileView);
         userIDView.setText(String.valueOf(clicked_user.getUserID()));
         TextView usernameView = (TextView)view.findViewById(R.id.usernameProfileView);
         usernameView.setText(clicked_user.getUsername());
@@ -89,6 +89,33 @@ public class OtherProfileFragment extends Fragment {
         else {
             otherInfoView.setText("");
         }
+        Button backButton = (Button)view.findViewById(R.id.backToCreateButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickGoBack(view);
+            }
+        });
+        Button uninviteButton = (Button)view.findViewById(R.id.uninviteUserButton);
+        uninviteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickUninvite(view);
+            }
+        });
+    }
+
+    public void onClickGoBack(View view) {
+        Fragment createFrag = new CreateFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void onClickUninvite(View view) {
+        MainActivity.infoBundle.putBoolean("delete_clicked", true);
+        onClickGoBack(view);
     }
 
     public OtherProfileFragment() {}

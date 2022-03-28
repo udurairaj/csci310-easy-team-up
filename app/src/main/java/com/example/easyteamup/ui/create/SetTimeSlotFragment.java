@@ -1,4 +1,4 @@
-package com.example.easyteamup.ui.shared;
+package com.example.easyteamup.ui.create;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.example.easyteamup.MainActivity;
@@ -21,13 +22,14 @@ import com.example.easyteamup.ui.create.CreateFragment;
 import java.sql.Time;
 import java.util.Date;
 
-public class SetDueFragment extends Fragment {
+public class SetTimeSlotFragment extends Fragment {
 
     DatePicker datePicker = null;
     TimePicker timePicker = null;
+    EditText duration = null;
     Button saveButton = null;
 
-    public SetDueFragment() {
+    public SetTimeSlotFragment() {
         // Required empty public constructor
     }
 
@@ -40,15 +42,16 @@ public class SetDueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         container.removeAllViews();
-        View root = inflater.inflate(R.layout.fragment_set_due, container, false);
+        View root = inflater.inflate(R.layout.fragment_set_time_slot, container, false);
 
         datePicker = (DatePicker) root.findViewById(R.id.datePicker);
         timePicker = (TimePicker) root.findViewById(R.id.timePicker);
+        duration = (EditText)root.findViewById(R.id.timeSlotDurationView);
         saveButton = (Button) root.findViewById(R.id.dateTimeSet);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickSetDueTime(view);
+                onClickSetTime(view);
             }
         });
 
@@ -61,31 +64,37 @@ public class SetDueFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void onClickSetDueTime(View view) {
+    public void onClickSetTime(View view) {
         Boolean success = true;
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
         int hour = timePicker.getHour();
         int min = timePicker.getMinute();
+        String dur = duration.getText().toString();
+
         String date = String.format("%02d" , month) + "/" + String.format("%02d", day) + "/" + year;
         String time = String.format("%02d" , hour) + ":" + String.format("%02d" , min);
         String datetime = date + " " + time;
 
-        TimeSlot duetime = new TimeSlot(datetime);
-
+        TimeSlot temp = new TimeSlot(datetime);
         Date current = new Date();
-        if (current.after(duetime.dateTimeAsDate())) {
+        if (current.after(temp.dateTimeAsDate())) {
             AlertDialog.Builder fail = new AlertDialog.Builder(getContext());
-            fail.setMessage("Due time must be in future. Try again.");
+            fail.setMessage("Time slot must be in future. Try again.");
             fail.setTitle("Error");
             fail.setPositiveButton("Close", null);
             fail.create().show();
             success = false;
         }
+        if (dur.length() == 0) {
+            duration.setError("Please enter the duration of your availability time slot.");
+            success = false;
+        }
 
         if (success) {
-            MainActivity.infoBundle.putSerializable("duetime", duetime);
+            TimeSlot timeslot = new TimeSlot(datetime, Integer.parseInt(dur));
+            MainActivity.infoBundle.putSerializable("timeslot", timeslot);
             Fragment createFrag = new CreateFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
@@ -94,7 +103,7 @@ public class SetDueFragment extends Fragment {
         }
         else {
             AlertDialog.Builder fail = new AlertDialog.Builder(getContext());
-            fail.setMessage("Fix errors and try again.");
+            fail.setMessage("Please fix errors and try again.");
             fail.setTitle("Error");
             fail.setPositiveButton("Close", null);
             fail.create().show();

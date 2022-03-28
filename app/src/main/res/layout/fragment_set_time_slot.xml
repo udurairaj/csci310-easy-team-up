@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="#990000"
     android:backgroundTint="#990000"
-    tools:context=".ui.shared.SetDueFragment">
+    tools:context=".ui.create.SetTimeSlotFragment">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:layout_marginTop="15dp"
-        android:text="Set Due Time"
+        android:text="Select Time Slot"
         android:textAlignment="center"
         android:textColor="#FFCC00"
         android:textSize="30sp"
@@ -73,17 +73,42 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/timeSlotDurationText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Duration (min):"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dueTimeEventPicker" />
+
+    <EditText
+        android:id="@+id/timeSlotDurationView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:backgroundTint="#FFCC00"
+        android:digits="0123456789+"
+        app:layout_constraintStart_toEndOf="@id/timeSlotDurationText"
+        app:layout_constraintTop_toBottomOf="@+id/dueTimeEventPicker" />
+
     <Button
         android:id="@+id/dateTimeSet"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:backgroundTint="#FFCC00"
         android:text="Set Time"
         android:textAlignment="center"
         android:textColor="#990000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dueTimeEventPicker" />
+        app:layout_constraintTop_toBottomOf="@+id/timeSlotDurationView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

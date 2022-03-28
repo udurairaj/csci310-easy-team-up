@@ -7,7 +7,7 @@
     android:background="#990000"
     android:backgroundTint="#990000"
     android:textColor="#FFFFFF"
-    tools:context=".ui.create.CreateFragment">
+    tools:context=".EditEvent">
 
     <TextView
         android:id="@+id/textView"
@@ -167,7 +167,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:text="View / Select"
+        android:text="Select Availability"
         android:textColor="#990000"
         android:backgroundTint="#FFCC00"
         app:layout_constraintStart_toEndOf="@+id/timeSlotsEventText"
@@ -234,7 +234,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="View / Select"
+        android:text="View"
         android:textColor="#990000"
         android:backgroundTint="#FFCC00"
         app:layout_constraintStart_toEndOf="@+id/invitedUsersEventText"
