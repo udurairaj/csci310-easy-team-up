@@ -111,7 +111,7 @@ public class UserEventDisplayFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                MainActivity.infoBundle.putString("event", eventNames[position]);
+                MainActivity.infoBundle.putString("event", events[position]);
                 Fragment editFrag = new DetailsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);

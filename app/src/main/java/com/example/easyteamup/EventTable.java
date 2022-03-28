@@ -38,7 +38,6 @@ public class EventTable {
                 int lastID = 0;
                 if (task.isSuccessful()) {
                     for (DataSnapshot child : task.getResult().getChildren()) {
-                        Log.i("DATA", "ADDING");
                         Event event = child.getValue(Event.class);
                         map.put(Integer.toString(event.getEventID()), event);
                         if (event.getEventID() > lastID) {

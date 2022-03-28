@@ -1,14 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#990000"
+    android:backgroundTint="#990000"
+    android:textColor="#FFFFFF"
     tools:context=".EditEvent">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/textView"
+        android:layout_width="196dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="15dp"
+        android:text="Create Event"
+        android:textColor="#FFCC00"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/nameEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Title:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/statusPublicEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Status:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEventText" />
+
+    <TextView
+        android:id="@+id/descriptionEventText"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="4dp"
+        android:text="Event Info:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusPublicEventText" />
+
+    <TextView
+        android:id="@+id/locationEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:text="Location:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEventText" />
+
+    <TextView
+        android:id="@+id/timeSlotsEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:text="Time Slots:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationEventText" />
+
+    <TextView
+        android:id="@+id/dueTimeEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Due Time:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeSlotsEventText" />
+
+    <TextView
+        android:id="@+id/dueTimeEventView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:text="Click below"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@id/dueTimeEventText"
+        app:layout_constraintTop_toBottomOf="@+id/timeSlotsEventButton" />
+
+    <EditText
+        android:id="@+id/nameEventView"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:hint="Click to type"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/nameEventText"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/statusPublicSpinner"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:spinnerMode="dropdown"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/statusPublicEventText"
+        app:layout_constraintTop_toBottomOf="@+id/nameEventText"
+        />
+
+    <EditText
+        android:id="@+id/descriptionEventView"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp"
+        android:gravity="top"
+        android:hint="Click to type"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/descriptionEventText"
+        app:layout_constraintTop_toBottomOf="@+id/statusPublicSpinner" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/locationEventSearch"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search"
+        app:layout_constraintStart_toEndOf="@+id/locationEventText"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEventView"
+        />
+
+    <Button
+        android:id="@+id/timeSlotsEventButton"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Select Availability"
+        android:textColor="#990000"
+        android:backgroundTint="#FFCC00"
+        app:layout_constraintStart_toEndOf="@+id/timeSlotsEventText"
+        app:layout_constraintTop_toBottomOf="@+id/locationEventSearch" />
+
+    <Button
+        android:id="@+id/dateTimeSet"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:text="Set Time"
+        android:textColor="#990000"
+        android:backgroundTint="#FFCC00"
+        app:layout_constraintStart_toEndOf="@+id/dueTimeEventText"
+        app:layout_constraintTop_toBottomOf="@+id/dueTimeEventView" />
+
+    <TextView
+        android:id="@+id/inviteEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="58dp"
+        android:text="Invite:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dueTimeEventText" />
+
+    <TextView
+        android:id="@+id/inviteSearchDisplayButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:padding="2dp"
+        android:ems="10"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:text="User not found. Click here to try again."
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:background="#f0f0f0"
+        app:layout_constraintStart_toEndOf="@+id/invitedUsersEventText"
+        app:layout_constraintTop_toBottomOf="@+id/inviteEventSearch" />
+
+    <TextView
+        android:id="@+id/invitedUsersEventText"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:text="Invited Users:"
+        android:textColor="#FFCC00"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inviteEventText" />
+
+    <Button
+        android:id="@+id/viewInvitedUsersButton"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="View"
+        android:textColor="#990000"
+        android:backgroundTint="#FFCC00"
+        app:layout_constraintStart_toEndOf="@+id/invitedUsersEventText"
+        app:layout_constraintTop_toBottomOf="@+id/inviteEventSearch" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/inviteEventSearch"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:inputType="number"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search user ID"
+        app:layout_constraintStart_toEndOf="@+id/inviteEventText"
+        app:layout_constraintTop_toBottomOf="@+id/dateTimeSet"
+        />
+
+
+    <Button
+        android:id="@+id/saveEventButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Create!"
+        android:gravity="center"
+        android:textColor="#990000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewInvitedUsersButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

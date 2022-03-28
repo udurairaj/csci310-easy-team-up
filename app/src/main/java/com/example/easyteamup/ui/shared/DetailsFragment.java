@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.easyteamup.EditEvent;
 import com.example.easyteamup.Event;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
@@ -44,7 +45,7 @@ public class DetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = MainActivity.userTable.getUser(MainActivity.userID);
-        event = (Event)MainActivity.infoBundle.getSerializable("event");
+        event = MainActivity.eventTable.getEvent(Integer.parseInt(MainActivity.infoBundle.getString("event")));
 //        if (MainActivity.infoBundle.containsKey("eventID")) {
 //            event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("eventID"));
 //        }
@@ -55,7 +56,6 @@ public class DetailsFragment extends Fragment {
 //            fail.setPositiveButton("Close", null);
 //            fail.create().show();
 //        }
-        Log.i("event", event.getEventName());
     }
 
     @Override
@@ -108,6 +108,7 @@ public class DetailsFragment extends Fragment {
         invitees.setText(makeCommaString(event.getInvitees()));
         TextView participants = (TextView) view.findViewById(R.id.participantsDetailsView);
         participants.setText(makeCommaString(event.getParticipants()));
+        Button editButton = (Button) view.findViewById(R.id.editEventButton);
     }
 
     public String makeCommaString(ArrayList<Integer> list) {
@@ -142,11 +143,11 @@ public class DetailsFragment extends Fragment {
 
     public void onClickEditEvent(View view) {
         MainActivity.infoBundle.putInt("eventID", event.getEventID());
-//        Fragment editEventFrag = new EditEventFragment();
-//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editEventFrag);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+        Fragment editEventFrag = new EditEvent();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.action_detailsFragment_to_editEvent, editEventFrag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
