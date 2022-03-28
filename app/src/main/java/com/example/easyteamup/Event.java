@@ -1,6 +1,7 @@
 package com.example.easyteamup;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Event implements Serializable {
@@ -13,7 +14,7 @@ public class Event implements Serializable {
     private ArrayList<Integer> participants;
     private TimeSlot dueTime;
     private ArrayList<Integer> invitees;
-//    private ArrayList<TimeSlot> timeOptions;
+    private ArrayList<TimeSlot> timeOptions;
 //    private NotificationHandler notificationHandler;
     private Location location;
 //    private TimeSlot finalTime;
@@ -31,7 +32,7 @@ public class Event implements Serializable {
         this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
         this.dueTime = null;
-//        this.timeOptions = new ArrayList<>();
+        this.timeOptions = new ArrayList<>();
 //        this.notificationHandler = null;
 //        this.location = null;
 //        this.finalTime = null;
@@ -46,7 +47,7 @@ public class Event implements Serializable {
     public ArrayList<Integer> getParticipants() { return participants; }
     public TimeSlot getDueTime() { return dueTime; }
     public ArrayList<Integer> getInvitees() { return invitees; }
-//    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
+    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
 //    public NotificationHandler getNotificationHandler() { return notificationHandler; }
 //    public Location getLocation() { return location; }
 //    public TimeSlot getFinalTime() { return finalTime; }
@@ -60,16 +61,11 @@ public class Event implements Serializable {
     public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
-//    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
-//    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
+    public void setTimeOptions(ArrayList<TimeSlot> list) { this.timeOptions = list; }
 
     public void generateFinalTime() {
 //        finalTime = generator.generate();
         // FEATURE 1: notification to participants
-    }
-
-    public void invite(User user) {
-        // FEATURE 2
     }
 
 }
