@@ -55,6 +55,15 @@ public class SetTimeSlotFragment extends Fragment {
             }
         });
 
+        if (MainActivity.infoBundle.containsKey("clicked_slot")) {
+            TimeSlot clickedSlot = (TimeSlot)MainActivity.infoBundle.getSerializable("clicked_slot");
+            datePicker.updateDate(clickedSlot.getYear(), clickedSlot.getMonth(), clickedSlot.getDay());
+            timePicker.setHour(clickedSlot.getHour());
+            timePicker.setMinute(clickedSlot.getMinute());
+            duration.setText(String.valueOf(clickedSlot.getDuration()));
+            MainActivity.infoBundle.remove("clicked_slot");
+        }
+
         // Inflate the layout for this fragment
         return root;
     }

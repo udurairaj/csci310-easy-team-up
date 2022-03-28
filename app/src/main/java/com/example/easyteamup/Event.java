@@ -79,8 +79,6 @@ public class Event implements Serializable {
         Log.i("REMOVE", "remove");
         participants.remove(user.getUserID());
     }
-//    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
-//    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 
     public void setTimeOptions(ArrayList<TimeSlot> list) { this.timeOptions = list; }
 
