@@ -150,7 +150,6 @@ public class EventTable {
     }
 
     public String[] getAllEventNames() {
-        Log.i("DATA", "Events: " + map.size());
         ArrayList<String> namesList = new ArrayList<>();
         String[] names = {};
         for (Map.Entry<String, Event> entry : map.entrySet()) {

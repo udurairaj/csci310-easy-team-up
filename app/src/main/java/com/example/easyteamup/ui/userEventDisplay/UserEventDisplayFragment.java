@@ -56,8 +56,6 @@ public class UserEventDisplayFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-
-                Log.i("ID", eventNames[position]);
                 MainActivity.infoBundle.putString("event", eventNames[position]);
                 Fragment editFrag = new DetailsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
