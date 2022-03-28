@@ -1,58 +1,70 @@
 package com.example.easyteamup.ui.shared;
 
-import android.app.ActionBar;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.easyteamup.EventTable;
+import com.example.easyteamup.Event;
+import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.OnIntegerChangeListener;
 import com.example.easyteamup.R;
+import com.example.easyteamup.UserTable;
+import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
 
-import java.util.ArrayList;
 
+public class ListFragment extends Fragment {
 
-public class ListFragment extends Fragment
-{
-
+    private FragmentUserEventDisplayBinding binding;
+    ListView l;
+    EventTable table = MainActivity.eventTable;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // init view
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-
-
-
-        return view;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        EventTable et = new EventTable();
-        ListView list = getView().findViewById(R.id.listOfEvents);
-        String[] eventArr = new String[et.size()];
-        eventArr = et.getAllEventNames();
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, eventArr);
-        list.setAdapter(adapter);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding = FragmentUserEventDisplayBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+
+        l = root.findViewById(R.id.list);
+        ArrayAdapter<String> arr;
+        arr
+                = new ArrayAdapter<String>(
+                getContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                table.getAllEventNames());
+        l.setAdapter(arr);
+
+        table.setOnIntegerChangeListener(new OnIntegerChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onIntegerChanged(int newValue) {
+                ArrayAdapter<String> arr;
+                arr
+                        = new ArrayAdapter<String>(
+                        getContext(),
+                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                        table.getAllEventNames());
+                l.setAdapter(arr);
             }
         });
+
+        return root;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
