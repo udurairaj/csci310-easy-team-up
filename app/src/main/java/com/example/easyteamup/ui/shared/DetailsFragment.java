@@ -119,10 +119,10 @@ public class DetailsFragment extends Fragment {
         Log.i("eventPublic", event.getEventName());
         TextView publicView = (TextView) view.findViewById(R.id.statusPublicDetailsView);
         if (event.getStatusPublic() == null || event.getStatusPublic()) {
-            publicView.setText("Public");
+            publicView.setText("Status: Public");
         }
         else {
-            publicView.setText("Private");
+            publicView.setText("Status: Private");
         }
         TextView descriptionView = (TextView) view.findViewById(R.id.descriptionDetailsView);
         setTextCheck(descriptionView, event.getDescription());
