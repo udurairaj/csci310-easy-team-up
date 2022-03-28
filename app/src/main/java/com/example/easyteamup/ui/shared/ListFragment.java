@@ -18,7 +18,7 @@ import com.example.easyteamup.R;
 import com.example.easyteamup.UserTable;
 import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
 
-
+// working as of night 3/27
 public class ListFragment extends Fragment {
 
     private FragmentUserEventDisplayBinding binding;

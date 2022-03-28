@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+// working as of night 3/27
 public class MapsFragment extends Fragment{
 
     private GoogleMap map;
