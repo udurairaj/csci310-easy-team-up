@@ -1,33 +1,41 @@
 package com.example.easyteamup.ui.create;
 
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.easyteamup.Event;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
+import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentCreateBinding;
-import com.example.easyteamup.ui.profile.OtherProfileFragment;
 import com.example.easyteamup.ui.profile.ProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 import com.example.easyteamup.ui.shared.SetDueFragment;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class CreateFragment extends Fragment {
@@ -43,9 +51,10 @@ public class CreateFragment extends Fragment {
     androidx.appcompat.widget.SearchView locationCreate = null;
     TextView dueTimeTextView = null;
     androidx.appcompat.widget.SearchView inviteCreate = null;
-    TextView invitedUsersCreate = null;
     ArrayList<Integer> invitedUsersTemp = new ArrayList<>();
     TextView displayInvitedUserButton = null;
+    Button viewInvitedUsersButton = null;
+    TimeSlot duetime = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +79,8 @@ public class CreateFragment extends Fragment {
         locationCreate = (androidx.appcompat.widget.SearchView)root.findViewById(R.id.locationEventSearch);
         dueTimeTextView = (TextView) root.findViewById(R.id.dueTimeEventView);
         inviteCreate = (androidx.appcompat.widget.SearchView) root.findViewById(R.id.inviteEventSearch);
-        invitedUsersCreate = (TextView)root.findViewById(R.id.invitedUsersEventView);
-        invitedUsersCreate.setVisibility(View.VISIBLE);
+//        invitedUsersCreate = (TextView)root.findViewById(R.id.invitedUsersEventView);
+//        invitedUsersCreate.setVisibility(View.VISIBLE);
         displayInvitedUserButton = (TextView)root.findViewById(R.id.inviteSearchDisplayButton);
         displayInvitedUserButton.setVisibility(View.GONE);
 
@@ -91,7 +100,13 @@ public class CreateFragment extends Fragment {
                 onClickSetTime(view);
             }
         });
-
+        viewInvitedUsersButton = (Button)root.findViewById(R.id.viewInvitedUsersButton);
+        viewInvitedUsersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickViewInvitedUsers(view);
+            }
+        });
 
 //        locationCreate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 //            @Override
@@ -115,12 +130,12 @@ public class CreateFragment extends Fragment {
                 searchedInviteUser = MainActivity.userTable.getUser(Integer.parseInt(s));
 
                 displayInvitedUserButton.setVisibility(View.VISIBLE);
-                invitedUsersCreate.setVisibility(View.INVISIBLE);
+                viewInvitedUsersButton.setVisibility(View.INVISIBLE);
                 if (searchedInviteUser != null) {
                     displayInvitedUserButton.setText(searchedInviteUser.getName());
                 }
                 else {
-                    displayInvitedUserButton.setText("User not found. Click here to try again.");
+                    displayInvitedUserButton.setText("User not found. Click to try again.");
                 }
                 return true;
             }
@@ -138,42 +153,8 @@ public class CreateFragment extends Fragment {
 
                 if (searchedInviteUser != null) {
                     invitedUsersTemp.add(searchedInviteUser.getUserID());
-                    if (invitedUsersCreate.getText() != "None") {
-                        SpannableString ss = new SpannableString( searchedInviteUser.getUserID() + "-" + searchedInviteUser.getName());
-                        ClickableSpan cs = new ClickableSpan() {
-                            @Override
-                            public void onClick(@NonNull View view) {
-                                savePageEntries();
-                                int endIndex = ss.toString().indexOf("-") + 1;
-                                char[] clickedUserId = new char[endIndex - 1];
-                                ss.getChars(0, endIndex-1, clickedUserId, 0);
-                                int userId = Integer.parseInt(new String(clickedUserId));
-                                User clickedUser = new User("Erica De Guzman", "ed139@usc.edu", "3749288483", "edguz", "", "CS student looking for team");
-                                clickedUser.setUserID(123);
-                                //User clickedUser = GET USER FROM DB USING USERID INT
-                                MainActivity.infoBundle.putSerializable("clicked_user", clickedUser);
-                                Fragment otherProfFrag = new OtherProfileFragment();
-                                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, otherProfFrag);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                            }
-                        };
-                        invitedUsersCreate.setMovementMethod(LinkMovementMethod.getInstance());
-                        if (invitedUsersCreate.getText().toString().equals("None")) {
-                            ss.setSpan(cs, invitedUsersTemp.size()-1, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            invitedUsersCreate.setText(ss);
-                        }
-                        else {
-                            ss.setSpan(cs, invitedUsersTemp.size()+1, searchedInviteUser.getName().length() + String.valueOf(searchedInviteUser.getUserID()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            invitedUsersCreate.setText(invitedUsersCreate.getText() + ", " + ss);
-                        }
-                    }
-                    else {
-                        invitedUsersCreate.setText(searchedInviteUser.getName());
-                    }
                 }
-                invitedUsersCreate.setVisibility(View.VISIBLE);
+                viewInvitedUsersButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -187,13 +168,6 @@ public class CreateFragment extends Fragment {
     }
 
     public void onClickCreateEvent(View view) {
-        // delete temps
-        MainActivity.infoBundle.remove("temp_event_name");
-        MainActivity.infoBundle.remove("temp_event_statuspublic");
-        MainActivity.infoBundle.remove("temp_event_otherinfo");
-        MainActivity.infoBundle.remove("duetime");
-        MainActivity.infoBundle.remove("invited_user");
-
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
         Boolean status;
@@ -203,15 +177,27 @@ public class CreateFragment extends Fragment {
         else {
             status = false;
         }
+        String description = descriptionCreate.getText().toString();
         // READ LOCATION HERE
         // READ TIME SLOTS HERE
-        String dueTime = MainActivity.infoBundle.getString("duetime");
+        duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
 
         // CREATE EVENT WITH ALL INFO
         eventInProgress = new Event(user.getUserID(), createdName, status);
+        MainActivity.eventTable.addEvent(eventInProgress);
+        eventInProgress.setDescription(description);
+        eventInProgress.setDueTime(duetime);
+        MainActivity.eventTable.editEvent(eventInProgress);
         // ADD EVENT TO DB (int eventID = addToDB)
         // GET EVENT FROM DB BY ID
         // EDIT EVENT TO ADD LOCATION, TIME SLOTS, DUE TIME, INVITED USERS (PARTICIPANTS), etc.
+
+        // delete temps
+        MainActivity.infoBundle.remove("temp_event_name");
+        MainActivity.infoBundle.remove("temp_event_statuspublic");
+        MainActivity.infoBundle.remove("temp_event_otherinfo");
+        MainActivity.infoBundle.remove("duetime");
+        MainActivity.infoBundle.remove("temp_invited_users");
 
         // SAVE EVENT LOCALLY
         MainActivity.infoBundle.putSerializable("event", eventInProgress);
@@ -233,6 +219,34 @@ public class CreateFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    public void onClickViewInvitedUsers(View view) {
+        if (invitedUsersTemp.size() == 0) {
+            AlertDialog.Builder noInvites = new AlertDialog.Builder(getContext());
+            noInvites.setMessage("No users have been invited to this event yet.");
+            noInvites.setTitle("Invited Users");
+            noInvites.setPositiveButton("Close", null);
+            noInvites.create().show();
+        }
+        else {
+            savePageEntries();
+
+            String[] invitedUsersStringArray = new String[invitedUsersTemp.size()];
+            for (int i = 0; i < invitedUsersTemp.size(); i++) {
+                User u = MainActivity.userTable.getUser(invitedUsersTemp.get(i));
+                String str = u.getName() + " (" + invitedUsersTemp.get(i) + ")";
+                invitedUsersStringArray[i] = str;
+            }
+            MainActivity.infoBundle.putIntegerArrayList("invitedUserIDs", invitedUsersTemp);
+            MainActivity.infoBundle.putStringArray("invitedUsersArray", invitedUsersStringArray);
+
+            Fragment invitedFrag = new InvitedUsersFragment();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
     public void savePageEntries() {
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
@@ -241,11 +255,14 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.putString("temp_event_name", createdName);
         MainActivity.infoBundle.putString("temp_event_statuspublic", createdStatusPublic);
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
-        // SAVE LOCATION, TIME SLOTS, AND INVITED USERS
+        MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
+        if (duetime != null) {
+            MainActivity.infoBundle.putSerializable("temp_event_duetime", duetime);
+        }
+        // SAVE LOCATION, TIME SLOTS
     }
 
     public void restorePageEntries() {
-        MainActivity.infoBundle.remove("clicked_user");
 
         if (MainActivity.infoBundle.containsKey("temp_event_name")) {
             String tempName = MainActivity.infoBundle.getString("temp_event_name");
@@ -265,8 +282,21 @@ public class CreateFragment extends Fragment {
             descriptionCreate.setText(tempOtherInfo);
         }
         if (MainActivity.infoBundle.containsKey("duetime")) {
-            String datetime = MainActivity.infoBundle.getString("duetime");
-            dueTimeTextView.setText(datetime);
+            duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
+            dueTimeTextView.setText(duetime.getDateTimeToString());
         }
+        if (MainActivity.infoBundle.containsKey("temp_invited_users")) {
+            invitedUsersTemp = MainActivity.infoBundle.getIntegerArrayList("temp_invited_users");
+            if (MainActivity.infoBundle.containsKey("delete_clicked")) {
+                Boolean delete = MainActivity.infoBundle.getBoolean("delete_clicked");
+                if (delete) {
+                    User clicked = (User)MainActivity.infoBundle.getSerializable("clicked_user");
+                    int deleteIndex = invitedUsersTemp.indexOf(clicked.getUserID());
+                    invitedUsersTemp.remove(deleteIndex);
+                }
+            }
+        }
+        MainActivity.infoBundle.remove("delete_clicked");
+        MainActivity.infoBundle.remove("clicked_user");
     }
 }
