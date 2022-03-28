@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -43,7 +44,17 @@ public class DetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = MainActivity.userTable.getUser(MainActivity.userID);
-        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("event"));
+        event = (Event)MainActivity.infoBundle.getSerializable("event");
+//        if (MainActivity.infoBundle.containsKey("eventID")) {
+//            event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("eventID"));
+//        }
+//        else {
+//            AlertDialog.Builder fail = new AlertDialog.Builder(getContext());
+//            fail.setMessage("Issue loading event. Please try again.");
+//            fail.setTitle("Error");
+//            fail.setPositiveButton("Close", null);
+//            fail.create().show();
+//        }
         Log.i("event", event.getEventName());
     }
 
@@ -56,14 +67,23 @@ public class DetailsFragment extends Fragment {
         invitedUsersText = root.findViewById(R.id.invitedUsersDetailsText);
         invitedUsersView = root.findViewById(R.id.invitedUsersDetailsView);
 
-//        if (MainActivity.userID == event.getOwner()) {
-//            invitedUsersText.setVisibility(View.VISIBLE);
-//            invitedUsersView.setVisibility(View.VISIBLE);
-//        }
+        if (MainActivity.userID == event.getOwner()) {
+            invitedUsersText.setVisibility(View.VISIBLE);
+            invitedUsersView.setVisibility(View.VISIBLE);
+        }
 
         // Inflate the layout for this fragment
 
         displayEvent(root, event);
+
+        Button editButton = (Button)root.findViewById(R.id.editEventButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickEditEvent(view);
+            }
+        });
+
         return root;
     }
 
@@ -118,6 +138,15 @@ public class DetailsFragment extends Fragment {
         else {
             view.setText("none");
         }
+    }
+
+    public void onClickEditEvent(View view) {
+        MainActivity.infoBundle.putInt("eventID", event.getEventID());
+//        Fragment editEventFrag = new EditEventFragment();
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editEventFrag);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
     }
 
     @Override

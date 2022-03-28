@@ -1,5 +1,7 @@
 package com.example.easyteamup.ui.create;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -22,10 +24,12 @@ import android.widget.Toast;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.easyteamup.Event;
+import com.example.easyteamup.Location;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
@@ -35,8 +39,11 @@ import com.example.easyteamup.ui.profile.ProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 import com.example.easyteamup.ui.shared.SetDueFragment;
 
+import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class CreateFragment extends Fragment {
 
@@ -44,6 +51,7 @@ public class CreateFragment extends Fragment {
     private User user = null;
     private User searchedInviteUser = null;
     private Event eventInProgress = null;
+    Boolean createSuccess = true;
 
     EditText nameCreate = null;
     EditText descriptionCreate = null;
@@ -55,6 +63,8 @@ public class CreateFragment extends Fragment {
     TextView displayInvitedUserButton = null;
     Button viewInvitedUsersButton = null;
     TimeSlot duetime = null;
+    Location location = null;
+    Button timeSlotsButton = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +89,6 @@ public class CreateFragment extends Fragment {
         locationCreate = (androidx.appcompat.widget.SearchView)root.findViewById(R.id.locationEventSearch);
         dueTimeTextView = (TextView) root.findViewById(R.id.dueTimeEventView);
         inviteCreate = (androidx.appcompat.widget.SearchView) root.findViewById(R.id.inviteEventSearch);
-//        invitedUsersCreate = (TextView)root.findViewById(R.id.invitedUsersEventView);
-//        invitedUsersCreate.setVisibility(View.VISIBLE);
         displayInvitedUserButton = (TextView)root.findViewById(R.id.inviteSearchDisplayButton);
         displayInvitedUserButton.setVisibility(View.GONE);
 
@@ -107,23 +115,53 @@ public class CreateFragment extends Fragment {
                 onClickViewInvitedUsers(view);
             }
         });
+        timeSlotsButton = (Button)root.findViewById(R.id.timeSlotsEventButton);
+        timeSlotsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickTimeSlots(view);
+            }
+        });
 
-//        locationCreate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                // SEARCH MAPS API FOR LOCATION
-//                // SAVE LOCATION INFO THAT JOE NEEDS FOR GOOGLE MAPS MARKER
-//                // RETURN TRUE
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                return false;
-//            }
-//        });
+        locationCreate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                List<Address> addresses = null;
+                if (s != null || !s.equals("")) {
+                    Geocoder geocoder = new Geocoder(getActivity());
+                    try {
+                        addresses = geocoder.getFromLocationName(s, 1);
+                    } catch (IOException e) {
+                        Toast.makeText(getContext(), "Issue finding location. Please try again.", Toast.LENGTH_LONG);
+                    }
+                    if (addresses.size() == 1) {
+                        Address addr = addresses.get(0);
+                        location = new Location(s, (float)addr.getLatitude(), (float)addr.getLongitude());
+                        locationCreate.setQueryHint(s);
+                        locationCreate.setQuery("", false);
+                        AlertDialog.Builder locationsuccess = new AlertDialog.Builder(getContext());
+                        locationsuccess.setMessage("Event location set to " + s + ".");
+                        locationsuccess.setTitle("Success");
+                        locationsuccess.setPositiveButton("Close", null);
+                        locationsuccess.create().show();
+                    }
+                    else {
+                        AlertDialog.Builder locationfail = new AlertDialog.Builder(getContext());
+                        locationfail.setMessage("Location not found. Please select a more specific location or address.");
+                        locationfail.setTitle("Error");
+                        locationfail.setPositiveButton("Close", null);
+                        locationfail.create().show();                    }
+                }
+                return true;
+            }
 
-        inviteCreate.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        inviteCreate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
@@ -169,6 +207,10 @@ public class CreateFragment extends Fragment {
 
     public void onClickCreateEvent(View view) {
         String createdName = nameCreate.getText().toString();
+        if (createdName.length() == 0) {
+            nameCreate.setError("Title is required.");
+            createSuccess = false;
+        }
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
         Boolean status;
         if (createdStatusPublic.equals("Public")) {
@@ -178,20 +220,28 @@ public class CreateFragment extends Fragment {
             status = false;
         }
         String description = descriptionCreate.getText().toString();
-        // READ LOCATION HERE
         // READ TIME SLOTS HERE
         duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
+        if (duetime == null) {
+            AlertDialog.Builder missingDue = new AlertDialog.Builder(getContext());
+            missingDue.setMessage("Event due time is required.");
+            missingDue.setTitle("Error");
+            missingDue.setPositiveButton("Close", null);
+            missingDue.create().show();
+            createSuccess = false;
+        }
 
         // CREATE EVENT WITH ALL INFO
         eventInProgress = new Event(user.getUserID(), createdName, status);
-        MainActivity.eventTable.addEvent(eventInProgress);
-        eventInProgress.setDescription(description);
-        eventInProgress.setDueTime(duetime);
-        eventInProgress.setInvitees(invitedUsersTemp);
-        MainActivity.eventTable.editEvent(eventInProgress);
-        // ADD EVENT TO DB (int eventID = addToDB)
-        // GET EVENT FROM DB BY ID
-        // EDIT EVENT TO ADD LOCATION, TIME SLOTS, DUE TIME, INVITED USERS (PARTICIPANTS), etc.
+        int eventID = MainActivity.eventTable.addEvent(eventInProgress);
+        Event event = MainActivity.eventTable.getEvent(eventID);
+        event.setDescription(description);
+        event.setDueTime(duetime);
+        event.setInvitees(invitedUsersTemp);
+        if (location != null) {
+            event.setLocation(location);
+        }
+        MainActivity.eventTable.editEvent(event);
 
         // delete temps
         MainActivity.infoBundle.remove("temp_event_name");
@@ -199,15 +249,27 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.remove("temp_event_otherinfo");
         MainActivity.infoBundle.remove("duetime");
         MainActivity.infoBundle.remove("temp_invited_users");
+        MainActivity.infoBundle.remove("temp_event_location");
 
-        // SAVE EVENT LOCALLY
-        MainActivity.infoBundle.putSerializable("event", eventInProgress);
-        // SWITCH FRAGMENTS
-        Fragment detailsFrag = new DetailsFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, detailsFrag);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        if (createSuccess) {
+            // SAVE EVENT LOCALLY
+            MainActivity.infoBundle.putInt("eventID", eventID);
+            MainActivity.infoBundle.putSerializable("event", event);
+            // SWITCH FRAGMENTS
+            Fragment detailsFrag = new DetailsFragment();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, detailsFrag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+        else {
+            AlertDialog.Builder fail = new AlertDialog.Builder(getContext());
+            fail.setMessage("Please fix errors and try again.");
+            fail.setTitle("Error");
+            fail.setPositiveButton("Close", null);
+            fail.create().show();
+        }
+        createSuccess = true;
     }
 
     public void onClickSetTime(View view) {
@@ -248,6 +310,14 @@ public class CreateFragment extends Fragment {
         }
     }
 
+    public void onClickTimeSlots(View view) {
+//        Fragment invitedFrag = new InvitedUsersFragment();
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+    }
+
     public void savePageEntries() {
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
@@ -260,7 +330,10 @@ public class CreateFragment extends Fragment {
         if (duetime != null) {
             MainActivity.infoBundle.putSerializable("temp_event_duetime", duetime);
         }
-        // SAVE LOCATION, TIME SLOTS
+        if (location != null) {
+            MainActivity.infoBundle.putSerializable("temp_event_location", location);
+        }
+        // SAVE TIME SLOTS
     }
 
     public void restorePageEntries() {
@@ -299,5 +372,8 @@ public class CreateFragment extends Fragment {
         }
         MainActivity.infoBundle.remove("delete_clicked");
         MainActivity.infoBundle.remove("clicked_user");
+        if (MainActivity.infoBundle.containsKey("temp_event_location")) {
+            location = (Location)MainActivity.infoBundle.getSerializable("temp_event_location");
+        }
     }
 }

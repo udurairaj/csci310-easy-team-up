@@ -71,7 +71,7 @@
         />
     <fragment
         android:id="@+id/invitedUsersFragment"
-        android:name="com.example.easyteamup.InvitedUsersFragment"
+        android:name="com.example.easyteamup.ui.create.InvitedUsersFragment"
         android:label="fragment_invited_users"
         tools:layout="@layout/fragment_invited_users" >
         <action
@@ -88,4 +88,10 @@
         android:name="com.example.easyteamup.EditEvent"
         android:label="fragment_edit_event"
         tools:layout="@layout/fragment_edit_event" />
+    <fragment
+        android:id="@+id/setTimeSlotsFragment"
+        android:name="com.example.easyteamup.ui.create.SetTimeSlotsFragment"
+        android:label="fragment_set_time_slots"
+        tools:layout="@layout/fragment_set_time_slots" />
+
 </navigation>

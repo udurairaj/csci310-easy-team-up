@@ -106,7 +106,7 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toEndOf="@id/dueTimeEventText"
-        app:layout_constraintTop_toBottomOf="@+id/timeSlotsEventView" />
+        app:layout_constraintTop_toBottomOf="@+id/timeSlotsEventButton" />
 
     <EditText
         android:id="@+id/nameEventView"
@@ -161,18 +161,15 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionEventView"
         />
 
-    <EditText
-        android:id="@+id/timeSlotsEventView"
+    <Button
+        android:id="@+id/timeSlotsEventButton"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:ems="10"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textColorLink="#FFFFFF"
-        android:textSize="18sp"
-        android:backgroundTint="@color/white"
+        android:text="Select Availability"
+        android:textColor="#990000"
+        android:backgroundTint="#FFCC00"
         app:layout_constraintStart_toEndOf="@+id/timeSlotsEventText"
         app:layout_constraintTop_toBottomOf="@+id/locationEventSearch" />
 
@@ -192,7 +189,7 @@
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="58dp"
         android:text="Invite:"
         android:textColor="#FFCC00"
         android:textSize="20sp"
@@ -223,7 +220,7 @@
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Invited Users:"
         android:textColor="#FFCC00"
         android:textSize="20sp"
@@ -236,7 +233,7 @@
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="8dp"
         android:text="View"
         android:textColor="#990000"
         android:backgroundTint="#FFCC00"
@@ -248,7 +245,7 @@
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
         android:inputType="number"
         app:iconifiedByDefault="false"
@@ -262,7 +259,7 @@
         android:id="@+id/saveEventButton"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="#FFCC00"
         android:text="Create!"
         android:gravity="center"

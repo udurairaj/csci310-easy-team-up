@@ -3,11 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/csci310-easy-team-up/app/src/main/res/layout/fragment_create.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/csci310-easy-team-up/app/src/main/res/layout/fragment_details.xml" value="0.12239583333333333" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/csci310-easy-team-up/app/src/main/res/layout/fragment_profile.xml" value="0.12239583333333333" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/csci310-easy-team-up/app/src/main/res/layout/fragment_userEventDisplay.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/csci310-easy-team-up/app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/side_nav_bar.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
@@ -16,7 +11,6 @@
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/content_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_create.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_details.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_list.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_maps.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_profile.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/fragment_set_due.xml" value="0.5541666666666667" />
@@ -33,16 +27,21 @@
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.1435" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.12734082397003746" />
-        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.18347015380859377" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.20158081054687502" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_invited_users.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1631708780924479" />
+        <entry key="app/src/main/res/layout/fragment_other_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_set_due.xml" value="0.25844980875651047" />
+        <entry key="app/src/main/res/layout/fragment_set_location.xml" value="0.16822916666666668" />
+        <entry key="app/src/main/res/layout/fragment_set_time_slots.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.18125" />
+        <entry key="app/src/main/res/layout/fragment_user_event_display.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/spinner_selected.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.28229166666666666" />
