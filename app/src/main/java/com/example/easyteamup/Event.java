@@ -40,7 +40,7 @@ public class Event implements Serializable {
     }
 
     public int getEventID() { return eventID; }
-    public int getOwner() { return userTable.getUser(owner).getUserID(); }
+    public int getOwner() { return owner; }
     public String getEventName() { return eventName; }
     public Boolean getStatusPublic() { return statusPublic; }
     public String getDescription() { return description; }
@@ -57,10 +57,10 @@ public class Event implements Serializable {
     public void setStatusPublic(Boolean statusPublic) { this.statusPublic = statusPublic; }
     public void setDescription(String description) { this.description = description; }
     public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
+    public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
 //    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
-    public void addInvitee(int userID) { invitees.add(userID); }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
 //    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 

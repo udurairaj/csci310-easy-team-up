@@ -51,10 +51,10 @@ public class DetailsFragment extends Fragment {
         invitedUsersText = root.findViewById(R.id.invitedUsersDetailsText);
         invitedUsersView = root.findViewById(R.id.invitedUsersDetailsView);
 
-        if (MainActivity.userID == event.getOwner()) {
-            invitedUsersText.setVisibility(View.VISIBLE);
-            invitedUsersView.setVisibility(View.VISIBLE);
-        }
+//        if (MainActivity.userID == event.getOwner()) {
+//            invitedUsersText.setVisibility(View.VISIBLE);
+//            invitedUsersView.setVisibility(View.VISIBLE);
+//        }
 
         // Inflate the layout for this fragment
         return root;
