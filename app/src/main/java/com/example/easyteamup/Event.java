@@ -11,6 +11,7 @@ public class Event implements Serializable {
     private Boolean statusPublic;
     private String description;
     private ArrayList<Integer> participants;
+    private TimeSlot dueTime;
     private ArrayList<Integer> invitees;
 //    private ArrayList<TimeSlot> timeOptions;
 //    private NotificationHandler notificationHandler;
@@ -29,6 +30,7 @@ public class Event implements Serializable {
         this.description = null;
         this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
+        this.dueTime = null;
 //        this.timeOptions = new ArrayList<>();
 //        this.notificationHandler = null;
 //        this.location = null;
@@ -42,6 +44,7 @@ public class Event implements Serializable {
     public Boolean getStatusPublic() { return statusPublic; }
     public String getDescription() { return description; }
     public ArrayList<Integer> getParticipants() { return participants; }
+    public TimeSlot getDueTime() { return dueTime; }
     public ArrayList<Integer> getInvitees() { return invitees; }
 //    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
 //    public NotificationHandler getNotificationHandler() { return notificationHandler; }
@@ -52,6 +55,7 @@ public class Event implements Serializable {
     public void setEventName(String eventName) { this.eventName = eventName; }
     public void setStatusPublic(Boolean statusPublic) { this.statusPublic = statusPublic; }
     public void setDescription(String description) { this.description = description; }
+    public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
 //    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }

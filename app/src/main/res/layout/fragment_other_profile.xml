@@ -113,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <TextView
-        android:id="@+id/userIDProfileView"
+        android:id="@+id/userIDOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -136,7 +136,7 @@
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/usernameProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/userIDProfileView" />
+        app:layout_constraintTop_toBottomOf="@+id/userIDOtherProfileView" />
 
     <TextView
         android:id="@+id/emailProfileView"
@@ -179,15 +179,25 @@
         app:layout_constraintTop_toBottomOf="@+id/phoneProfileView" />
 
     <Button
-        android:id="@+id/editProfileButton"
+        android:id="@+id/uninviteUserButton"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:backgroundTint="#FFCC00"
         android:text="Uninvite User"
         android:textColor="#990000"
-        android:onClick="onClickEditProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otherInfoProfileView" />
+
+    <Button
+        android:id="@+id/backToCreateButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Back to Event"
+        android:textColor="#990000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uninviteUserButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

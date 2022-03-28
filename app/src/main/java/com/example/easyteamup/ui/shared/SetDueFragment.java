@@ -14,7 +14,10 @@ import android.widget.TimePicker;
 
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
+import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.ui.create.CreateFragment;
+
+import java.sql.Time;
 
 public class SetDueFragment extends Fragment {
 
@@ -34,7 +37,7 @@ public class SetDueFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        container.removeAllViews();
         View root = inflater.inflate(R.layout.fragment_set_due, container, false);
 
         datePicker = (DatePicker) root.findViewById(R.id.datePicker);
@@ -58,24 +61,17 @@ public class SetDueFragment extends Fragment {
 
     public void onClickSetDueTime(View view) {
         int day = datePicker.getDayOfMonth();
-        int month = datePicker.getMonth() + 1;
+        int month = datePicker.getMonth();
         int year = datePicker.getYear();
         int hour = timePicker.getHour();
         int min = timePicker.getMinute();
-        String date = month + "/" + day + "/" + year;
-        String time = "";
-        if (hour < 12) {
-            time = hour + ":" + min + "AM";
-        }
-        else if (hour == 12) {
-            time = hour + ":" + min + "PM";
-        }
-        else {
-            time = (hour-12) + ":" + min + "PM";
-        }
+        String date = String.format("%02d" , month) + "/" + String.format("%02d", day) + "/" + year;
+        String time = String.format("%02d" , hour) + ":" + String.format("%02d" , min);
         String datetime = date + " " + time;
 
-        MainActivity.infoBundle.putString("duetime", datetime);
+        TimeSlot duetime = new TimeSlot(datetime);
+
+        MainActivity.infoBundle.putSerializable("duetime", duetime);
         Fragment createFrag = new CreateFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
