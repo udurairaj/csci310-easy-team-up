@@ -12,6 +12,7 @@ public class Event implements Serializable {
     private String description;
     private ArrayList<Integer> participants;
     private TimeSlot dueTime;
+    private ArrayList<Integer> invitees;
 //    private ArrayList<TimeSlot> timeOptions;
 //    private NotificationHandler notificationHandler;
 //    private Location location;
@@ -45,6 +46,7 @@ public class Event implements Serializable {
     public String getDescription() { return description; }
     public ArrayList<Integer> getParticipants() { return participants; }
     public TimeSlot getDueTime() { return dueTime; }
+    public ArrayList<Integer> getInvitees() { return invitees; }
 //    public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
 //    public NotificationHandler getNotificationHandler() { return notificationHandler; }
 //    public Location getLocation() { return location; }
@@ -58,6 +60,7 @@ public class Event implements Serializable {
 //    public void setLocation(Location location) { this.location = location; }
 
     public void addParticipant(User user) { participants.add(user.getUserID()); }
+    public void addInvitee(int userID) { invitees.add(userID); }
 //    public void addTimeSlot(TimeSlot t) { timeOptions.add(t); }
 //    public void removeTimeSlot(TimeSlot t) { timeOptions.remove(t); }
 
