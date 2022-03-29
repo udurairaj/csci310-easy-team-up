@@ -78,7 +78,9 @@ public class UserEventDisplayFragment extends Fragment {
         table.setOnIntegerChangeListener(new OnIntegerChangeListener() {
             @Override
             public void onIntegerChanged(int newValue) {
-                makeDisplay(filterEvents());
+                if (getContext() != null) {
+                    makeDisplay(filterEvents());
+                }
             }
         });
 
