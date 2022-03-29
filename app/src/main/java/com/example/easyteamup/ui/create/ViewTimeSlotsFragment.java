@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.easyteamup.EditEvent;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
@@ -54,11 +55,21 @@ public class ViewTimeSlotsFragment extends Fragment {
                 if (slots.size() > 0) {
                     TimeSlot deleteSlot = slots.get(position);
                     MainActivity.infoBundle.putSerializable("delete_slot", deleteSlot);
-                    Fragment createFrag = new CreateFragment();
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+
+                    if (MainActivity.infoBundle.getBoolean("editing")) {
+                        Fragment editFrag = new EditEvent();
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                    else {
+                        Fragment createFrag = new CreateFragment();
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
                 }
                 else {
                     Toast.makeText(getContext(), "An error occurred. Please try again later.", Toast.LENGTH_LONG);
@@ -82,11 +93,20 @@ public class ViewTimeSlotsFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment createFrag = new CreateFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (MainActivity.infoBundle.getBoolean("editing")) {
+                    Fragment editFrag = new EditEvent();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+                else {
+                    Fragment createFrag = new CreateFragment();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
             }
         });
 

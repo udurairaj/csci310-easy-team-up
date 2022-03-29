@@ -136,6 +136,7 @@ public class EventTable {
     public void editEvent(Event event) {
         DatabaseReference ref = rootRef.child(Integer.toString(event.getEventID()));
         ref.setValue(event);
+        Log.i("INVITED", Integer.toString(event.getInvitees().size()));
         if(listener != null)
         {
             listener.onIntegerChanged(map.size());
@@ -170,7 +171,8 @@ public class EventTable {
             if (entry.getValue().getOwner() == MainActivity.userID) {
                 TimeSlot finalTime = entry.getValue().getFinalTime();
                 Date now = new Date();
-                if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                if (finalTime == null || finalTime.dateTimeAsDate() == null
+                        || finalTime.dateTimeAsDate().after(now)) {
                     namesList.add(entry.getValue().getEventName());
                 }
             }
@@ -184,7 +186,8 @@ public class EventTable {
             if (entry.getValue().getOwner() == MainActivity.userID) {
                 TimeSlot finalTime = entry.getValue().getFinalTime();
                 Date now = new Date();
-                if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                if (finalTime == null || finalTime.dateTimeAsDate() == null
+                        || finalTime.dateTimeAsDate().after(now)) {
                     IDList.add(entry.getValue().getEventID());
                 }
             }
@@ -198,10 +201,14 @@ public class EventTable {
         for (Map.Entry<String, Event> entry : map.entrySet()) {
             if (entry.getValue().getInvitees() != null) {
                 if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
-                    TimeSlot finalTime = entry.getValue().getFinalTime();
-                    Date now = new Date();
-                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
-                        namesList.add(entry.getValue().getEventName());
+                    if (entry.getValue().getParticipants() == null ||
+                            !entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                        TimeSlot finalTime = entry.getValue().getFinalTime();
+                        Date now = new Date();
+                        if (finalTime == null || finalTime.dateTimeAsDate() == null
+                                || finalTime.dateTimeAsDate().after(now)) {
+                            namesList.add(entry.getValue().getEventName());
+                        }
                     }
                 }
             }
@@ -214,10 +221,14 @@ public class EventTable {
         for (Map.Entry<String, Event> entry : map.entrySet()) {
             if (entry.getValue().getInvitees() != null) {
                 if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
-                    TimeSlot finalTime = entry.getValue().getFinalTime();
-                    Date now = new Date();
-                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
-                        IDList.add(entry.getValue().getEventID());
+                    if (entry.getValue().getParticipants() == null ||
+                            !entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                        TimeSlot finalTime = entry.getValue().getFinalTime();
+                        Date now = new Date();
+                        if (finalTime == null || finalTime.dateTimeAsDate() == null
+                                || finalTime.dateTimeAsDate().after(now)) {
+                            IDList.add(entry.getValue().getEventID());
+                        }
                     }
                 }
             }
@@ -233,7 +244,8 @@ public class EventTable {
                 if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
                     TimeSlot finalTime = entry.getValue().getFinalTime();
                     Date now = new Date();
-                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                    if (finalTime == null || finalTime.dateTimeAsDate() == null
+                            || finalTime.dateTimeAsDate().after(now)) {
                         namesList.add(entry.getValue().getEventName());
                     }
                 }
@@ -249,7 +261,8 @@ public class EventTable {
                 if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
                     TimeSlot finalTime = entry.getValue().getFinalTime();
                     Date now = new Date();
-                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                    if (finalTime == null || finalTime.dateTimeAsDate() == null
+                            || finalTime.dateTimeAsDate().after(now)) {
                         IDList.add(entry.getValue().getEventID());
                     }
                 }
@@ -264,7 +277,8 @@ public class EventTable {
         for (Map.Entry<String, Event> entry : map.entrySet()) {
             TimeSlot finalTime = entry.getValue().getFinalTime();
             Date now = new Date();
-            if (finalTime != null && now.after(finalTime.dateTimeAsDate())) {
+            if (finalTime != null && finalTime.dateTimeAsDate() != null
+                    && now.after(finalTime.dateTimeAsDate())) {
                 if (entry.getValue().getOwner() == MainActivity.userID) {
                     namesList.add(entry.getValue().getEventName());
                 }
@@ -288,7 +302,8 @@ public class EventTable {
         for (Map.Entry<String, Event> entry : map.entrySet()) {
             TimeSlot finalTime = entry.getValue().getFinalTime();
             Date now = new Date();
-            if (finalTime != null && now.after(finalTime.dateTimeAsDate())) {
+            if (finalTime != null && finalTime.dateTimeAsDate() != null
+                    && now.after(finalTime.dateTimeAsDate())) {
                 if (entry.getValue().getOwner() == MainActivity.userID) {
                     IDList.add(entry.getValue().getEventID());
                 }

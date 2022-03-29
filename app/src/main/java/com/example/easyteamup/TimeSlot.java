@@ -60,11 +60,19 @@ public class TimeSlot implements Serializable
     public void setDuration(int duration) { this.duration = duration; }
 
     public Date dateTimeAsDate() {
+        if (cal == null) {
+            cal = Calendar.getInstance();
+            cal.set(year, month, day, hour, minute);
+        }
         return cal.getTime();
     }
 
     public String toStringDateTime()
     {
+        if (cal == null) {
+            cal = Calendar.getInstance();
+            cal.set(year, month, day, hour, minute);
+        }
         return cal.getTime().toString();
     }
 

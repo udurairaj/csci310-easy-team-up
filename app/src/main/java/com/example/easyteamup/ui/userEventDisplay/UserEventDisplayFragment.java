@@ -27,6 +27,7 @@ import com.example.easyteamup.ui.profile.EditProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class UserEventDisplayFragment extends Fragment {
