@@ -282,6 +282,7 @@ public class CreateFragment extends Fragment {
     public void onClickSetTime(View view) {
         savePageEntries();
 
+        MainActivity.infoBundle.putBoolean("editing", false);
         Fragment setDueFrag = new SetDueFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setDueFrag);
@@ -309,6 +310,7 @@ public class CreateFragment extends Fragment {
             MainActivity.infoBundle.putIntegerArrayList("invitedUserIDs", invitedUsersTemp);
             MainActivity.infoBundle.putStringArray("invitedUsersArray", invitedUsersStringArray);
 
+            MainActivity.infoBundle.putBoolean("editing", false);
             Fragment invitedFrag = new InvitedUsersFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
@@ -331,6 +333,7 @@ public class CreateFragment extends Fragment {
             timeOptionsStringArray = new String[]{};
         }
         MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
+        MainActivity.infoBundle.putBoolean("editing", false);
 
         Fragment timeSlotFrag = new ViewTimeSlotsFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

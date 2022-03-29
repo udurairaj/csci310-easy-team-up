@@ -18,18 +18,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.easyteamup.EditEvent;
 import com.example.easyteamup.Event;
+import com.example.easyteamup.Location;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
+import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
 import com.example.easyteamup.databinding.FragmentProfileBinding;
 import com.example.easyteamup.ui.userEventDisplay.UserEventDisplayFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DetailsFragment extends Fragment {
 
@@ -40,6 +44,10 @@ public class DetailsFragment extends Fragment {
     TextView invitedUsersView = null;
     Button editButton = null;
     LinearLayout inviteLayout = null;
+    Button button2 = null;
+    Button button3 = null;
+    Button button4 = null;
+    Button withdrawButton = null;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -77,7 +85,12 @@ public class DetailsFragment extends Fragment {
         if (MainActivity.userID == event.getOwner()) {
             invitedUsersText.setVisibility(View.VISIBLE);
             invitedUsersView.setVisibility(View.VISIBLE);
-            editButton.setVisibility(View.VISIBLE);
+            TimeSlot finalTime = event.getFinalTime();
+            Date now = new Date();
+            if (finalTime == null || finalTime.dateTimeAsDate() == null
+                    || finalTime.dateTimeAsDate().after(now)) {
+                editButton.setVisibility(View.VISIBLE);
+            }
         }
 
         inviteLayout = root.findViewById(R.id.inviteLayout);
@@ -85,7 +98,24 @@ public class DetailsFragment extends Fragment {
         event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
         if (event.getInvitees() != null) {
             if (event.getInvitees().contains(user.getUserID())) {
-                inviteLayout.setVisibility(View.VISIBLE);
+                if (event.getParticipants() == null ||
+                        !event.getParticipants().contains(user.getUserID())) {
+                    inviteLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        button2 = root.findViewById(R.id.button2);
+        button3 = root.findViewById(R.id.button3);
+        button4 = root.findViewById(R.id.button4);
+        withdrawButton = root.findViewById(R.id.withdrawButton);
+
+        if (event.getParticipants() != null) {
+            if (event.getParticipants().contains(user.getUserID())) {
+                button2.setVisibility(View.VISIBLE);
+                button3.setVisibility(View.VISIBLE);
+                button4.setVisibility(View.VISIBLE);
+                withdrawButton.setVisibility(View.VISIBLE);
             }
         }
 
@@ -113,13 +143,17 @@ public class DetailsFragment extends Fragment {
             public void onClick(View view) { onClickReject(view); }
         });
 
+        withdrawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { onClickWithdraw(view); }
+        });
+
         return root;
     }
 
     protected void displayEvent(View view, Event event) {
         TextView nameView = (TextView) view.findViewById(R.id.nameDetailsView);
         setTextCheck(nameView, event.getEventName());
-        Log.i("eventPublic", event.getEventName());
         TextView publicView = (TextView) view.findViewById(R.id.statusPublicDetailsView);
         if (event.getStatusPublic() == null || event.getStatusPublic()) {
             publicView.setText("Status: Public");
@@ -132,7 +166,6 @@ public class DetailsFragment extends Fragment {
         TextView ownerView = (TextView) view.findViewById(R.id.ownerDetailsView);
         User owner = MainActivity.userTable.getUser(event.getOwner());
         setTextCheck(ownerView, owner.getName());
-        //Log.i("invitees", Integer.toString(event.getInvitees().size()));
         TextView invitees = (TextView) view.findViewById(R.id.invitedUsersDetailsView);
         invitees.setText(makeCommaString(event.getInvitees()));
         TextView participants = (TextView) view.findViewById(R.id.participantsDetailsView);
@@ -169,8 +202,10 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    public void onClickEditEvent(View view) {
+    public void onClickEditEvent(View root) {
         MainActivity.infoBundle.putInt("eventID", event.getEventID());
+        MainActivity.infoBundle.putBoolean("first", true);
+
         Fragment editEventFrag = new EditEvent();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editEventFrag);
@@ -193,6 +228,18 @@ public class DetailsFragment extends Fragment {
 
     public void onClickReject(View view) {
         event.removeInvitee(user);
+        MainActivity.eventTable.editEvent(event);
+
+        MainActivity.infoBundle.putInt("eventID", event.getEventID());
+        Fragment eventsFrag = new UserEventDisplayFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, eventsFrag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void onClickWithdraw(View view) {
+        event.removeParticipant(user);
         MainActivity.eventTable.editEvent(event);
 
         MainActivity.infoBundle.putInt("eventID", event.getEventID());

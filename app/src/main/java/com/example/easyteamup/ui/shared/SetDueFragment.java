@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.example.easyteamup.EditEvent;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
@@ -86,11 +87,20 @@ public class SetDueFragment extends Fragment {
 
         if (success) {
             MainActivity.infoBundle.putSerializable("duetime", duetime);
-            Fragment createFrag = new CreateFragment();
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            if (MainActivity.infoBundle.getBoolean("editing")) {
+                Fragment editFrag = new EditEvent();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else {
+                Fragment createFrag = new CreateFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         }
         else {
             AlertDialog.Builder fail = new AlertDialog.Builder(getContext());

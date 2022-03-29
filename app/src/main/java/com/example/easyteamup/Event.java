@@ -69,15 +69,24 @@ public class Event implements Serializable {
         participants.add(user.getUserID());
     }
 
-    public void removeInvitee(User user) {
+    public void removeParticipant(User user) {
         if (participants == null) {
             return;
         }
-        if (!participants.contains(user)) {
+        if (!participants.contains(user.getUserID())) {
             return;
         }
-        Log.i("REMOVE", "remove");
-        participants.remove(user.getUserID());
+        participants.remove(participants.indexOf(user.getUserID()));
+    }
+
+    public void removeInvitee(User user) {
+        if (invitees == null) {
+            return;
+        }
+        if (!invitees.contains(user.getUserID())) {
+            return;
+        }
+        invitees.remove(invitees.indexOf(user.getUserID()));
     }
 
     public void setTimeOptions(ArrayList<TimeSlot> list) { this.timeOptions = list; }
