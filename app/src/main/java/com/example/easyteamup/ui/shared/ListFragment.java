@@ -19,6 +19,9 @@ import com.example.easyteamup.UserTable;
 import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
 import com.example.easyteamup.ui.profile.EditProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
+
+import java.util.ArrayList;
+
 public class ListFragment extends Fragment {
     private FragmentUserEventDisplayBinding binding;
     ListView l;
@@ -33,6 +36,7 @@ public class ListFragment extends Fragment {
         binding = FragmentUserEventDisplayBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         l = root.findViewById(R.id.list);
+        EventTable et = new EventTable();
         ArrayAdapter<String> arr;
         eventNames = table.getAllEventNames();
         arr
@@ -45,9 +49,10 @@ public class ListFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-
+                ArrayList<Event> allEvents;
+                allEvents = et.getAllEvents();
                 Log.i("ID", eventNames[position]);
-                MainActivity.infoBundle.putString("event", eventNames[position]);
+                MainActivity.infoBundle.putInt("eventID", allEvents.get(position).getEventID());
                 Fragment editFrag = new DetailsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
@@ -71,7 +76,9 @@ public class ListFragment extends Fragment {
                     public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
                     {
                         Log.i("ID", eventNames[position]);
-                        MainActivity.infoBundle.putString("event", eventNames[position]);
+                        ArrayList<Event> allEvents;
+                        allEvents = et.getAllEvents();
+                        MainActivity.infoBundle.putInt("eventID", allEvents.get(position).getEventID());
                         Fragment editFrag = new DetailsFragment();
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
