@@ -26,13 +26,15 @@ import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
 import com.example.easyteamup.ui.profile.EditProfileFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;
 
+import java.util.ArrayList;
+
 
 public class UserEventDisplayFragment extends Fragment {
 
     private FragmentUserEventDisplayBinding binding;
     private ListView l;
     private EventTable table = MainActivity.eventTable;
-    private String[] eventNames;
+    private ArrayList<Integer> IDList;
     private RadioGroup radioGroup;
     private TextView titleText;
     private RadioButton button1;
@@ -48,6 +50,8 @@ public class UserEventDisplayFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        container.removeAllViews();
 
         binding = FragmentUserEventDisplayBinding.inflate(inflater, container, false);
         root = binding.getRoot();
@@ -83,18 +87,22 @@ public class UserEventDisplayFragment extends Fragment {
     public String[] filterEvents() {
         if (button1.isChecked()) {
             titleText.setText("Your Created Events");
+            IDList = table.getOwnEventIDs();
             return table.getOwnEvents();
         }
         else if (button2.isChecked()) {
             titleText.setText("Your Invites");
+            IDList = table.getInvitedEventIDs();
             return table.getInvitedEvents();
         }
         else if (button3.isChecked()) {
             titleText.setText("Events You've Joined");
+            IDList = table.getJoinedEventIDs();
             return table.getJoinedEvents();
         }
         else {
             titleText.setText("Your Past Events");
+            IDList = table.getPastEventIDs();
             return table.getPastEvents();
         }
     }
@@ -111,7 +119,7 @@ public class UserEventDisplayFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                MainActivity.infoBundle.putString("event", events[position]);
+                MainActivity.infoBundle.putInt("event", IDList.get(position));
                 Fragment editFrag = new DetailsFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);

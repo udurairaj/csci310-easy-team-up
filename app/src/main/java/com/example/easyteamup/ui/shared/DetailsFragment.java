@@ -49,7 +49,7 @@ public class DetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = MainActivity.userTable.getUser(MainActivity.userID);
-        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("event"));
+        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("event"));
 //        if (MainActivity.infoBundle.containsKey("eventID")) {
 //            event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("eventID"));
 //        }
@@ -65,6 +65,8 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        container.removeAllViews();
 
         View root = inflater.inflate(R.layout.fragment_details, container, false);
 

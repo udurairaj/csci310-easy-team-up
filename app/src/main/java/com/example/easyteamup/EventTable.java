@@ -178,6 +178,20 @@ public class EventTable {
         return namesList.toArray(names);
     }
 
+    public ArrayList<Integer> getOwnEventIDs() {
+        ArrayList<Integer> IDList = new ArrayList<>();
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getOwner() == MainActivity.userID) {
+                TimeSlot finalTime = entry.getValue().getFinalTime();
+                Date now = new Date();
+                if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                    IDList.add(entry.getValue().getEventID());
+                }
+            }
+        }
+        return IDList;
+    }
+
     public String[] getInvitedEvents() {
         ArrayList<String> namesList = new ArrayList<>();
         String[] names = {};
@@ -195,6 +209,22 @@ public class EventTable {
         return namesList.toArray(names);
     }
 
+    public ArrayList<Integer> getInvitedEventIDs() {
+        ArrayList<Integer> IDList = new ArrayList<>();
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getInvitees() != null) {
+                if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
+                    TimeSlot finalTime = entry.getValue().getFinalTime();
+                    Date now = new Date();
+                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                        IDList.add(entry.getValue().getEventID());
+                    }
+                }
+            }
+        }
+        return IDList;
+    }
+
     public String[] getJoinedEvents() {
         ArrayList<String> namesList = new ArrayList<>();
         String[] names = {};
@@ -210,6 +240,22 @@ public class EventTable {
             }
         }
         return namesList.toArray(names);
+    }
+
+    public ArrayList<Integer> getJoinedEventIDs() {
+        ArrayList<Integer> IDList = new ArrayList<>();
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            if (entry.getValue().getParticipants() != null) {
+                if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                    TimeSlot finalTime = entry.getValue().getFinalTime();
+                    Date now = new Date();
+                    if (finalTime == null || finalTime.dateTimeAsDate().after(now)) {
+                        IDList.add(entry.getValue().getEventID());
+                    }
+                }
+            }
+        }
+        return IDList;
     }
 
     public String[] getPastEvents() {
@@ -235,6 +281,30 @@ public class EventTable {
             }
         }
         return namesList.toArray(names);
+    }
+
+    public ArrayList<Integer> getPastEventIDs() {
+        ArrayList<Integer> IDList = new ArrayList<>();
+        for (Map.Entry<String, Event> entry : map.entrySet()) {
+            TimeSlot finalTime = entry.getValue().getFinalTime();
+            Date now = new Date();
+            if (finalTime != null && now.after(finalTime.dateTimeAsDate())) {
+                if (entry.getValue().getOwner() == MainActivity.userID) {
+                    IDList.add(entry.getValue().getEventID());
+                }
+                else if (entry.getValue().getInvitees() != null) {
+                    if (entry.getValue().getInvitees().contains(MainActivity.userID)) {
+                        IDList.add(entry.getValue().getEventID());
+                    }
+                }
+                else if (entry.getValue().getParticipants() != null) {
+                    if (entry.getValue().getParticipants().contains(MainActivity.userID)) {
+                        IDList.add(entry.getValue().getEventID());
+                    }
+                }
+            }
+        }
+        return IDList;
     }
 
 }
