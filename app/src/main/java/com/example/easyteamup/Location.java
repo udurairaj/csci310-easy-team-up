@@ -9,7 +9,8 @@ public class Location implements Serializable
     private float longitude;
     private Event[] events;
 
-    public Location() {
+    public Location()
+    {
 
     }
 
