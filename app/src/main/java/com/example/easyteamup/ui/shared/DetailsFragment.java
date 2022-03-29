@@ -170,6 +170,30 @@ public class DetailsFragment extends Fragment {
         invitees.setText(makeCommaString(event.getInvitees()));
         TextView participants = (TextView) view.findViewById(R.id.participantsDetailsView);
         participants.setText(makeCommaString(event.getParticipants()));
+        TextView timeSlots = (TextView) view.findViewById(R.id.timeOptionsDetailsView);
+        timeSlots.setText(makeTimeString(event.getTimeOptions()));
+        TextView location = (TextView) view.findViewById(R.id.locationDetailsView);
+        location.setText(event.getLocation().getName());
+    }
+
+    public String makeTimeString(ArrayList<TimeSlot> times) {
+        if (times == null) {
+            return "none";
+        }
+        if (times.size() == 0) {
+            return "none";
+        }
+        String names= "";
+        for (int i = 0; i < times.size() - 1; i++) {
+            if (times.get(i) != null) {
+                names = names + times.get(i).toStringDateTime();
+                names = names + ", ";
+            }
+        }
+        if (times.get(times.size() - 1) != null) {
+            names = names + times.get(times.size() - 1).toStringDateTime();
+        }
+        return names;
     }
 
     public String makeCommaString(ArrayList<Integer> list) {
@@ -180,7 +204,6 @@ public class DetailsFragment extends Fragment {
             return "none";
         }
         String names= "";
-        String nextName;
         for (int i = 0; i < list.size() - 1; i++) {
             if (list.get(i) != null) {
                 names = names + MainActivity.userTable.getUser(list.get(i)).getName();
