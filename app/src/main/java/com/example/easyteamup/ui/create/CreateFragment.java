@@ -349,7 +349,7 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
         MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
         if (duetime != null) {
-            MainActivity.infoBundle.putSerializable("temp_event_duetime", duetime);
+            MainActivity.infoBundle.putSerializable("duetime", duetime);
         }
         if (location != null) {
             MainActivity.infoBundle.putSerializable("temp_event_location", location);
