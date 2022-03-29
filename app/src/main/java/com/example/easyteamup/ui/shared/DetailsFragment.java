@@ -49,7 +49,7 @@ public class DetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = MainActivity.userTable.getUser(MainActivity.userID);
-        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("event"));
+        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
 //        if (MainActivity.infoBundle.containsKey("eventID")) {
 //            event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("eventID"));
 //        }
@@ -121,17 +121,17 @@ public class DetailsFragment extends Fragment {
         Log.i("eventPublic", event.getEventName());
         TextView publicView = (TextView) view.findViewById(R.id.statusPublicDetailsView);
         if (event.getStatusPublic() == null || event.getStatusPublic()) {
-            publicView.setText("Public");
+            publicView.setText("Status: Public");
         }
         else {
-            publicView.setText("Private");
+            publicView.setText("Status: Private");
         }
         TextView descriptionView = (TextView) view.findViewById(R.id.descriptionDetailsView);
         setTextCheck(descriptionView, event.getDescription());
         TextView ownerView = (TextView) view.findViewById(R.id.ownerDetailsView);
         User owner = MainActivity.userTable.getUser(event.getOwner());
         setTextCheck(ownerView, owner.getName());
-        Log.i("invitees", Integer.toString(event.getInvitees().size()));
+        //Log.i("invitees", Integer.toString(event.getInvitees().size()));
         TextView invitees = (TextView) view.findViewById(R.id.invitedUsersDetailsView);
         invitees.setText(makeCommaString(event.getInvitees()));
         TextView participants = (TextView) view.findViewById(R.id.participantsDetailsView);

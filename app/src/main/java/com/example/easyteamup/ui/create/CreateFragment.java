@@ -153,16 +153,25 @@ public class CreateFragment extends Fragment {
         inviteCreate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
-                searchedInviteUser = MainActivity.userTable.getUser(Integer.parseInt(s));
-
-                displayInvitedUserButton.setVisibility(View.VISIBLE);
-                viewInvitedUsersButton.setVisibility(View.INVISIBLE);
-                if (searchedInviteUser != null) {
-                    displayInvitedUserButton.setText(searchedInviteUser.getName());
+                if (Integer.parseInt(s) == user.getUserID()) {
+                    AlertDialog.Builder inviteFail = new AlertDialog.Builder(getContext());
+                    inviteFail.setMessage("You cannot invite yourself to your event.");
+                    inviteFail.setTitle("Error");
+                    inviteFail.setPositiveButton("Close", null);
+                    inviteFail.create().show();
+                    inviteCreate.setQuery("", false);
                 }
                 else {
-                    displayInvitedUserButton.setText("User not found. Click to try again.");
+                    searchedInviteUser = MainActivity.userTable.getUser(Integer.parseInt(s));
+
+                    displayInvitedUserButton.setVisibility(View.VISIBLE);
+                    viewInvitedUsersButton.setVisibility(View.INVISIBLE);
+                    if (searchedInviteUser != null) {
+                        displayInvitedUserButton.setText(searchedInviteUser.getName());
+                    }
+                    else {
+                        displayInvitedUserButton.setText("User not found. Click to try again.");
+                    }
                 }
                 return true;
             }
@@ -304,11 +313,16 @@ public class CreateFragment extends Fragment {
 
     public void onClickTimeSlots(View view) {
         savePageEntries();
-
-        String[] timeOptionsStringArray = new String[timeOptions.size()];
-        for (int i = 0; i < timeOptions.size(); i++) {
-            String str = timeOptions.get(i).toStringDateTime() + " (" + timeOptions.get(i).getDuration() + " min)";
-            timeOptionsStringArray[i] = str;
+        String[] timeOptionsStringArray;
+        if (timeOptions.size() > 0) {
+             timeOptionsStringArray = new String[timeOptions.size()];
+            for (int i = 0; i < timeOptions.size(); i++) {
+                String str = timeOptions.get(i).toStringDateTime() + " (" + timeOptions.get(i).getDuration() + " min)";
+                timeOptionsStringArray[i] = str;
+            }
+        }
+        else {
+            timeOptionsStringArray = new String[]{};
         }
         MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
 
@@ -377,11 +391,18 @@ public class CreateFragment extends Fragment {
             location = (Location)MainActivity.infoBundle.getSerializable("temp_event_location");
             locationCreate.setQuery(location.getName(), false);
         }
-        if (MainActivity.infoBundle.containsKey("timeslot")) {
+        if (MainActivity.infoBundle.containsKey("temp_time_options")) {
             timeOptions = (ArrayList<TimeSlot>)MainActivity.infoBundle.getSerializable("temp_time_options");
-            TimeSlot ts = (TimeSlot) MainActivity.infoBundle.getSerializable("timeslot");
-            timeOptions.add(ts);
-            MainActivity.infoBundle.remove("timeslot");
+            if (MainActivity.infoBundle.containsKey("timeslot")) {
+                TimeSlot ts = (TimeSlot) MainActivity.infoBundle.getSerializable("timeslot");
+                timeOptions.add(ts);
+                MainActivity.infoBundle.remove("timeslot");
+            }
+            if (MainActivity.infoBundle.containsKey("delete_slot")) {
+                TimeSlot delete = (TimeSlot)MainActivity.infoBundle.getSerializable("delete_slot");
+                timeOptions.remove(delete);
+                MainActivity.infoBundle.remove("delete_slot");
+            }
         }
     }
 }

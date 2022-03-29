@@ -75,7 +75,7 @@
 
     <TextView
         android:id="@+id/timeSlotDurationText"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
         android:text="Duration (min):"
@@ -87,14 +87,14 @@
 
     <EditText
         android:id="@+id/timeSlotDurationView"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:gravity="center_vertical"
         android:backgroundTint="#FFCC00"
         android:digits="0123456789+"
+        android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@id/timeSlotDurationText"
         app:layout_constraintTop_toBottomOf="@+id/dueTimeEventPicker" />
 
