@@ -85,12 +85,6 @@ public class UserTable {
         return nextID++;
     }
 
-    public void removeUser(int ID) {
-        DatabaseReference ref = rootRef.child(Integer.toString(ID));
-        ref.removeValue();
-        map.remove(Integer.toString(ID));
-    }
-
     public User getUser(int ID) {
         return map.get(Integer.toString(ID));
     }
@@ -98,13 +92,6 @@ public class UserTable {
     public void editUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(user.getUserID()));
         ref.setValue(user);
-    }
-
-    public User contains(int ID) {
-        if (this.map.containsKey(Integer.toString(ID))) {
-            return this.map.get(Integer.toString(ID));
-        }
-        return null;
     }
 
     public User contains(String username) {
@@ -123,13 +110,5 @@ public class UserTable {
             }
         }
         return null;
-    }
-
-    public ArrayList<User> getAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        for (Map.Entry<String, User> entry : map.entrySet()) {
-            users.add(entry.getValue());
-        }
-        return users;
     }
 }

@@ -136,7 +136,6 @@ public class EventTable {
     public void editEvent(Event event) {
         DatabaseReference ref = rootRef.child(Integer.toString(event.getEventID()));
         ref.setValue(event);
-        Log.i("INVITED", Integer.toString(event.getInvitees().size()));
         if(listener != null)
         {
             listener.onIntegerChanged(map.size());
