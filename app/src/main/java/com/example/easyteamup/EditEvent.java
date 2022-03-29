@@ -96,9 +96,7 @@ public class EditEvent extends Fragment {
 
             MainActivity.infoBundle.putString("temp_event_otherinfo", event.getDescription());
             MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", event.getInvitees());
-            Log.i("DUE", "here");
-            duetime = event.getDueTime();
-            MainActivity.infoBundle.putSerializable("temp_event_duetime", event.getDueTime());
+            MainActivity.infoBundle.putSerializable("duetime", event.getDueTime());
             if (event.getLocation() != null) {
                 MainActivity.infoBundle.putSerializable("temp_event_location", event.getLocation());
             }
@@ -368,7 +366,7 @@ public class EditEvent extends Fragment {
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
         MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
         if (duetime != null) {
-            MainActivity.infoBundle.putSerializable("temp_event_duetime", duetime);
+            MainActivity.infoBundle.putSerializable("duetime", duetime);
         }
         if (location != null) {
             MainActivity.infoBundle.putSerializable("temp_event_location", location);
