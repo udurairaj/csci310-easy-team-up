@@ -66,6 +66,8 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        container.removeAllViews();
+
         View root = inflater.inflate(R.layout.fragment_details, container, false);
 
         invitedUsersText = root.findViewById(R.id.invitedUsersDetailsText);
