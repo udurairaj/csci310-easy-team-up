@@ -80,6 +80,7 @@ public class DetailsFragment extends Fragment {
 
         inviteLayout = root.findViewById(R.id.inviteLayout);
 
+        event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
         if (event.getInvitees() != null) {
             if (event.getInvitees().contains(user.getUserID())) {
                 inviteLayout.setVisibility(View.VISIBLE);

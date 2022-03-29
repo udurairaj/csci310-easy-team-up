@@ -230,29 +230,35 @@ public class CreateFragment extends Fragment {
         }
 
         // CREATE EVENT WITH ALL INFO
-        eventInProgress = new Event(user.getUserID(), createdName, status);
-        int eventID = MainActivity.eventTable.addEvent(eventInProgress);
-        Event event = MainActivity.eventTable.getEvent(eventID);
-        event.setDescription(description);
-        event.setDueTime(duetime);
-        event.setInvitees(invitedUsersTemp);
-        if (location != null) {
-            event.setLocation(location);
-        }
-        event.setTimeOptions(timeOptions);
-        MainActivity.eventTable.editEvent(event);
-
-        // delete temps
-        MainActivity.infoBundle.remove("temp_event_name");
-        MainActivity.infoBundle.remove("temp_event_statuspublic");
-        MainActivity.infoBundle.remove("temp_event_otherinfo");
-        MainActivity.infoBundle.remove("duetime");
-        MainActivity.infoBundle.remove("temp_invited_users");
-        MainActivity.infoBundle.remove("temp_event_location");
-        MainActivity.infoBundle.remove("invitedUsersArray");
-        MainActivity.infoBundle.remove("timeOptionsArray");
-
         if (createSuccess) {
+            eventInProgress = new Event(user.getUserID(), createdName, status);
+            int eventID = MainActivity.eventTable.addEvent(eventInProgress);
+            Event event = MainActivity.eventTable.getEvent(eventID);
+            event.setDescription(description);
+            event.setDueTime(duetime);
+            event.setInvitees(invitedUsersTemp);
+            if (location != null) {
+                event.setLocation(location);
+            }
+            event.setTimeOptions(timeOptions);
+            MainActivity.eventTable.editEvent(event);
+
+            // delete temps
+            MainActivity.infoBundle.remove("temp_event_name");
+            MainActivity.infoBundle.remove("temp_event_statuspublic");
+            MainActivity.infoBundle.remove("temp_event_otherinfo");
+            MainActivity.infoBundle.remove("duetime");
+            MainActivity.infoBundle.remove("temp_invited_users");
+            MainActivity.infoBundle.remove("temp_event_location");
+            MainActivity.infoBundle.remove("invitedUsersArray");
+            MainActivity.infoBundle.remove("timeOptionsArray");
+            timeOptions.clear();
+            invitedUsersTemp.clear();
+            nameCreate.setText("");
+            descriptionCreate.setText("");
+            locationCreate.setQuery("", false);
+            locationCreate.setQueryHint("");
+
             // SAVE EVENT LOCALLY
             MainActivity.infoBundle.putInt("eventID", eventID);
             MainActivity.infoBundle.putSerializable("event", event);
