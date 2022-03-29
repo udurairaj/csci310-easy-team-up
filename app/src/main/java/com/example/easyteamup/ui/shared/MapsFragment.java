@@ -79,7 +79,7 @@ public class MapsFragment extends Fragment{
                                     }
                                 }
                             }
-                            MainActivity.infoBundle.putString("event", eventNames[pos]);
+                            MainActivity.infoBundle.putInt("eventID", allEvents.get(pos).getEventID());
 
                             Fragment editFrag = new DetailsFragment();
                             FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -136,7 +136,7 @@ public class MapsFragment extends Fragment{
                                             }
                                         }
                                     }
-                                    MainActivity.infoBundle.putString("event", eventNames[pos]);
+                                    MainActivity.infoBundle.putInt("eventID", allEvents.get(pos).getEventID());
 
                                     Fragment editFrag = new DetailsFragment();
                                     FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
