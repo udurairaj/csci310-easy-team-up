@@ -78,6 +78,11 @@ public class EventTable {
         });
     }
 
+    public EventTable(boolean testing) {
+        this.nextID = 1;
+        this.map = new HashMap<String, Event>();
+    }
+
     public void setOnIntegerChangeListener(OnIntegerChangeListener listener)
     {
         this.listener = listener;
@@ -107,6 +112,12 @@ public class EventTable {
         {
             listener.onIntegerChanged(map.size());
         }
+        return nextID++;
+    }
+
+    public int addEvent(Event event, boolean testing) {
+        event.setEventID(this.nextID);
+        map.put(Integer.toString(event.getEventID()), event);
         return nextID++;
     }
 
