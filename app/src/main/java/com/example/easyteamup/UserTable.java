@@ -66,6 +66,11 @@ public class UserTable {
         });
     }
 
+    public UserTable(boolean testing) {
+        this.nextID = 1;
+        this.map = new HashMap<String, User>();
+    }
+
     public int addUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(this.nextID));
         user.setUserID(this.nextID);
@@ -85,6 +90,12 @@ public class UserTable {
         return nextID++;
     }
 
+    public int addUser(User user, boolean testing) {
+        user.setUserID(this.nextID);
+        map.put(Integer.toString(user.getUserID()), user);
+        return nextID++;
+    }
+
     public User getUser(int ID) {
         return map.get(Integer.toString(ID));
     }
@@ -92,6 +103,10 @@ public class UserTable {
     public void editUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(user.getUserID()));
         ref.setValue(user);
+    }
+
+    public void editUser(User user, boolean testing) {
+        map.put(Integer.toString(user.getUserID()), user);
     }
 
     public User contains(String username) {

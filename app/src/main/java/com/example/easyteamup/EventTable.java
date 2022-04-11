@@ -131,6 +131,10 @@ public class EventTable {
         }
     }
 
+    public void removeEvent(int ID, boolean testing) {
+        map.remove(Integer.toString(ID));
+    }
+
     public Event getEvent(int ID) {
         return map.get(Integer.toString(ID));
     }
@@ -151,6 +155,10 @@ public class EventTable {
         {
             listener.onIntegerChanged(map.size());
         }
+    }
+
+    public void editEvent(Event event, boolean testing) {
+        map.put(Integer.toString(event.getEventID()), event);
     }
 
     public int size() {
