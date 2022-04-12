@@ -16,6 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.easyteamup.login.LoginActivity;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +29,27 @@ public class BasicFeatureBlackBoxTests {
             new ActivityScenarioRule<LoginActivity>(LoginActivity.class);
 
     @Test
-    public void testLogin() {
+    public void login() {
         onView(withId(R.id.usernameLoginBox)).perform(typeText("bob"));
         onView(withId(R.id.passwordLoginBox)).perform(typeText("bobbobbob"), closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
+
         onView(withId(R.id.nameProfileView)).check(matches(withText("billy bobby :)")));
+        onView(withId(R.id.userIDProfileView)).check(matches(withText("5")));
+        onView(withId(R.id.usernameProfileView)).check(matches(withText("bob")));
+        onView(withId(R.id.emailProfileView)).check(matches(withText("bobbobbob@gmail.com")));
+        onView(withId(R.id.phoneProfileView)).check(matches(withText("1111111111")));
+        onView(withId(R.id.otherInfoProfileView)).check(matches(withText("cool viterbi dog")));
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-
         onView(withId(R.id.nav_userEventDisplay)).perform(click());
+
+
+    }
+
+    @Test
+    public void displayTest() {
+        login();
+        onView(withId(R.id.radioButton2)).perform(click());
     }
 }
