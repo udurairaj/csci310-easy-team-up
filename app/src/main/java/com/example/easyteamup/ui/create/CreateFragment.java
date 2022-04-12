@@ -230,29 +230,35 @@ public class CreateFragment extends Fragment {
         }
 
         // CREATE EVENT WITH ALL INFO
-        eventInProgress = new Event(user.getUserID(), createdName, status);
-        int eventID = MainActivity.eventTable.addEvent(eventInProgress);
-        Event event = MainActivity.eventTable.getEvent(eventID);
-        event.setDescription(description);
-        event.setDueTime(duetime);
-        event.setInvitees(invitedUsersTemp);
-        if (location != null) {
-            event.setLocation(location);
-        }
-        event.setTimeOptions(timeOptions);
-        MainActivity.eventTable.editEvent(event);
-
-        // delete temps
-        MainActivity.infoBundle.remove("temp_event_name");
-        MainActivity.infoBundle.remove("temp_event_statuspublic");
-        MainActivity.infoBundle.remove("temp_event_otherinfo");
-        MainActivity.infoBundle.remove("duetime");
-        MainActivity.infoBundle.remove("temp_invited_users");
-        MainActivity.infoBundle.remove("temp_event_location");
-        MainActivity.infoBundle.remove("invitedUsersArray");
-        MainActivity.infoBundle.remove("timeOptionsArray");
-
         if (createSuccess) {
+            eventInProgress = new Event(user.getUserID(), createdName, status);
+            int eventID = MainActivity.eventTable.addEvent(eventInProgress);
+            Event event = MainActivity.eventTable.getEvent(eventID);
+            event.setDescription(description);
+            event.setDueTime(duetime);
+            event.setInvitees(invitedUsersTemp);
+            if (location != null) {
+                event.setLocation(location);
+            }
+            event.setTimeOptions(timeOptions);
+            MainActivity.eventTable.editEvent(event);
+
+            // delete temps
+            MainActivity.infoBundle.remove("temp_event_name");
+            MainActivity.infoBundle.remove("temp_event_statuspublic");
+            MainActivity.infoBundle.remove("temp_event_otherinfo");
+            MainActivity.infoBundle.remove("duetime");
+            MainActivity.infoBundle.remove("temp_invited_users");
+            MainActivity.infoBundle.remove("temp_event_location");
+            MainActivity.infoBundle.remove("invitedUsersArray");
+            MainActivity.infoBundle.remove("timeOptionsArray");
+            timeOptions.clear();
+            invitedUsersTemp.clear();
+            nameCreate.setText("");
+            descriptionCreate.setText("");
+            locationCreate.setQuery("", false);
+            locationCreate.setQueryHint("");
+
             // SAVE EVENT LOCALLY
             MainActivity.infoBundle.putInt("eventID", eventID);
             MainActivity.infoBundle.putSerializable("event", event);
@@ -276,6 +282,7 @@ public class CreateFragment extends Fragment {
     public void onClickSetTime(View view) {
         savePageEntries();
 
+        MainActivity.infoBundle.putBoolean("editing", false);
         Fragment setDueFrag = new SetDueFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setDueFrag);
@@ -303,6 +310,7 @@ public class CreateFragment extends Fragment {
             MainActivity.infoBundle.putIntegerArrayList("invitedUserIDs", invitedUsersTemp);
             MainActivity.infoBundle.putStringArray("invitedUsersArray", invitedUsersStringArray);
 
+            MainActivity.infoBundle.putBoolean("editing", false);
             Fragment invitedFrag = new InvitedUsersFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
@@ -325,6 +333,7 @@ public class CreateFragment extends Fragment {
             timeOptionsStringArray = new String[]{};
         }
         MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
+        MainActivity.infoBundle.putBoolean("editing", false);
 
         Fragment timeSlotFrag = new ViewTimeSlotsFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -343,7 +352,7 @@ public class CreateFragment extends Fragment {
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
         MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
         if (duetime != null) {
-            MainActivity.infoBundle.putSerializable("temp_event_duetime", duetime);
+            MainActivity.infoBundle.putSerializable("duetime", duetime);
         }
         if (location != null) {
             MainActivity.infoBundle.putSerializable("temp_event_location", location);

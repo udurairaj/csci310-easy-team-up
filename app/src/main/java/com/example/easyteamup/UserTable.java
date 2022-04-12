@@ -66,6 +66,11 @@ public class UserTable {
         });
     }
 
+    public UserTable(boolean testing) {
+        this.nextID = 1;
+        this.map = new HashMap<String, User>();
+    }
+
     public int addUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(this.nextID));
         user.setUserID(this.nextID);
@@ -85,10 +90,29 @@ public class UserTable {
         return nextID++;
     }
 
-    public void removeUser(int ID) {
-        DatabaseReference ref = rootRef.child(Integer.toString(ID));
-        ref.removeValue();
-        map.remove(Integer.toString(ID));
+    public int addUser(User user, boolean testing) {
+        user.setUserID(this.nextID);
+        map.put(Integer.toString(user.getUserID()), user);
+        return nextID++;
+    }
+
+    public void removeUser(String username) {
+        this.rootRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        User user = child.getValue(User.class);
+                        if (user.getUsername().compareTo(username) == 0) {
+                            rootRef.child(Integer.toString(user.getUserID())).getRef().removeValue();
+                        }
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
     }
 
     public User getUser(int ID) {
@@ -100,11 +124,8 @@ public class UserTable {
         ref.setValue(user);
     }
 
-    public User contains(int ID) {
-        if (this.map.containsKey(Integer.toString(ID))) {
-            return this.map.get(Integer.toString(ID));
-        }
-        return null;
+    public void editUser(User user, boolean testing) {
+        map.put(Integer.toString(user.getUserID()), user);
     }
 
     public User contains(String username) {
@@ -123,13 +144,5 @@ public class UserTable {
             }
         }
         return null;
-    }
-
-    public ArrayList<User> getAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        for (Map.Entry<String, User> entry : map.entrySet()) {
-            users.add(entry.getValue());
-        }
-        return users;
     }
 }

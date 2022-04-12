@@ -17,7 +17,6 @@ public class User implements Serializable {
     private String password;
     private String profilePic;
     private String otherInfo;
-    private int[] events;
 
     public User() {
 
@@ -57,7 +56,6 @@ public class User implements Serializable {
     public String getPassword() { return password; }
     public String getProfilePic() { return profilePic; }
     public String getOtherInfo() { return otherInfo; }
-    public int[] getEvents() { return events; }
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
@@ -93,5 +91,4 @@ public class User implements Serializable {
 //        }
 //        return hashedPass;
 //    }
-
 }

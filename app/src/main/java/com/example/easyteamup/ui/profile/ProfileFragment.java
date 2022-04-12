@@ -132,6 +132,9 @@ public class ProfileFragment extends Fragment {
     }
 
     public void onClickEditProfile(View view) {
+        if (MainActivity.infoBundle.containsKey("user")) {
+            MainActivity.infoBundle.remove("user");
+        }
         Fragment editFrag = new EditProfileFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
