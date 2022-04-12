@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.easyteamup.EditEvent;
 import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
@@ -106,11 +107,20 @@ public class OtherProfileFragment extends Fragment {
     }
 
     public void onClickGoBack(View view) {
-        Fragment createFrag = new CreateFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        if (MainActivity.infoBundle.getBoolean("editing")) {
+            Fragment editFrag = new EditEvent();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+        else {
+            Fragment createFrag = new CreateFragment();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, createFrag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     public void onClickUninvite(View view) {

@@ -85,6 +85,8 @@ public class EditEvent extends Fragment {
         displayInvitedUserButton = (TextView)root.findViewById(R.id.inviteSearchDisplayButton);
         displayInvitedUserButton.setVisibility(View.GONE);
 
+        MainActivity.infoBundle.putBoolean("editing", true);
+
         if (MainActivity.infoBundle.getBoolean("first")) {
             MainActivity.infoBundle.putString("temp_event_name", event.getEventName());
             if (event.getStatusPublic()) {
@@ -295,7 +297,6 @@ public class EditEvent extends Fragment {
     public void onClickSetTime(View view) {
         savePageEntries();
 
-        MainActivity.infoBundle.putBoolean("editing", true);
         Fragment setDueFrag = new SetDueFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setDueFrag);
@@ -322,7 +323,6 @@ public class EditEvent extends Fragment {
             }
             MainActivity.infoBundle.putIntegerArrayList("invitedUserIDs", invitedUsersTemp);
             MainActivity.infoBundle.putStringArray("invitedUsersArray", invitedUsersStringArray);
-            MainActivity.infoBundle.putBoolean("editing", true);
 
             Fragment invitedFrag = new InvitedUsersFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -346,7 +346,6 @@ public class EditEvent extends Fragment {
             timeOptionsStringArray = new String[]{};
         }
         MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
-        MainActivity.infoBundle.putBoolean("editing", true);
 
         Fragment timeSlotFrag = new ViewTimeSlotsFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
