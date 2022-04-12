@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_details.xml" value="0.1" />
+        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/side_nav_bar.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
