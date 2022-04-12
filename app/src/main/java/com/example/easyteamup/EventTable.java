@@ -131,6 +131,29 @@ public class EventTable {
         }
     }
 
+    public void removeEvent(String name) {
+        this.rootRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        Event event = child.getValue(Event.class);
+                        if (event.getEventName().compareTo(name) == 0) {
+                            rootRef.child(Integer.toString(event.getEventID())).getRef().removeValue();
+                        }
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+        if(listener != null)
+        {
+            listener.onIntegerChanged(map.size());
+        }
+    }
+
     public void removeEvent(int ID, boolean testing) {
         map.remove(Integer.toString(ID));
     }

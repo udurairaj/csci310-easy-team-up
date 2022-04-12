@@ -96,6 +96,25 @@ public class UserTable {
         return nextID++;
     }
 
+    public void removeUser(String username) {
+        this.rootRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        User user = child.getValue(User.class);
+                        if (user.getUsername().compareTo(username) == 0) {
+                            rootRef.child(Integer.toString(user.getUserID())).getRef().removeValue();
+                        }
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+    }
+
     public User getUser(int ID) {
         return map.get(Integer.toString(ID));
     }
