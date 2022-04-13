@@ -73,15 +73,15 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        container.removeAllViews();
         View root = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        nameEdit = (EditText)root.findViewById(R.id.nameProfileView);
-        usernameEdit = (EditText)root.findViewById(R.id.usernameProfileView);
-        emailEdit = (EditText)root.findViewById(R.id.emailProfileView);
-        phoneEdit = (EditText)root.findViewById(R.id.phoneProfileView);
-        profilePicEdit = (ImageView)root.findViewById(R.id.imageButton);
-        otherInfoEdit = (EditText)root.findViewById(R.id.otherInfoProfileView);
+        nameEdit = (EditText)root.findViewById(R.id.nameEditProfileView);
+        usernameEdit = (EditText)root.findViewById(R.id.usernameEditProfileView);
+        emailEdit = (EditText)root.findViewById(R.id.emailEditProfileView);
+        phoneEdit = (EditText)root.findViewById(R.id.phoneEditProfileView);
+        profilePicEdit = (ImageView)root.findViewById(R.id.imageEditButton);
+        otherInfoEdit = (EditText)root.findViewById(R.id.otherInfoEditProfileView);
         saveButton = (Button)root.findViewById(R.id.confirmProfileChangesButton);
         profButton = (Button)root.findViewById(R.id.editProfilePicButton);
 
@@ -107,6 +107,7 @@ public class EditProfileFragment extends Fragment {
                                 public void onSuccess(byte[] bytes) {
                                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     profilePicEdit.setImageBitmap(bmp);
+                                    profilePicEdit.setContentDescription("SUCCESS");
                                 }
                             });
                         }
@@ -114,11 +115,13 @@ public class EditProfileFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
+                    profilePicEdit.setContentDescription("ERROR");
                 }
             });
         }
         else {
             profilePicEdit.setImageResource(R.drawable.no_prof_pic);
+            profilePicEdit.setContentDescription("SUCCESS");
         }
         if (user.getOtherInfo() != null) {
             otherInfoEdit.setText(user.getOtherInfo());
@@ -161,8 +164,10 @@ public class EditProfileFragment extends Fragment {
             usernameEdit.setError("Username is required");
             success = false;
         }
-        //else if (MainActivity.userTable)
-        // ELSE IF USERNAME FOUND IN DB, ERROR
+        else if (!editedUsername.equals(user.getUsername()) && MainActivity.userTable.contains(editedUsername) != null) {
+            usernameEdit.setError("Username is taken. Try again.");
+            success = false;
+        }
         else {
             user.setUsername(editedUsername);
         }
@@ -204,6 +209,7 @@ public class EditProfileFragment extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+        success = true;
     }
 
     ActivityResultLauncher<String> arl = registerForActivityResult

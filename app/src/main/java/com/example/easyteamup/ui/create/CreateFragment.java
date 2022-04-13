@@ -141,7 +141,8 @@ public class CreateFragment extends Fragment {
                         locationfail.setMessage("Location not found. Please select a more specific location or address.");
                         locationfail.setTitle("Error");
                         locationfail.setPositiveButton("Close", null);
-                        locationfail.create().show();                    }
+                        locationfail.create().show();
+                    }
                 }
                 return true;
             }

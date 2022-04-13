@@ -5,10 +5,7 @@
       <map>
         <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_details.xml" value="0.1" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_edit_event.xml" value="0.1" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
         <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
-        <entry key="..\:/Users/emdg0/Documents/2021-22/Spring 2022/CSCI-310/Easy Team Up/csci310-easy-team-up/app/src/main/res/layout/fragment_user_event_display.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/drawable/side_nav_bar.xml" value="0.4185" />
         <entry key="..\:/Users/no/AndroidStudioProjects/csci310-easy-team-up/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
@@ -47,7 +44,7 @@
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.1118421052631579" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_other_profile.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2570694087403599" />
         <entry key="app/src/main/res/layout/fragment_set_due.xml" value="0.25844980875651047" />
         <entry key="app/src/main/res/layout/fragment_set_location.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/fragment_set_time_slot.xml" value="0.17982456140350878" />

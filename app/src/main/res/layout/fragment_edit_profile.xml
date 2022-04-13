@@ -9,7 +9,7 @@
     tools:context=".ui.profile.EditProfileFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textEditProfileView"
         android:layout_width="169dp"
         android:layout_height="44dp"
         android:layout_marginTop="15dp"
@@ -30,16 +30,16 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="70dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textEditProfileView">
         <ImageView
-            android:id="@+id/imageButton"
+            android:id="@+id/imageEditButton"
             android:layout_width="136dp"
             android:layout_height="136dp"
             android:layout_marginTop="20dp"
             android:contentDescription="profilePicture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textEditProfileView" />
 
         <Button
             android:id="@+id/editProfilePicButton"
@@ -53,11 +53,11 @@
             android:textColor="#990000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/imageEditButton" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/nameProfileText"
+        android:id="@+id/nameEditProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editProfilePicLayout" />
 
     <TextView
-        android:id="@+id/usernameProfileText"
+        android:id="@+id/usernameEditProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -79,10 +79,10 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/nameEditProfileText" />
 
     <TextView
-        android:id="@+id/emailProfileText"
+        android:id="@+id/emailEditProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -91,10 +91,10 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditProfileText" />
 
     <TextView
-        android:id="@+id/phoneProfileText"
+        android:id="@+id/phoneEditProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -103,10 +103,10 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditProfileText" />
 
     <TextView
-        android:id="@+id/otherInfoProfileText"
+        android:id="@+id/otherInfoEditProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -115,10 +115,10 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneEditProfileText" />
 
     <EditText
-        android:id="@+id/nameProfileView"
+        android:id="@+id/nameEditProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -128,11 +128,11 @@
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
         android:backgroundTint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/nameProfileText"
+        app:layout_constraintStart_toEndOf="@+id/nameEditProfileText"
         app:layout_constraintTop_toBottomOf="@+id/editProfilePicLayout" />
 
     <EditText
-        android:id="@+id/usernameProfileView"
+        android:id="@+id/usernameEditProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -141,11 +141,11 @@
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
         android:backgroundTint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/usernameProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/nameProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/usernameEditProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditProfileView" />
 
     <EditText
-        android:id="@+id/emailProfileView"
+        android:id="@+id/emailEditProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -155,11 +155,11 @@
         android:textColorLink="#FFFFFF"
         android:textSize="18sp"
         android:backgroundTint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/emailProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/usernameProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/emailEditProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditProfileView" />
 
     <EditText
-        android:id="@+id/phoneProfileView"
+        android:id="@+id/phoneEditProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -170,22 +170,23 @@
         android:inputType="phone"
         android:digits="0123456789+"
         android:backgroundTint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/phoneProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/emailProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/phoneEditProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditProfileView" />
 
     <EditText
-        android:id="@+id/otherInfoProfileView"
+        android:id="@+id/otherInfoEditProfileView"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:ems="10"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:isScrollContainer="true"
         android:gravity="top"
         android:backgroundTint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/otherInfoProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/phoneProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/otherInfoEditProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/phoneEditProfileView" />
 
     <Button
         android:id="@+id/confirmProfileChangesButton"
@@ -198,6 +199,6 @@
         android:onClick="onClickSaveEdits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otherInfoProfileView" />
+        app:layout_constraintTop_toBottomOf="@+id/otherInfoEditProfileView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

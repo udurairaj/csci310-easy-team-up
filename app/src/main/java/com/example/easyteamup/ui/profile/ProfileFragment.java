@@ -50,6 +50,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        container.removeAllViews();
+
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -108,6 +110,7 @@ public class ProfileFragment extends Fragment {
                                 public void onSuccess(byte[] bytes) {
                                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     profilePicView.setImageBitmap(bmp);
+                                    profilePicView.setContentDescription("SUCCESS");
                                 }
                             });
                         }
@@ -115,6 +118,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getContext(), "Error loading profile. Try again.", Toast.LENGTH_LONG).show();
+                            profilePicView.setContentDescription("ERROR");
                         }
                     });
         }

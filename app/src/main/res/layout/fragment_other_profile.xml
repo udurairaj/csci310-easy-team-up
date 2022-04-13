@@ -9,7 +9,7 @@
     tools:context=".ui.profile.OtherProfileFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textOtherProfileView"
         android:layout_width="101dp"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
@@ -21,18 +21,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageButton"
+        android:id="@+id/imageOtherProfileButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="15dp"
-        android:contentDescription="profilePicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textOtherProfileView"
         android:src="@drawable/no_prof_pic" />
 
     <TextView
-        android:id="@+id/nameProfileText"
+        android:id="@+id/nameOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -41,10 +40,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imageOtherProfileButton" />
 
     <TextView
-        android:id="@+id/userIDProfileText"
+        android:id="@+id/userIDOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -52,10 +51,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/nameOtherProfileText" />
 
     <TextView
-        android:id="@+id/usernameProfileText"
+        android:id="@+id/usernameOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -63,10 +62,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userIDProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/userIDOtherProfileText" />
 
     <TextView
-        android:id="@+id/emailProfileText"
+        android:id="@+id/emailOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -74,10 +73,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameOtherProfileText" />
 
     <TextView
-        android:id="@+id/phoneProfileText"
+        android:id="@+id/phoneOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -85,10 +84,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailOtherProfileText" />
 
     <TextView
-        android:id="@+id/otherInfoProfileText"
+        android:id="@+id/otherInfoOtherProfileText"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -96,10 +95,10 @@
         android:textColor="#FFCC00"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneProfileText" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneOtherProfileText" />
 
     <TextView
-        android:id="@+id/nameProfileView"
+        android:id="@+id/nameOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -109,8 +108,8 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/nameProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintStart_toEndOf="@+id/nameOtherProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/imageOtherProfileButton" />
 
     <TextView
         android:id="@+id/userIDOtherProfileView"
@@ -122,11 +121,11 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/userIDProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/nameProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/userIDOtherProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/nameOtherProfileView" />
 
     <TextView
-        android:id="@+id/usernameProfileView"
+        android:id="@+id/usernameOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -135,11 +134,11 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/usernameProfileText"
+        app:layout_constraintStart_toEndOf="@+id/usernameOtherProfileText"
         app:layout_constraintTop_toBottomOf="@+id/userIDOtherProfileView" />
 
     <TextView
-        android:id="@+id/emailProfileView"
+        android:id="@+id/emailOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -149,11 +148,11 @@
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/emailProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/usernameProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/emailOtherProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/usernameOtherProfileView" />
 
     <TextView
-        android:id="@+id/phoneProfileView"
+        android:id="@+id/phoneOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -162,11 +161,11 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/phoneProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/emailProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/phoneOtherProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/emailOtherProfileView" />
 
     <TextView
-        android:id="@+id/otherInfoProfileView"
+        android:id="@+id/otherInfoOtherProfileView"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
@@ -175,8 +174,8 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/otherInfoProfileText"
-        app:layout_constraintTop_toBottomOf="@+id/phoneProfileView" />
+        app:layout_constraintStart_toEndOf="@+id/otherInfoOtherProfileText"
+        app:layout_constraintTop_toBottomOf="@+id/phoneOtherProfileView" />
 
     <Button
         android:id="@+id/uninviteUserButton"
@@ -187,7 +186,7 @@
         android:textColor="#990000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otherInfoProfileView" />
+        app:layout_constraintTop_toBottomOf="@+id/otherInfoOtherProfileView" />
 
     <Button
         android:id="@+id/backToCreateButton"
