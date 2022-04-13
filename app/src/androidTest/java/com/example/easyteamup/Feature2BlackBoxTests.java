@@ -1,6 +1,7 @@
 package com.example.easyteamup;
 
 import static android.view.KeyEvent.KEYCODE_1;
+import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_6;
 import static android.view.KeyEvent.KEYCODE_7;
 import static android.view.KeyEvent.KEYCODE_C;
@@ -45,6 +46,7 @@ import androidx.test.internal.util.Checks;
 import com.example.easyteamup.login.LoginActivity;
 
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,10 +56,12 @@ import java.util.ArrayList;
 @RunWith(AndroidJUnit4.class)
 public class Feature2BlackBoxTests {
 
+    // EventTable used for cleanup after test completes to allow for rerunning
+    private EventTable eventTable = new EventTable();
+
     @Rule
     public ActivityScenarioRule<LoginActivity> loginRule =
             new ActivityScenarioRule<LoginActivity>(LoginActivity.class);
-
 
     public void login() {
         onView(withId(R.id.usernameLoginBox)).perform(typeText("bob"));
@@ -76,9 +80,6 @@ public class Feature2BlackBoxTests {
     public void createEventErrorTest() {
         login();
 
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
-
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
         onView(withId(R.id.saveEventButton)).perform(click());
@@ -92,22 +93,34 @@ public class Feature2BlackBoxTests {
         onView(withText("Error")).perform(pressBack());
 
         onView(withId(R.id.dateTimeSet)).perform(closeSoftKeyboard(), click());
+        onView(withId(R.id.dateDuePicker)).perform(PickerActions.setDate(2022, 4, 1));
+        onView(withId(R.id.timeDuePicker)).perform(PickerActions.setTime(10, 30));
+        onView(withId(R.id.dateTimeDueSet)).perform(click());
+        onView(withText("Error")).perform(pressBack());
+        onView(withText("Error")).perform(pressBack());
         onView(withId(R.id.dateDuePicker)).perform(PickerActions.setDate(2022, 5, 1));
         onView(withId(R.id.timeDuePicker)).perform(PickerActions.setTime(10, 30));
         onView(withId(R.id.dateTimeDueSet)).perform(click());
 
+        onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KEYCODE_5), pressKey(KEYCODE_ENTER));
+        onView(withText("Error")).perform(pressBack());
+        closeSoftKeyboard();
+
         onView(withId(R.id.locationEventSearch)).perform(click(), pressKey(KEYCODE_R), pressKey(KEYCODE_ENTER));
         onView(withText("Error")).perform(pressBack());
         onView(withText("Error")).perform(pressBack());
-        closeSoftKeyboard();
+        onView(withId(R.id.nameEventView)).perform(click(), closeSoftKeyboard());
+
+        onView(withId(R.id.saveEventButton)).perform(click());
+
+        // TEST FINISHED
+        // Manually delete event to allow for test to be rerun
+        eventTable.removeEvent("2.4 Error Event");
     }
 
     @Test
     public void createBasicPublicEventTest() {
         login();
-
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
@@ -128,7 +141,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("none")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
-
         // TEST FINISHED
         // Manually delete event to allow for test to be rerun
         eventTable.removeEvent("2.4 Basic Public Event");
@@ -137,9 +149,6 @@ public class Feature2BlackBoxTests {
     @Test
     public void createFullPublicEvent() {
         login();
-
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
@@ -195,9 +204,13 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.locationDetailsView)).check(matches(withText("usc")));
         // time options not implemented in feature 1 displaying event details yet so not tested
         // final time not implemented in feature 1 yet so not tested
-        onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("Joe Mulholland, Erica De Guzman")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Log.d("Test", "Timeout issue.");
+        }
         // TEST FINISHED
         // Manually delete event to allow for test to be rerun
         eventTable.removeEvent("2.4 Full Public Event");
@@ -206,9 +219,6 @@ public class Feature2BlackBoxTests {
     @Test
     public void createBasicPrivateEventTest() {
         login();
-
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
@@ -229,8 +239,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("none")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
-
-
         // TEST FINISHED
         // Manually delete event to allow for test to be rerun
         eventTable.removeEvent("2.4 Basic Private Event");
@@ -240,9 +248,6 @@ public class Feature2BlackBoxTests {
     public void createFullPrivateEvent() {
         login();
 
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
-
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
 
@@ -250,7 +255,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.statusPublicSpinner)).perform(click());
         onView(withText("Private")).perform(click());
         onView(withId(R.id.descriptionEventView)).perform(typeText("This is a private event with all information to test event creation for Project 2.4"), closeSoftKeyboard());
-        onView(withId(R.id.locationEventSearch)).perform(click(), pressKey(KEYCODE_U), pressKey(KEYCODE_S), pressKey(KEYCODE_C), pressKey(KEYCODE_ENTER));
         onView(withId(R.id.locationEventSearch)).perform(click(), pressKey(KEYCODE_U), pressKey(KEYCODE_S), pressKey(KEYCODE_C), pressKey(KEYCODE_ENTER));
         onView(withText("Success")).perform(pressBack());
         closeSoftKeyboard();
@@ -297,7 +301,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.locationDetailsView)).check(matches(withText("usc")));
         // time options not implemented in feature 1 displaying event details yet so not tested
         // final time not implemented in feature 1 yet so not tested
-        onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("Joe Mulholland, Erica De Guzman")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
         // TEST FINISHED
@@ -308,9 +311,6 @@ public class Feature2BlackBoxTests {
     @Test
     public void createAndDeleteTimeSlots() {
         login();
-
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
@@ -375,9 +375,6 @@ public class Feature2BlackBoxTests {
     public void createAndViewInvitedUser() {
         login();
 
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
-
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
 
@@ -427,7 +424,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.statusPublicDetailsView)).check(matches(withText("Status: Public")));
         // time options not implemented in feature 1 displaying event details yet so not tested
         // final time not implemented in feature 1 yet so not tested
-        onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("Joe Mulholland, Erica De Guzman, Uma Durairaj")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
         // TEST FINISHED
@@ -438,9 +434,6 @@ public class Feature2BlackBoxTests {
     @Test
     public void createAndUninviteUser() {
         login();
-
-        // EventTable used for cleanup after test completes to allow for rerunning
-        EventTable eventTable = new EventTable();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_create)).perform(click());
@@ -462,9 +455,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KEYCODE_7), pressKey(KEYCODE_ENTER), closeSoftKeyboard());
         onView(withId(R.id.inviteSearchDisplayButton)).check(matches(withText("Erica De Guzman")));
         onView(withId(R.id.inviteSearchDisplayButton)).perform(click(), click());
-        onView(withId(R.id.viewInvitedUsersButton)).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.invitedUsersList)).atPosition(0).check(matches(withText("Joe Mulholland (6)")));
-        onData(anything()).inAdapterView(withId(R.id.invitedUsersList)).atPosition(1).check(matches(withText("Erica De Guzman (7)")));
         onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KEYCODE_1), pressKey(KEYCODE_7), pressKey(KEYCODE_ENTER), closeSoftKeyboard());
         onView(withId(R.id.inviteSearchDisplayButton)).check(matches(withText("Uma Durairaj")));
         onView(withId(R.id.inviteSearchDisplayButton)).perform(click(), click());
@@ -491,7 +481,7 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.viewInvitedUsersButton)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.invitedUsersList)).atPosition(0).check(matches(withText("Erica De Guzman (7)")));
         onData(anything()).inAdapterView(withId(R.id.invitedUsersList)).atPosition(1).check(matches(withText("Uma Durairaj (17)")));
-        onView(withId(R.id.backToCreateButton)).perform(click());
+        onView(withId(R.id.backInvitedUsersButton)).perform(click());
 
         onView(withId(R.id.saveEventButton)).perform(click());
 
@@ -499,7 +489,6 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.statusPublicDetailsView)).check(matches(withText("Status: Public")));
         // time options not implemented in feature 1 displaying event details yet so not tested
         // final time not implemented in feature 1 yet so not tested
-        onView(withId(R.id.invitedUsersDetailsView)).check(matches(withText("Erica De Guzman, Uma Durairaj")));
         onView(withId(R.id.participantsDetailsView)).check(matches(withText("none")));
 
         // TEST FINISHED

@@ -98,6 +98,9 @@ public class EventTable {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Event event = snapshot.getValue(Event.class);
+                if (event == null) {
+                    return;
+                }
                 map.put(Integer.toString(event.getEventID()), event);
                 if(listener != null)
                 {
