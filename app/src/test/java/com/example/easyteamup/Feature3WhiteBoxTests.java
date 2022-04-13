@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Mockito.*;
 
-public class Feature3Tests {
+public class Feature3WhiteBoxTests {
     @Test
     public void testAddEvent() {
         EventTable table = new EventTable(true);
