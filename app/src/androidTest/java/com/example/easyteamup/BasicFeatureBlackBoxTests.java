@@ -43,7 +43,7 @@ public class BasicFeatureBlackBoxTests {
             new ActivityScenarioRule<LoginActivity>(LoginActivity.class);
 
     @Test
-    public void login() {
+    public void loginTest() {
         onView(withId(R.id.usernameLoginBox)).perform(typeText("bob"));
         onView(withId(R.id.passwordLoginBox)).perform(typeText("bobbobbob"), closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
@@ -57,11 +57,12 @@ public class BasicFeatureBlackBoxTests {
     }
 
     @Test
-    public void displayTest() {
-        login();
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_userEventDisplay)).perform(click());
-        onView(withId(R.id.radioButton2)).perform(click());
+    public void loginFailTest() {
+        onView(withId(R.id.usernameLoginBox)).perform(typeText("userDNE"));
+        onView(withId(R.id.passwordLoginBox)).perform(typeText("nopassword"));
+        onView(withId(R.id.loginButton)).perform(click());
+
+        onView(withText("Error")).check(matches(isDisplayed()));
     }
 
     @Test

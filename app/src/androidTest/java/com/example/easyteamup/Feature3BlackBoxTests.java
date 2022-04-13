@@ -107,6 +107,9 @@ public class Feature3BlackBoxTests {
 
         onView(withId(R.id.rejectInviteButton)).perform(click());
 
+        onView(withId(R.id.radioButton2)).perform(click());
+        onView(withText(chosenEvent.getEventName())).check(doesNotExist());
+
         onView(withId(R.id.radioButton3)).perform(click());
         onView(withText(chosenEvent.getEventName())).check(doesNotExist());
 
