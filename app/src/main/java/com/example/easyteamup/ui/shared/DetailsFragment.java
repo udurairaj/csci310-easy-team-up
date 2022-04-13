@@ -97,6 +97,7 @@ public class DetailsFragment extends Fragment {
 
         event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
         if (event.getInvitees() != null) {
+            Log.d("INVITEES", "DOES THIS PRINT");
             if (event.getInvitees().contains(user.getUserID())) {
                 if (event.getParticipants() == null ||
                         !event.getParticipants().contains(user.getUserID())) {
