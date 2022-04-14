@@ -81,6 +81,9 @@ public class UserTable {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
+                if (user == null) {
+                    return;
+                }
                 map.put(Integer.toString(user.getUserID()), user);
             }
             public void onCancelled(DatabaseError dbError) {
