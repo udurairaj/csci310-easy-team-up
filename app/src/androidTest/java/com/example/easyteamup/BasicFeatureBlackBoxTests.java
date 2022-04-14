@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -172,5 +173,62 @@ public class BasicFeatureBlackBoxTests {
         mary.setPhone("1237894567");
         mary.setOtherInfo("Mary Mary quite contrary");
         userTable.editUser(mary);
+    }
+
+    @Test
+    public void signupValid()
+    {
+        UserTable ut = new UserTable();
+
+//        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+//        StringBuilder salt = new StringBuilder();
+//        Random rnd = new Random();
+//        while (salt.length() < 10) { // length of the random string.
+//            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+//            salt.append(SALTCHARS.charAt(index));
+//        }
+//        String username = salt.toString();
+
+
+        onView(withId(R.id.usernameSignupBox)).perform(typeText("mikey123"), closeSoftKeyboard());
+        onView(withId(R.id.passwordSignupBox)).perform(typeText("nljkjkjl"), closeSoftKeyboard());
+        onView(withId(R.id.nameSignupBox)).perform(typeText("michael"), closeSoftKeyboard());
+        onView(withId(R.id.emailSignupBox)).perform(typeText("mikey123@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.signupButton)).perform(click());
+        ut.removeUser("mikey123");
+        //Espresso.pressBack();
+
+
+    }
+
+    @Test
+    public void signupUserAlreadyExists()
+    {
+        onView(withId(R.id.usernameSignupBox)).perform(typeText("bob"), closeSoftKeyboard());
+        onView(withId(R.id.passwordSignupBox)).perform(typeText("bobbobbob"), closeSoftKeyboard());
+        onView(withId(R.id.nameSignupBox)).perform(typeText("bobbobbob"), closeSoftKeyboard());
+        onView(withId(R.id.emailSignupBox)).perform(typeText("bobbobbob"), closeSoftKeyboard());
+        onView(withId(R.id.signupButton)).perform(click());
+        Espresso.pressBack();
+    }
+
+    @Test
+    public void signupNoPassword()
+    {
+//        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+//        StringBuilder salt = new StringBuilder();
+//        Random rnd = new Random();
+//        while (salt.length() < 10) { // length of the random string.
+//            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+//            salt.append(SALTCHARS.charAt(index));
+//        }
+//        String username = salt.toString();
+
+
+        onView(withId(R.id.usernameSignupBox)).perform(typeText("thiswontwork"), closeSoftKeyboard());
+        onView(withId(R.id.nameSignupBox)).perform(typeText("michael"), closeSoftKeyboard());
+        onView(withId(R.id.emailSignupBox)).perform(typeText("whouseshotmail@hotmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.signupButton)).perform(click());
+        //Espresso.pressBack();
     }
 }

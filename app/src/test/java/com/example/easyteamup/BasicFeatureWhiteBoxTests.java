@@ -44,4 +44,20 @@ public class BasicFeatureWhiteBoxTests {
         Assert.assertEquals("User phone number stored in database correctly", user.getPhone(), "1234567890");
         Assert.assertEquals("User profile pic stored in database correctly", user.getProfilePic(), "image");
     }
+
+    @Test
+    public void testSignUp()
+    {
+        UserTable ut = new UserTable(true);
+        User user = new User("steph", "steph@rcbc.edu", "steph", "steph123");
+        Assert.assertNotEquals(ut.getUser(ut.addUser(user, true)), null);
+    }
+
+    @Test
+    public void testBadUser()
+    {
+        UserTable ut = new UserTable(true);
+        User user2 = new User();
+        Assert.assertNull(ut.getUser(ut.addUser(user2, true)).getName());
+    }
 }
