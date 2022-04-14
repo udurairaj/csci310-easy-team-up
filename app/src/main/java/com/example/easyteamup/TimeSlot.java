@@ -28,6 +28,7 @@ public class TimeSlot implements Serializable
         this.duration = 0;
         this.cal = Calendar.getInstance();
         cal.set(year, month, day, hour, minute);
+        //Log.d("datetime", cal.getTime().toString());
         cal.set(Calendar.SECOND, 0);
     }
 

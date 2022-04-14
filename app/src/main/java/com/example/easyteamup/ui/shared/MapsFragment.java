@@ -62,6 +62,7 @@ public class MapsFragment extends Fragment{
                         double latitude = loc.getLatitude();
                         Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title));
                         marker.setTag(marker.getPosition());
+                        marker.setTitle("marker " + i);
                     }
                     googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
@@ -155,5 +156,7 @@ public class MapsFragment extends Fragment{
         });
         return view;
     }
+
+
 
 }
