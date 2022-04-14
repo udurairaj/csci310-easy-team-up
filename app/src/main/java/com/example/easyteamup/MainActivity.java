@@ -3,6 +3,7 @@ package com.example.easyteamup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -70,4 +71,5 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

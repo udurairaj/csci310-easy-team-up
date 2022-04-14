@@ -13,6 +13,6 @@ public class Feature3Tests {
     public void testAddEvent() {
         EventTable table = new EventTable(true);
         Event event = new Event(999, "My Event", true);
-       Assert.assertNotEquals(table.getEvent(table.addEvent(event, true)), null);
+        Assert.assertNotEquals(table.getEvent(table.addEvent(event, true)), null);
     }
 }
