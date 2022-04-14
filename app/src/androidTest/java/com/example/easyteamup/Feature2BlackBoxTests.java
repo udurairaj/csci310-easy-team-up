@@ -1,6 +1,8 @@
 package com.example.easyteamup;
 
+import static android.view.KeyEvent.KEYCODE_0;
 import static android.view.KeyEvent.KEYCODE_1;
+import static android.view.KeyEvent.KEYCODE_2;
 import static android.view.KeyEvent.KEYCODE_5;
 import static android.view.KeyEvent.KEYCODE_6;
 import static android.view.KeyEvent.KEYCODE_7;
@@ -105,6 +107,9 @@ public class Feature2BlackBoxTests {
         onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KEYCODE_5), pressKey(KEYCODE_ENTER));
         onView(withText("Error")).perform(pressBack());
         closeSoftKeyboard();
+        onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KEYCODE_0), pressKey(KEYCODE_ENTER));
+        onView(withId(R.id.inviteSearchDisplayButton)).check(matches(withText("User not found. Click to try again.")));
+        closeSoftKeyboard();
 
         onView(withId(R.id.locationEventSearch)).perform(click(), pressKey(KEYCODE_R), pressKey(KEYCODE_ENTER));
         onView(withText("Error")).perform(pressBack());
@@ -147,7 +152,7 @@ public class Feature2BlackBoxTests {
     }
 
     @Test
-    public void createFullPublicEvent() {
+    public void createFullPublicEventTest() {
         login();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -245,7 +250,7 @@ public class Feature2BlackBoxTests {
     }
 
     @Test
-    public void createFullPrivateEvent() {
+    public void createFullPrivateEventTest() {
         login();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -309,7 +314,7 @@ public class Feature2BlackBoxTests {
     }
 
     @Test
-    public void createAndDeleteTimeSlots() {
+    public void createAndDeleteTimeSlotsTest() {
         login();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -372,7 +377,7 @@ public class Feature2BlackBoxTests {
     }
 
     @Test
-    public void createAndViewInvitedUser() {
+    public void createAndViewInvitedUserTest() {
         login();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -432,7 +437,7 @@ public class Feature2BlackBoxTests {
     }
 
     @Test
-    public void createAndUninviteUser() {
+    public void createAndUninviteUserTest() {
         login();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
