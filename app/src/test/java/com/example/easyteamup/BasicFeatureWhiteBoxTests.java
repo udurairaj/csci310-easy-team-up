@@ -34,6 +34,7 @@ public class BasicFeatureWhiteBoxTests {
         userTest.setEmail("testedit@gmail.com");
         userTest.setPhone("1234567890");
         userTest.setProfilePic("image");
+        userTest.setOtherInfo("Test student at USC");
         userTable.editUser(userTest, true);
         user = userTable.getUser(ID);
         Assert.assertEquals("User name stored in database correctly", user.getName(), "Test Edit");
@@ -43,6 +44,7 @@ public class BasicFeatureWhiteBoxTests {
         Assert.assertEquals("User password stored in database correctly", user.getPassword(), "testing123");
         Assert.assertEquals("User phone number stored in database correctly", user.getPhone(), "1234567890");
         Assert.assertEquals("User profile pic stored in database correctly", user.getProfilePic(), "image");
+        Assert.assertEquals("User other info stored in database correctly", user.getOtherInfo(), "Test student at USC");
     }
 
     @Test
