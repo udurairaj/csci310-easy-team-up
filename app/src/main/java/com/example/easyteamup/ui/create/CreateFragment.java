@@ -81,6 +81,8 @@ public class CreateFragment extends Fragment {
         displayInvitedUserButton = (TextView)root.findViewById(R.id.inviteSearchDisplayButton);
         displayInvitedUserButton.setVisibility(View.GONE);
 
+        MainActivity.infoBundle.putBoolean("editing", false);
+
         restorePageEntries();
 
         Button createButton = (Button)root.findViewById(R.id.saveEventButton);
@@ -139,7 +141,8 @@ public class CreateFragment extends Fragment {
                         locationfail.setMessage("Location not found. Please select a more specific location or address.");
                         locationfail.setTitle("Error");
                         locationfail.setPositiveButton("Close", null);
-                        locationfail.create().show();                    }
+                        locationfail.create().show();
+                    }
                 }
                 return true;
             }
@@ -282,7 +285,6 @@ public class CreateFragment extends Fragment {
     public void onClickSetTime(View view) {
         savePageEntries();
 
-        MainActivity.infoBundle.putBoolean("editing", false);
         Fragment setDueFrag = new SetDueFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setDueFrag);
@@ -310,7 +312,6 @@ public class CreateFragment extends Fragment {
             MainActivity.infoBundle.putIntegerArrayList("invitedUserIDs", invitedUsersTemp);
             MainActivity.infoBundle.putStringArray("invitedUsersArray", invitedUsersStringArray);
 
-            MainActivity.infoBundle.putBoolean("editing", false);
             Fragment invitedFrag = new InvitedUsersFragment();
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.nav_host_fragment_content_main, invitedFrag);
@@ -333,7 +334,6 @@ public class CreateFragment extends Fragment {
             timeOptionsStringArray = new String[]{};
         }
         MainActivity.infoBundle.putStringArray("timeOptionsArray", timeOptionsStringArray);
-        MainActivity.infoBundle.putBoolean("editing", false);
 
         Fragment timeSlotFrag = new ViewTimeSlotsFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

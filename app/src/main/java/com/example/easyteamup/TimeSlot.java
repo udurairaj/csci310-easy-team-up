@@ -29,6 +29,7 @@ public class TimeSlot implements Serializable
         this.cal = Calendar.getInstance();
         cal.set(year, month, day, hour, minute);
         //Log.d("datetime", cal.getTime().toString());
+        cal.set(Calendar.SECOND, 0);
     }
 
     // constructor
@@ -42,7 +43,6 @@ public class TimeSlot implements Serializable
         this.duration = duration;
         this.cal = Calendar.getInstance();
         cal.set(year, month, day, hour, minute);
-        Log.d("datetime", cal.getTime().toString());
     }
 
     public int getMonth() { return month; }
@@ -63,6 +63,7 @@ public class TimeSlot implements Serializable
         if (cal == null) {
             cal = Calendar.getInstance();
             cal.set(year, month, day, hour, minute);
+            cal.set(Calendar.SECOND, 0);
         }
         return cal.getTime();
     }
@@ -72,7 +73,9 @@ public class TimeSlot implements Serializable
         if (cal == null) {
             cal = Calendar.getInstance();
             cal.set(year, month, day, hour, minute);
+            cal.set(Calendar.SECOND, 0);
         }
+        cal.set(Calendar.SECOND, 0);
         return cal.getTime().toString();
     }
 

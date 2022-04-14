@@ -97,6 +97,7 @@ public class DetailsFragment extends Fragment {
 
         event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
         if (event.getInvitees() != null) {
+            Log.d("INVITEES", "DOES THIS PRINT");
             if (event.getInvitees().contains(user.getUserID())) {
                 if (event.getParticipants() == null ||
                         !event.getParticipants().contains(user.getUserID())) {
@@ -173,7 +174,9 @@ public class DetailsFragment extends Fragment {
         TextView timeSlots = (TextView) view.findViewById(R.id.timeOptionsDetailsView);
         timeSlots.setText(makeTimeString(event.getTimeOptions()));
         TextView location = (TextView) view.findViewById(R.id.locationDetailsView);
-        location.setText(event.getLocation().getName());
+        if (event.getLocation() != null) {
+            location.setText(event.getLocation().getName());
+        }
     }
 
     public String makeTimeString(ArrayList<TimeSlot> times) {

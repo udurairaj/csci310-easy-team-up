@@ -94,7 +94,7 @@ public class InvitedUsersFragment extends Fragment {
             }
         });
 
-        Button backButton = (Button)root.findViewById(R.id.backButton);
+        Button backButton = (Button)root.findViewById(R.id.backInvitedUsersButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

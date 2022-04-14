@@ -89,6 +89,16 @@ public class Event implements Serializable {
         invitees.remove(invitees.indexOf(user.getUserID()));
     }
 
+    public void invite(User user) {
+        if (invitees == null) {
+            invitees = new ArrayList<>();
+        }
+        if (invitees.contains(user.getUserID())) {
+            return;
+        }
+        invitees.add(user.getUserID());
+    }
+
     public void setTimeOptions(ArrayList<TimeSlot> list) { this.timeOptions = list; }
 
 

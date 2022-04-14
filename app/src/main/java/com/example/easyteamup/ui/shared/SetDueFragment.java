@@ -43,9 +43,9 @@ public class SetDueFragment extends Fragment {
         container.removeAllViews();
         View root = inflater.inflate(R.layout.fragment_set_due, container, false);
 
-        datePicker = (DatePicker) root.findViewById(R.id.datePicker);
-        timePicker = (TimePicker) root.findViewById(R.id.timePicker);
-        saveButton = (Button) root.findViewById(R.id.dateTimeSet);
+        datePicker = (DatePicker) root.findViewById(R.id.dateDuePicker);
+        timePicker = (TimePicker) root.findViewById(R.id.timeDuePicker);
+        saveButton = (Button) root.findViewById(R.id.dateTimeDueSet);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

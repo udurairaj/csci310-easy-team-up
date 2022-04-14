@@ -89,7 +89,7 @@ public class ViewTimeSlotsFragment extends Fragment {
             }
         });
 
-        Button backButton = (Button)root.findViewById(R.id.backButton);
+        Button backButton = (Button)root.findViewById(R.id.backTimeSlotViewButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
