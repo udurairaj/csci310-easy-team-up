@@ -225,7 +225,7 @@ public class Feature3BlackBoxTests {
         onView(withId(R.id.dateTimeDueSet)).perform(click());
         onView(withId(R.id.dueTimeEventView)).check(matches(withText("Sun May 15 20:20:00 PDT 2022")));
 
-        onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KeyEvent.KEYCODE_7),
+        onView(withId(R.id.inviteEventSearch)).perform(click(), pressKey(KeyEvent.KEYCODE_6),
                 pressKey(KeyEvent.KEYCODE_ENTER), closeSoftKeyboard());
         onView(withId(R.id.inviteSearchDisplayButton)).perform(click(), click());
 
@@ -247,12 +247,13 @@ public class Feature3BlackBoxTests {
         onView(withId(R.id.descriptionDetailsView)).check(matches(withText("testing editing")));
         onView(withId(R.id.locationDetailsView)).check(matches(withText("usc")));
 
-        Event oldEvent = new Event(loggedIn.getUserID(), oldName, oldStatus);
-        oldEvent.setDescription(oldInfo);
-        oldEvent.setLocation(oldLocation);
-        oldEvent.setInvitees(oldInvitees);
-        oldEvent.setDueTime(oldDueTime);
-        oldEvent.setTimeOptions(oldTimeSlots);
-        eventTable.editEvent(oldEvent);
+        chosenEvent.setEventName(oldName);
+        chosenEvent.setStatusPublic(oldStatus);
+        chosenEvent.setDescription(oldInfo);
+        chosenEvent.setLocation(oldLocation);
+        chosenEvent.setInvitees(oldInvitees);
+        chosenEvent.setDueTime(oldDueTime);
+        chosenEvent.setTimeOptions(oldTimeSlots);
+        eventTable.editEvent(chosenEvent);
     }
 }
