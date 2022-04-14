@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import java.util.Random;
 
 @RunWith(AndroidJUnit4.class)
-public class Feature1Tests {
+public class Feature1BlackBoxTests {
 
     @Rule
     public ActivityScenarioRule<LoginActivity> loginRule =

@@ -5,7 +5,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class Feature1Tests {
+public class Feature1WhiteBoxTests {
     @Test
     public void testSignUp()
     {
