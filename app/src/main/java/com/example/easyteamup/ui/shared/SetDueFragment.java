@@ -13,13 +13,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import com.example.easyteamup.EditEvent;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.EditEvent;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.ui.create.CreateFragment;
 
-import java.sql.Time;
 import java.util.Date;
 
 public class SetDueFragment extends Fragment {

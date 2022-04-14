@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.easyteamup.Event;
 import com.example.easyteamup.Location;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;

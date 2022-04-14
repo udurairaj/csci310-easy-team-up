@@ -1,12 +1,7 @@
 package com.example.easyteamup.ui.shared;
 
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,21 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.easyteamup.EditEvent;
+import com.example.easyteamup.ui.EditEvent;
 import com.example.easyteamup.Event;
-import com.example.easyteamup.Location;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
-import com.example.easyteamup.databinding.FragmentProfileBinding;
 import com.example.easyteamup.ui.userEventDisplay.UserEventDisplayFragment;
 
 import java.util.ArrayList;

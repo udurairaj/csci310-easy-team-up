@@ -2,7 +2,6 @@ package com.example.easyteamup.ui.profile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.easyteamup.EditEvent;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.EditEvent;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.ui.create.CreateFragment;

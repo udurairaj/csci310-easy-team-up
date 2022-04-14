@@ -94,7 +94,7 @@
         tools:layout="@layout/fragment_other_profile" />
     <fragment
         android:id="@+id/editEvent"
-        android:name="com.example.easyteamup.EditEvent"
+        android:name="com.example.easyteamup.ui.EditEvent"
         android:label="fragment_edit_event"
         tools:layout="@layout/fragment_edit_event" />
     <fragment

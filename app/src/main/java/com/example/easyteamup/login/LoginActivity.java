@@ -2,14 +2,13 @@ package com.example.easyteamup.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.UserTable;

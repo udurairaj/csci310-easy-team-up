@@ -1,10 +1,14 @@
-package com.example.easyteamup;
+package com.example.easyteamup.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.easyteamup.EventTable;
+import com.example.easyteamup.R;
+import com.example.easyteamup.User;
+import com.example.easyteamup.UserTable;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 

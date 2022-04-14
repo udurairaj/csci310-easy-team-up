@@ -1,17 +1,113 @@
 package com.example.easyteamup;
 
-import android.util.Log;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
-public class Feature2WhiteBoxTests {
+public class AllWhiteBoxTests {
 
-    private EventTable eventTable = new EventTable(true);
     private UserTable userTable = new UserTable(true);
+    private EventTable eventTable = new EventTable(true);
+
+    @Test
+    public void userTableContainsTest() {
+        User userTest = new User("Test", "test@gmail.com", "usertotest", "testing123");
+        Assert.assertEquals(userTable.contains("usertotest"), null);
+
+        userTable.addUser(userTest, true);
+        Assert.assertNotEquals(userTable.contains("usertotest"), null);
+    }
+
+    @Test
+    public void editProfileTest() {
+        User userTest = new User("Test", "test@gmail.com", "usertotest", "testing123");
+        Assert.assertEquals(userTable.contains("usertotest"), null);
+        int ID = userTable.addUser(userTest, true);
+        Assert.assertNotEquals(userTable.contains("usertotest"), null);
+        User user = userTable.getUser(ID);
+        Assert.assertEquals("User name stored in database correctly", user.getName(), "Test");
+        Assert.assertEquals("User email stored in database correctly", user.getEmail(), "test@gmail.com");
+        Assert.assertEquals("User username stored in database correctly", user.getUsername(), "usertotest");
+        Assert.assertEquals("User stored in database with correct ID", user.getUserID(), ID);
+        Assert.assertEquals("User password stored in database correctly", user.getPassword(), "testing123");
+
+        userTest.setName("Test Edit");
+        userTest.setUsername("usertotestedit");
+        userTest.setEmail("testedit@gmail.com");
+        userTest.setPhone("1234567890");
+        userTest.setProfilePic("image");
+        userTest.setOtherInfo("Test student at USC");
+        userTable.editUser(userTest, true);
+        user = userTable.getUser(ID);
+        Assert.assertEquals("User name stored in database correctly", user.getName(), "Test Edit");
+        Assert.assertEquals("User email stored in database correctly", user.getEmail(), "testedit@gmail.com");
+        Assert.assertEquals("User username stored in database correctly", user.getUsername(), "usertotestedit");
+        Assert.assertEquals("User stored in database with correct ID", user.getUserID(), ID);
+        Assert.assertEquals("User password stored in database correctly", user.getPassword(), "testing123");
+        Assert.assertEquals("User phone number stored in database correctly", user.getPhone(), "1234567890");
+        Assert.assertEquals("User profile pic stored in database correctly", user.getProfilePic(), "image");
+        Assert.assertEquals("User other info stored in database correctly", user.getOtherInfo(), "Test student at USC");
+    }
+
+    @Test
+    public void testSignUp()
+    {
+        UserTable ut = new UserTable(true);
+        User user = new User("steph", "steph@rcbc.edu", "steph", "steph123");
+        Assert.assertNotEquals(ut.getUser(ut.addUser(user, true)), null);
+    }
+
+    @Test
+    public void testBadUser()
+    {
+        UserTable ut = new UserTable(true);
+        User user2 = new User();
+        Assert.assertNull(ut.getUser(ut.addUser(user2, true)).getName());
+    }
+
+    @Test
+    public void testLocation()
+    {
+        Location location = new Location("USC", 34.0224f, 118.2851f);
+        Assert.assertEquals(location.getName(), "USC");
+        Assert.assertEquals(location.getLatitude(), 34.0224, .001);
+        Assert.assertEquals(location.getLongitude(), 118.2851, .001);
+    }
+
+    @Test
+    public void testBadLocation()
+    {
+        Location location = new Location();
+        location.setName("UCLA");
+        location.setLatitude(34.0f);
+        location.setLongitude(119.0f);
+        Assert.assertNotEquals(location.getName(), "USC");
+        Assert.assertNotEquals(location.getLatitude(), 34.0224, .001);
+        Assert.assertNotEquals(location.getLongitude(), 118.2851, .001);
+    }
+
+    @Test
+    public void testTimeSlot()
+    {
+        TimeSlot slot = new TimeSlot("12:03:2001:11:05");
+        Assert.assertEquals(slot.getMonth(), 12);
+        Assert.assertEquals(slot.getDay(), 03);
+        Assert.assertEquals(slot.getYear(), 2001);
+        Assert.assertEquals(slot.getHour(), 11);
+        Assert.assertEquals(slot.getMinute(), 05);
+    }
+
+    @Test
+    public void testBadTimeSlot()
+    {
+        TimeSlot slot = new TimeSlot("07:08:2000:01:30");
+        Assert.assertNotEquals(slot.getMonth(), 12);
+        Assert.assertNotEquals(slot.getDay(), 03);
+        Assert.assertNotEquals(slot.getYear(), 2001);
+        Assert.assertNotEquals(slot.getHour(), 11);
+        Assert.assertNotEquals(slot.getMinute(), 05);
+    }
 
     @Test
     public void testAddBasicPublicEvent() {
@@ -189,7 +285,7 @@ public class Feature2WhiteBoxTests {
     @Test
     public void testRemoveTimeSlotsFromPublicEvent() {
         Event event = new Event(999, "My Public Event Test", true);
-        int ID  = eventTable.addEvent(event, true);
+        int ID = eventTable.addEvent(event, true);
 
         int day = 20;
         int month = 6;
@@ -197,8 +293,8 @@ public class Feature2WhiteBoxTests {
         int hour = 11;
         int min = 15;
         int dur = 90;
-        String date = String.format("%02d" , month) + "/" + String.format("%02d", day) + "/" + year;
-        String time = String.format("%02d" , hour) + ":" + String.format("%02d" , min);
+        String date = String.format("%02d", month) + "/" + String.format("%02d", day) + "/" + year;
+        String time = String.format("%02d", hour) + ":" + String.format("%02d", min);
         String datetime = date + " " + time;
         TimeSlot timeslot1 = new TimeSlot(datetime, dur);
 
@@ -208,8 +304,8 @@ public class Feature2WhiteBoxTests {
         hour = 8;
         min = 30;
         dur = 30;
-        date = String.format("%02d" , month) + "/" + String.format("%02d", day) + "/" + year;
-        time = String.format("%02d" , hour) + ":" + String.format("%02d" , min);
+        date = String.format("%02d", month) + "/" + String.format("%02d", day) + "/" + year;
+        time = String.format("%02d", hour) + ":" + String.format("%02d", min);
         datetime = date + " " + time;
         TimeSlot timeslot2 = new TimeSlot(datetime, dur);
 
@@ -249,4 +345,64 @@ public class Feature2WhiteBoxTests {
         eventTable.removeEvent(ID, true);
     }
 
+    @Test
+    public void testAddParticipant() {
+        User currentUser = new User();
+        currentUser.setUserID(0);
+
+        Event eventToTest = new Event();
+        eventToTest.addParticipant(currentUser);
+
+        Assert.assertEquals(eventToTest.getParticipants().size(), 1);
+        Assert.assertTrue(eventToTest.getParticipants().contains(0));
+    }
+
+    @Test
+    public void testWithdraw() {
+        User currentUser = new User();
+        currentUser.setUserID(0);
+
+        Event eventToTest = new Event();
+        eventToTest.addParticipant(currentUser);
+
+        eventToTest.removeParticipant(currentUser);
+        Assert.assertEquals(eventToTest.getParticipants().size(), 0);
+        Assert.assertFalse(eventToTest.getParticipants().contains(0));
+    }
+
+    @Test
+    public void testRejectInvite() {
+        User currentUser = new User();
+        currentUser.setUserID(0);
+
+        Event eventToTest = new Event();
+        eventToTest.invite(currentUser);
+        eventToTest.removeInvitee(currentUser);
+
+        Assert.assertEquals(eventToTest.getInvitees().size(), 0);
+        Assert.assertFalse(eventToTest.getInvitees().contains(0));
+    }
+
+    @Test
+    public void testGetAllEvents() {
+        Event eventTest1 = new Event();
+        eventTest1.setEventID(0);
+
+        Event eventTest2 = new Event();
+        eventTest2.setEventID(1);
+
+        Event eventTest3 = new Event();
+        eventTest3.setEventID(2);
+
+        EventTable eventTable = new EventTable(true);
+        eventTable.addEvent(eventTest1, true);
+        eventTable.addEvent(eventTest2, true);
+        eventTable.addEvent(eventTest3, true);
+
+        ArrayList<Event> allEvents = eventTable.getAllEvents();
+        Assert.assertEquals(allEvents.size(), 3);
+        Assert.assertTrue(allEvents.contains(eventTest1));
+        Assert.assertTrue(allEvents.contains(eventTest2));
+        Assert.assertTrue(allEvents.contains(eventTest3));
+    }
 }

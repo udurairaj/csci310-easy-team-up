@@ -12,13 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.easyteamup.EventTable;
 import com.example.easyteamup.Event;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.OnIntegerChangeListener;
 import com.example.easyteamup.R;
-import com.example.easyteamup.UserTable;
 import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
-import com.example.easyteamup.ui.profile.EditProfileFragment;
-import com.example.easyteamup.ui.shared.DetailsFragment;
 
 import java.util.ArrayList;
 

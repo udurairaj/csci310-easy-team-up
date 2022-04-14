@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasValue;
 
 import android.app.LauncherActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.test.espresso.contrib.DrawerActions;
@@ -69,6 +70,11 @@ public class Feature3BlackBoxTests {
 
         login();
         onView(withId(R.id.radioButton2)).perform(click());
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Log.d("Test", "Timeout issue.");
+        }
         onData(anything()).inAdapterView(withId(R.id.list)).atPosition(0).perform(click());
 
         Event chosenEvent = eventTable.getEvent(eventTable.getInvitedEventIDs().get(0));

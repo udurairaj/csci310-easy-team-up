@@ -1,9 +1,8 @@
-package com.example.easyteamup;
+package com.example.easyteamup.ui;
 
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.easyteamup.Event;
 import com.example.easyteamup.Location;
-import com.example.easyteamup.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
-import com.example.easyteamup.databinding.FragmentCreateBinding;
 import com.example.easyteamup.ui.create.InvitedUsersFragment;
 import com.example.easyteamup.ui.create.ViewTimeSlotsFragment;
 import com.example.easyteamup.ui.shared.DetailsFragment;

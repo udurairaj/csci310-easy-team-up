@@ -7,7 +7,7 @@
     android:background="#990000"
     android:backgroundTint="#990000"
     android:textColor="#FFFFFF"
-    tools:context=".EditEvent">
+    tools:context=".ui.EditEvent">
 
     <TextView
         android:id="@+id/textView"

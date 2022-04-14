@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.easyteamup.EditEvent;
-import com.example.easyteamup.MainActivity;
+import com.example.easyteamup.ui.EditEvent;
+import com.example.easyteamup.ui.MainActivity;
 import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 
