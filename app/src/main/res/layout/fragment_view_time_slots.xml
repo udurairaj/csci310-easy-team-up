@@ -22,12 +22,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/moreInfo"
+        android:id="@+id/selectThreeText"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:text="Click to delete a time slot."
+        android:text="Select up to 3 time slot availabilities"
         android:textColor="#000000"
         android:textSize="20sp"
+        android:layout_marginBottom="7dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/deleteText"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:text="Click to delete a time slot"
+        android:textColor="#000000"
+        android:textSize="16sp"
         android:layout_gravity="center" />
 
     <ListView

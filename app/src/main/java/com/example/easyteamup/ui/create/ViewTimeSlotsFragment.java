@@ -2,6 +2,7 @@ package com.example.easyteamup.ui.create;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -25,7 +26,6 @@ public class ViewTimeSlotsFragment extends Fragment {
 
     ListView timeSlotsList = null;
     ArrayAdapter listAdapter = null;
-    ArrayAdapter listAdapterSub = null;
 
     public ViewTimeSlotsFragment() {
         // Required empty public constructor
@@ -81,11 +81,20 @@ public class ViewTimeSlotsFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment setTimeFrag = new SetTimeSlotFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setTimeFrag);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (timeSlotsList.getAdapter().getCount() < 3) {
+                    Fragment setTimeFrag = new SetTimeSlotFragment();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, setTimeFrag);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+                else {
+                    AlertDialog.Builder fail = new AlertDialog.Builder(getContext());
+                    fail.setMessage("Only 3 time slots allowed. Please delete one time slot to create a new availability.");
+                    fail.setTitle("Error");
+                    fail.setPositiveButton("Close", null);
+                    fail.create().show();
+                }
             }
         });
 
