@@ -51,7 +51,7 @@ public class NotificationHandler {
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                Log.i("NOTIFY", "description changed");
             }
 
             @Override
@@ -67,7 +67,7 @@ public class NotificationHandler {
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                Log.i("NOTIFY", "duetime changed");
             }
 
             @Override
@@ -83,7 +83,7 @@ public class NotificationHandler {
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                Log.i("NOTIFY", "location changed");
             }
 
             @Override
@@ -99,7 +99,7 @@ public class NotificationHandler {
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                Log.i("NOTIFY", "status changed");
             }
 
             @Override
@@ -115,7 +115,7 @@ public class NotificationHandler {
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                Log.i("NOTIFY", "time options changed");
             }
 
             @Override

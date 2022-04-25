@@ -1,6 +1,7 @@
 package com.example.easyteamup.ui;
 
 import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public static UserTable userTable = new UserTable();
     public static EventTable eventTable = new EventTable();
     public static NotificationHandler handler = new NotificationHandler();
+    private NotificationChannel channel = null;
+    private NotificationManager manager = null;
+    private int notifCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID,
+                "notifications", NotificationManager.IMPORTANCE_DEFAULT);
+        manager = (NotificationManager) getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
     }
 
     @Override
@@ -89,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+        nm.notify(notifCount++, builder.build());
     }
 
 }
