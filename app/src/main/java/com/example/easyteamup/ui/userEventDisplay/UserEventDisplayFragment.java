@@ -1,6 +1,7 @@
 package com.example.easyteamup.ui.userEventDisplay;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,10 @@ import com.example.easyteamup.OnIntegerChangeListener;
 import com.example.easyteamup.R;
 import com.example.easyteamup.databinding.FragmentUserEventDisplayBinding;
 import com.example.easyteamup.ui.shared.DetailsFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -70,12 +75,15 @@ public class UserEventDisplayFragment extends Fragment {
             }
         });
 
-        table.setOnIntegerChangeListener(new OnIntegerChangeListener() {
+        FirebaseDatabase.getInstance().getReference().child("events").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onIntegerChanged(int newValue) {
-                if (getContext() != null) {
-                    makeDisplay(filterEvents());
-                }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                makeDisplay(filterEvents());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("ERROR", error.toString());
             }
         });
 
