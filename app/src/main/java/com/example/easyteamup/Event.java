@@ -2,6 +2,14 @@ package com.example.easyteamup;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -67,6 +75,20 @@ public class Event implements Serializable {
             participants = new ArrayList<>();
         }
         participants.add(user.getUserID());
+
+        DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
+                .child(Integer.toString(eventID)).child("eventName");
+        listening.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("NOTIFY", "name changed");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Error", error.toString());
+            }
+        });
     }
 
     public void removeParticipant(User user) {
