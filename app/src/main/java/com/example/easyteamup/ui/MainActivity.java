@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.easyteamup.EventTable;
+import com.example.easyteamup.Notification;
 import com.example.easyteamup.NotificationHandler;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
@@ -15,6 +16,7 @@ import com.example.easyteamup.UserTable;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easyteamup.databinding.ActivityMainBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public static Bundle infoBundle = new Bundle();
     public static UserTable userTable = new UserTable();
     public static EventTable eventTable = null;
-    public static NotificationHandler handler = new NotificationHandler();
     private NotificationChannel channel = null;
     private NotificationManager manager = null;
     private int notifCount = 0;
@@ -68,12 +76,35 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        channel = new NotificationChannel("my notifs",
+        channel = new NotificationChannel("channel",
                 "notifications", NotificationManager.IMPORTANCE_DEFAULT);
         manager = (NotificationManager) getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
         eventTable = new EventTable();
 
+        FirebaseDatabase.getInstance().getReference().child("users").child(Integer.toString(userID))
+                .child("notifications").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User tempUser = userTable.getUser(userID);
+                if (tempUser.getNotifications() != null) {
+                    if (tempUser.getNotifications().size() > 1) {
+                        if (tempUser.getNotifications().size() % 2 == 0) {
+                            sendNotification();
+                            Log.i("NOTIFY", "sent");
+                            tempUser.getNotifications().remove(0);
+                            tempUser.getNotifications().remove(0);
+                            userTable.editUser(tempUser);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -93,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder
-                (this, NotificationChannel.DEFAULT_CHANNEL_ID)
+        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+
+        NotificationCompat.Builder notif = new NotificationCompat.Builder
+                (this, "channel")
                 .setSmallIcon(R.drawable.app_icon)
                 .setContentTitle("Easy Team Up")
                 .setContentText("TEST NOTIFICATION")
@@ -102,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoCancel(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
-        nm.notify(notifCount++, builder.build());
+        nm.notify(notifCount++, notif.build());
     }
 
 }

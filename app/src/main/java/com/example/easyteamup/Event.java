@@ -32,7 +32,9 @@ public class Event implements Serializable {
 //    private TimeGenerator generator;
 
     public Event() {
-
+        if (notificationHandler == null) {
+            notificationHandler = new NotificationHandler();
+        }
     }
 
     public Event(int owner, String eventName, Boolean statusPublic) {
@@ -77,7 +79,7 @@ public class Event implements Serializable {
         }
         participants.add(user.getUserID());
 
-        MainActivity.handler.editListener(this);
+        notificationHandler.editListener(this);
     }
 
     public void removeParticipant(User user) {

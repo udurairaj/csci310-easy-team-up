@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 public class User implements Serializable {
 
@@ -17,6 +18,7 @@ public class User implements Serializable {
     private String password;
     private String profilePic;
     private String otherInfo;
+    private ArrayList<Notification> notifications;
 
     public User() {
 
@@ -56,6 +58,14 @@ public class User implements Serializable {
     public String getPassword() { return password; }
     public String getProfilePic() { return profilePic; }
     public String getOtherInfo() { return otherInfo; }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }

@@ -49,7 +49,7 @@ public class EventTable {
                         if (event.getParticipants() != null) {
                             if (event.getParticipants().contains(MainActivity.userID)) {
                                 if (!event.getNotificationHandler().getEditListener()) {
-                                    MainActivity.handler.editListener(event);
+                                    event.getNotificationHandler().editListener(event);
                                 }
                             }
                         }
@@ -76,7 +76,7 @@ public class EventTable {
                         if (event.getParticipants() != null) {
                             if (event.getParticipants().contains(MainActivity.userID)) {
                                 if (!event.getNotificationHandler().getEditListener()) {
-                                    MainActivity.handler.editListener(event);
+                                    event.getNotificationHandler().editListener(event);
                                 }
                             }
                         }

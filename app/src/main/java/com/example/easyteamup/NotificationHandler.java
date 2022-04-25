@@ -4,38 +4,71 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.easyteamup.ui.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class NotificationHandler {
     private boolean edit;
+    private boolean constructing;
+    private int editCounter;
+    private Event event;
+    private User user;
+
     public NotificationHandler() {
         this.edit = false;
+        this.constructing = true;
+        editCounter = 0;
+        this.user = MainActivity.userTable.getUser(MainActivity.userID);
     }
 
     public void editListener(Event event) {
-        editEventName(event);
-        editEventDescription(event);
-        editDueTime(event);
-        editLocation(event);
-        editStatusPublic(event);
-        editTimeOptions(event);
+        this.event = event;
         this.edit = true;
+        this.constructing = true;
+        editEventName();
+        editEventDescription();
+        editDueTime();
+        editLocation();
+        editStatusPublic();
+        editTimeOptions();
     }
 
     public boolean getEditListener() {
         return this.edit;
     }
-    public void editEventName(Event event) {
+    public void editEventName() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("eventName");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "name changed " + event.getEventName());
+                    Notification notification = new Notification(event.getEventID(), MainActivity.userID, 1);
+                    ArrayList<Notification> notifications = user.getNotifications();
+                    if (notifications == null) {
+                        notifications = new ArrayList<>();
+                    }
+                    notifications.add(notification);
+                    user.setNotifications(notifications);
+                    MainActivity.userTable.editUser(user);
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
@@ -45,13 +78,25 @@ public class NotificationHandler {
         });
     }
 
-    public void editEventDescription(Event event) {
+    public void editEventDescription() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("description");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "description changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "description changed " + event.getEventName());
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
@@ -61,13 +106,25 @@ public class NotificationHandler {
         });
     }
 
-    public void editDueTime(Event event) {
+    public void editDueTime() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("dueTime");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "duetime changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "duetime changed " + event.getEventName());
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
@@ -77,13 +134,25 @@ public class NotificationHandler {
         });
     }
 
-    public void editLocation(Event event) {
+    public void editLocation() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("location");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "location changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "location changed " + event.getEventName());
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
@@ -93,13 +162,25 @@ public class NotificationHandler {
         });
     }
 
-    public void editStatusPublic(Event event) {
+    public void editStatusPublic() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("statusPublic");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "status changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "status changed " + event.getEventName());
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
@@ -109,13 +190,25 @@ public class NotificationHandler {
         });
     }
 
-    public void editTimeOptions(Event event) {
+    public void editTimeOptions() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("timeOptions");
         listening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "time options changed");
+                if (!constructing) {
+                    Log.i("NOTIFY", "time options changed " + event.getEventName());
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 6) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
             }
 
             @Override
