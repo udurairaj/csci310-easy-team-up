@@ -46,6 +46,9 @@ public class EventTable {
                         {
                             listener.onIntegerChanged(map.size());
                         }
+                        if (event.getParticipants().contains(MainActivity.userID)) {
+                            MainActivity.handler.editListener(event);
+                        }
                     }
                     nextID = lastID + 1;
                 }

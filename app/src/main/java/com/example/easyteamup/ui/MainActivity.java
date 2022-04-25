@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public static NotificationHandler handler = new NotificationHandler();
     private NotificationChannel channel = null;
     private NotificationManager manager = null;
+    private int notifCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID,
+                "notifications", NotificationManager.IMPORTANCE_DEFAULT);
+        manager = (NotificationManager) getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
     }
 
     @Override
@@ -85,11 +91,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendNotification() {
-        channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID,
-                "notifications", NotificationManager.IMPORTANCE_DEFAULT);
-        manager = (NotificationManager) getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(channel);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder
                 (this, NotificationChannel.DEFAULT_CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_icon)
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(this);
-        nm.notify(0, builder.build());
+        nm.notify(notifCount++, builder.build());
     }
 
 }
