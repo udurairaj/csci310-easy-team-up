@@ -1,5 +1,6 @@
 package com.example.easyteamup.ui;
 
+import android.app.NotificationChannel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.easyteamup.UserTable;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -76,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void sendNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder
+                (this, NotificationChannel.DEFAULT_CHANNEL_ID)
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentTitle("Easy Team Up")
+                .setContentText("TEST NOTIFICATION")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
     }
 
 }
