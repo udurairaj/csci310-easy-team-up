@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.easyteamup.EventTable;
+import com.example.easyteamup.NotificationHandler;
 import com.example.easyteamup.R;
 import com.example.easyteamup.User;
 import com.example.easyteamup.UserTable;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static Bundle infoBundle = new Bundle();
     public static UserTable userTable = new UserTable();
     public static EventTable eventTable = new EventTable();
+    public static NotificationHandler handler = new NotificationHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

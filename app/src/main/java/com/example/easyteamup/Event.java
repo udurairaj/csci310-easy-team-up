@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.easyteamup.ui.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,6 @@ public class Event implements Serializable {
     private TimeSlot dueTime;
     private ArrayList<Integer> invitees;
     private ArrayList<TimeSlot> timeOptions;
-//    private NotificationHandler notificationHandler;
     private Location location;
     private TimeSlot finalTime;
 //    private TimeGenerator generator;
@@ -76,19 +76,7 @@ public class Event implements Serializable {
         }
         participants.add(user.getUserID());
 
-        DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
-                .child(Integer.toString(eventID)).child("eventName");
-        listening.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("NOTIFY", "name changed");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Error", error.toString());
-            }
-        });
+        MainActivity.handler.editListener(this);
     }
 
     public void removeParticipant(User user) {
