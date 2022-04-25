@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static int userID = 0;
     public static Bundle infoBundle = new Bundle();
     public static UserTable userTable = new UserTable();
-    public static EventTable eventTable = new EventTable();
+    public static EventTable eventTable = null;
     public static NotificationHandler handler = new NotificationHandler();
     private NotificationChannel channel = null;
     private NotificationManager manager = null;
@@ -68,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        channel = new NotificationChannel(NotificationChannel.DEFAULT_CHANNEL_ID,
+        channel = new NotificationChannel("my notifs",
                 "notifications", NotificationManager.IMPORTANCE_DEFAULT);
         manager = (NotificationManager) getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
+        eventTable = new EventTable();
+
     }
 
     @Override
