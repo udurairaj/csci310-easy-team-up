@@ -46,8 +46,12 @@ public class EventTable {
                         {
                             listener.onIntegerChanged(map.size());
                         }
-                        if (event.getParticipants().contains(MainActivity.userID)) {
-                            MainActivity.handler.editListener(event);
+                        if (event.getParticipants() != null) {
+                            if (event.getParticipants().contains(MainActivity.userID)) {
+                                if (!event.getNotificationHandler().getEditListener()) {
+                                    MainActivity.handler.editListener(event);
+                                }
+                            }
                         }
                     }
                     nextID = lastID + 1;
@@ -68,6 +72,13 @@ public class EventTable {
                         if(listener != null)
                         {
                             listener.onIntegerChanged(map.size());
+                        }
+                        if (event.getParticipants() != null) {
+                            if (event.getParticipants().contains(MainActivity.userID)) {
+                                if (!event.getNotificationHandler().getEditListener()) {
+                                    MainActivity.handler.editListener(event);
+                                }
+                            }
                         }
                     }
                 }

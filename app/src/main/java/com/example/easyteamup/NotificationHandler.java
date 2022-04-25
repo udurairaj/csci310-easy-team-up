@@ -11,8 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class NotificationHandler {
+    private boolean edit;
     public NotificationHandler() {
-
+        this.edit = false;
     }
 
     public void editListener(Event event) {
@@ -22,8 +23,12 @@ public class NotificationHandler {
         editLocation(event);
         editStatusPublic(event);
         editTimeOptions(event);
+        this.edit = true;
     }
 
+    public boolean getEditListener() {
+        return this.edit;
+    }
     public void editEventName(Event event) {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("eventName");

@@ -28,6 +28,7 @@ public class Event implements Serializable {
     private ArrayList<TimeSlot> timeOptions;
     private Location location;
     private TimeSlot finalTime;
+    private NotificationHandler notificationHandler;
 //    private TimeGenerator generator;
 
     public Event() {
@@ -43,7 +44,7 @@ public class Event implements Serializable {
         this.participants = new ArrayList<>();
         this.dueTime = null;
         this.timeOptions = new ArrayList<>();
-//        this.notificationHandler = null;
+        this.notificationHandler = new NotificationHandler();
         this.location = null;
         this.finalTime = null;
 //        this.generator = new TimeGenerator(this);
@@ -58,7 +59,7 @@ public class Event implements Serializable {
     public TimeSlot getDueTime() { return dueTime; }
     public ArrayList<Integer> getInvitees() { return invitees; }
     public ArrayList<TimeSlot> getTimeOptions() { return timeOptions; }
-//    public NotificationHandler getNotificationHandler() { return notificationHandler; }
+    public NotificationHandler getNotificationHandler() { return notificationHandler; }
     public Location getLocation() { return location; }
     public TimeSlot getFinalTime() { return finalTime; }
 
