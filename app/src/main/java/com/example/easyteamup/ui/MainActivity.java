@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationCompat.Builder notif = new NotificationCompat.Builder
                 (this, "channel")
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.notif_icon)
                 .setContentTitle("Easy Team Up")
                 .setContentText("TEST NOTIFICATION")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

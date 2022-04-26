@@ -40,4 +40,18 @@ public class Notification implements Serializable {
     public void setType(int type) {
         this.type = type;
     }
+
+    public String getMessage (int type) {
+        String message = "";
+        if (type == 1) {
+
+        }
+        else if (type == 2) {
+
+        }
+        else if (type == 3) {
+
+        }
+        return message;
+    }
 }
