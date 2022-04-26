@@ -18,13 +18,11 @@ public class NotificationHandler {
     private boolean constructing;
     private int editCounter;
     private Event event;
-    private User user;
 
     public NotificationHandler() {
         this.edit = false;
         this.constructing = true;
         editCounter = 0;
-        this.user = MainActivity.userTable.getUser(MainActivity.userID);
     }
 
     public void editListener(Event event) {
@@ -43,8 +41,8 @@ public class NotificationHandler {
         return this.edit;
     }
 
-    public void sendEditNotif() {
-        Notification notification = new Notification(event.getEventID(), MainActivity.userID, 1);
+    private void sendNotif(User user, int type) {
+        Notification notification = new Notification(event.getEventID(), user.getUserID(), type);
         ArrayList<Notification> notifications = user.getNotifications();
         if (notifications == null) {
             notifications = new ArrayList<>();
@@ -54,16 +52,22 @@ public class NotificationHandler {
         MainActivity.userTable.editUser(user);
     }
 
+    public void sendEditNotif() {
+        sendNotif(MainActivity.userTable.getUser(MainActivity.userID), 1);
+    }
+
     public void sendWithdrawNotif() {
         User owner = MainActivity.userTable.getUser(event.getOwner());
-        Notification notification = new Notification(event.getEventID(), event.getOwner(), 2);
-        ArrayList<Notification> notifications = owner.getNotifications();
-        if (notifications == null) {
-            notifications = new ArrayList<>();
+        sendNotif(owner, 2);
+    }
+
+    public void sendDueTimeNotif() {
+        User owner = MainActivity.userTable.getUser(event.getOwner());
+        sendNotif(owner, 3);
+
+        for (int participant : event.getParticipants()) {
+            sendNotif(MainActivity.userTable.getUser(participant), 3);
         }
-        notifications.add(notification);
-        owner.setNotifications(notifications);
-        MainActivity.userTable.editUser(owner);
     }
 
     public void editEventName() {

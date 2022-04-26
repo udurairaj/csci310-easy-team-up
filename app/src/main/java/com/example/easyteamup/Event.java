@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Event implements Serializable {
 
@@ -29,11 +30,12 @@ public class Event implements Serializable {
     private Location location;
     private TimeSlot finalTime;
     private NotificationHandler notificationHandler;
+    private Timer timer = new Timer();
 //    private TimeGenerator generator;
 
     public Event() {
-        if (notificationHandler == null) {
-            notificationHandler = new NotificationHandler();
+        if (this.notificationHandler == null) {
+            this.notificationHandler = new NotificationHandler();
         }
     }
 
@@ -69,7 +71,10 @@ public class Event implements Serializable {
     public void setEventName(String eventName) { this.eventName = eventName; }
     public void setStatusPublic(Boolean statusPublic) { this.statusPublic = statusPublic; }
     public void setDescription(String description) { this.description = description; }
-    public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
+    public void setDueTime(TimeSlot dueTime) {
+        this.dueTime = dueTime;
+        timer.schedule(new TimeGenerator(this), dueTime.dateTimeAsDate());
+    }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
     public void setLocation(Location location) { this.location = location; }
 
