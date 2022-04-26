@@ -72,8 +72,6 @@ public class Event implements Serializable {
     public void setDescription(String description) { this.description = description; }
     public void setDueTime(TimeSlot dueTime) {
         this.dueTime = dueTime;
-        Timer timer = new Timer();
-        timer.schedule(new TimeGenerator(this), dueTime.dateTimeAsDate());
     }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
     public void setLocation(Location location) { this.location = location; }

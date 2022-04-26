@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 public class EventTable {
     private FirebaseDatabase database;
@@ -24,6 +25,7 @@ public class EventTable {
     private int nextID;
     private Map<String, Event> map;
     private OnIntegerChangeListener listener;
+    private Timer timer = new Timer();
 
     public EventTable() {
         this.database = FirebaseDatabase.getInstance();
@@ -53,6 +55,7 @@ public class EventTable {
                                 }
                             }
                         }
+                        timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
                     }
                     nextID = lastID + 1;
                 }
@@ -102,6 +105,7 @@ public class EventTable {
     }
 
     public int addEvent(Event event) {
+        timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
         DatabaseReference ref = rootRef.child(Integer.toString(this.nextID));
         event.setEventID(this.nextID);
         ref.setValue(event);
@@ -119,6 +123,7 @@ public class EventTable {
                 {
                     listener.onIntegerChanged(map.size());
                 }
+                timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
             }
             public void onCancelled(DatabaseError dbError) {
                 Log.e("Error", dbError.toString());
