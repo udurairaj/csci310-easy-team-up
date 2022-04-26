@@ -96,7 +96,7 @@ public class Event implements Serializable {
         }
         participants.remove(participants.indexOf(user.getUserID()));
 
-        notificationHandler.sendWithdrawNotif();
+        notificationHandler.sendWithdrawNotif(this);
     }
 
     public void removeInvitee(User user) {
