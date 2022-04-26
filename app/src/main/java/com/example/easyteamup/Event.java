@@ -90,6 +90,8 @@ public class Event implements Serializable {
             return;
         }
         participants.remove(participants.indexOf(user.getUserID()));
+
+        notificationHandler.sendWithdrawNotif();
     }
 
     public void removeInvitee(User user) {

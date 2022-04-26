@@ -42,6 +42,30 @@ public class NotificationHandler {
     public boolean getEditListener() {
         return this.edit;
     }
+
+    public void sendEditNotif() {
+        Notification notification = new Notification(event.getEventID(), MainActivity.userID, 1);
+        ArrayList<Notification> notifications = user.getNotifications();
+        if (notifications == null) {
+            notifications = new ArrayList<>();
+        }
+        notifications.add(notification);
+        user.setNotifications(notifications);
+        MainActivity.userTable.editUser(user);
+    }
+
+    public void sendWithdrawNotif() {
+        User owner = MainActivity.userTable.getUser(event.getOwner());
+        Notification notification = new Notification(event.getEventID(), event.getOwner(), 2);
+        ArrayList<Notification> notifications = owner.getNotifications();
+        if (notifications == null) {
+            notifications = new ArrayList<>();
+        }
+        notifications.add(notification);
+        owner.setNotifications(notifications);
+        MainActivity.userTable.editUser(owner);
+    }
+
     public void editEventName() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("eventName");
@@ -49,15 +73,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "name changed " + event.getEventName());
-                    Notification notification = new Notification(event.getEventID(), MainActivity.userID, 1);
-                    ArrayList<Notification> notifications = user.getNotifications();
-                    if (notifications == null) {
-                        notifications = new ArrayList<>();
-                    }
-                    notifications.add(notification);
-                    user.setNotifications(notifications);
-                    MainActivity.userTable.editUser(user);
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
@@ -85,7 +101,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "description changed " + event.getEventName());
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
@@ -113,7 +129,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "duetime changed " + event.getEventName());
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
@@ -141,7 +157,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "location changed " + event.getEventName());
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
@@ -169,7 +185,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "status changed " + event.getEventName());
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
@@ -197,7 +213,7 @@ public class NotificationHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!constructing) {
-                    Log.i("NOTIFY", "time options changed " + event.getEventName());
+                    sendEditNotif();
                 }
                 else {
                     editCounter++;
