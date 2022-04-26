@@ -30,7 +30,6 @@ public class Event implements Serializable {
     private Location location;
     private TimeSlot finalTime;
     private NotificationHandler notificationHandler;
-    private Timer timer = new Timer();
 //    private TimeGenerator generator;
 
     public Event() {
@@ -73,6 +72,7 @@ public class Event implements Serializable {
     public void setDescription(String description) { this.description = description; }
     public void setDueTime(TimeSlot dueTime) {
         this.dueTime = dueTime;
+        Timer timer = new Timer();
         timer.schedule(new TimeGenerator(this), dueTime.dateTimeAsDate());
     }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
