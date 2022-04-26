@@ -15,7 +15,9 @@ public class TimeGenerator extends TimerTask {
 
     @Override
     public void run() {
-        event.generateFinalTime();
-        event.getNotificationHandler().sendDueTimeNotif();
+        if (event != null) {
+            event.generateFinalTime();
+            event.getNotificationHandler().sendDueTimeNotif(event);
+        }
     }
 }

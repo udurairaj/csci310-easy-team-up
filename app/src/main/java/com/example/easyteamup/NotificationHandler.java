@@ -56,12 +56,14 @@ public class NotificationHandler {
         sendNotif(MainActivity.userTable.getUser(MainActivity.userID), 1);
     }
 
-    public void sendWithdrawNotif() {
+    public void sendWithdrawNotif(Event event) {
+        this.event = event;
         User owner = MainActivity.userTable.getUser(event.getOwner());
         sendNotif(owner, 2);
     }
 
-    public void sendDueTimeNotif() {
+    public void sendDueTimeNotif(Event event) {
+        this.event = event;
         User owner = MainActivity.userTable.getUser(event.getOwner());
         sendNotif(owner, 3);
 
