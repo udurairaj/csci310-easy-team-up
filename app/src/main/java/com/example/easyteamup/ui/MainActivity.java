@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationChannel channel = null;
     private NotificationManager manager = null;
     private int notifCount = 0;
+    private String lastNotif = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,18 +87,35 @@ public class MainActivity extends AppCompatActivity {
                 .child("notifications").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("NOTIFY", "data change");
+                ArrayList<Notification> notifications = new ArrayList<>();
+                for (DataSnapshot notif : snapshot.getChildren()) {
+                    Notification notification = notif.getValue(Notification.class);
+                    notifications.add(notification);
+                }
                 User tempUser = userTable.getUser(userID);
+                tempUser.setNotifications(notifications);
                 if (tempUser.getNotifications() != null) {
-                    if (tempUser.getNotifications().size() > 1) {
-                        if (tempUser.getNotifications().size() % 2 == 0) {
-                            sendNotification();
+                    Log.i("NOTIFY", "user notifs not null");
+                    while (tempUser.getNotifications().size() > 0) {
+                        Log.i("NOTIFY", "notifs size > 0");
+                        if (tempUser.getNotifications().get(0).getMessage() != lastNotif) {
+                            Notification notification = tempUser.getNotifications().get(0);
+                            tempUser.getNotifications().remove(0);
+                            if (notification.getMessage() != lastNotif) {
+                                sendNotification(notification);
+                                lastNotif = notification.getMessage();
+                            }
                             Log.i("NOTIFY", "sent");
+                        }
+                        else {
+                            Notification notification = tempUser.getNotifications().get(0);
                             tempUser.getNotifications().remove(0);
-                            tempUser.getNotifications().remove(0);
-                            userTable.editUser(tempUser);
+                            Log.i("NOTIFY", "duplicate");
                         }
                     }
                 }
+                userTable.editUser(tempUser);
             }
 
             @Override
@@ -123,14 +141,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void sendNotification() {
+    public void sendNotification(Notification notification) {
         NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+        if (notification.getMessage() == "") {
+            return;
+        }
 
         NotificationCompat.Builder notif = new NotificationCompat.Builder
                 (this, "channel")
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.notif_icon)
                 .setContentTitle("Easy Team Up")
-                .setContentText("TEST NOTIFICATION")
+                .setContentText(notification.getMessage())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);

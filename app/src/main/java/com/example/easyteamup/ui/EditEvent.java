@@ -42,6 +42,7 @@ public class EditEvent extends Fragment {
     int eventID;
 
     EditText nameCreate = null;
+    EditText typeCreate = null;
     EditText descriptionCreate = null;
     Spinner statusPublicSpinner = null;
     androidx.appcompat.widget.SearchView locationCreate = null;
@@ -75,6 +76,7 @@ public class EditEvent extends Fragment {
         statusPublicSpinner.setAdapter(adapter);
 
         nameCreate = (EditText)root.findViewById(R.id.nameEventView);
+        typeCreate = (EditText)root.findViewById(R.id.typeEventView);
         descriptionCreate = (EditText)root.findViewById(R.id.descriptionEventView);
         locationCreate = (androidx.appcompat.widget.SearchView)root.findViewById(R.id.locationEventSearch);
         dueTimeTextView = (TextView) root.findViewById(R.id.dueTimeEventView);
@@ -86,6 +88,7 @@ public class EditEvent extends Fragment {
 
         if (MainActivity.infoBundle.getBoolean("first")) {
             MainActivity.infoBundle.putString("temp_event_name", event.getEventName());
+            MainActivity.infoBundle.putString("temp_event_type", event.getType());
             if (event.getStatusPublic()) {
                 MainActivity.infoBundle.putString("temp_event_statuspublic", "Public");
             }
@@ -94,7 +97,12 @@ public class EditEvent extends Fragment {
             }
 
             MainActivity.infoBundle.putString("temp_event_otherinfo", event.getDescription());
-            MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", event.getInvitees());
+            if (event.getInvitees() == null) {
+                MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", new ArrayList<>());
+            }
+            else {
+                MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", event.getInvitees());
+            }
             MainActivity.infoBundle.putSerializable("duetime", event.getDueTime());
             if (event.getLocation() != null) {
                 MainActivity.infoBundle.putSerializable("temp_event_location", event.getLocation());
@@ -237,6 +245,7 @@ public class EditEvent extends Fragment {
         else {
             status = false;
         }
+        String type = typeCreate.getText().toString();
         String description = descriptionCreate.getText().toString();
         // READ TIME SLOTS HERE
         duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
@@ -251,6 +260,7 @@ public class EditEvent extends Fragment {
 
         // CREATE EVENT WITH ALL INFO
         event.setEventName(createdName);
+        event.setType(type);
         event.setDescription(description);
         event.setDueTime(duetime);
         event.setInvitees(invitedUsersTemp);
@@ -262,6 +272,7 @@ public class EditEvent extends Fragment {
 
         // delete temps
         MainActivity.infoBundle.remove("temp_event_name");
+        MainActivity.infoBundle.remove("temp_event_type");
         MainActivity.infoBundle.remove("temp_event_statuspublic");
         MainActivity.infoBundle.remove("temp_event_otherinfo");
         MainActivity.infoBundle.remove("duetime");
@@ -356,8 +367,10 @@ public class EditEvent extends Fragment {
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
         String createdDescription = descriptionCreate.getText().toString();
+        String createdType = typeCreate.getText().toString();
 
         MainActivity.infoBundle.putString("temp_event_name", createdName);
+        MainActivity.infoBundle.putString("temp_event_type", createdType);
         MainActivity.infoBundle.putString("temp_event_statuspublic", createdStatusPublic);
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
         MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
@@ -375,6 +388,10 @@ public class EditEvent extends Fragment {
         if (MainActivity.infoBundle.containsKey("temp_event_name")) {
             String tempName = MainActivity.infoBundle.getString("temp_event_name");
             nameCreate.setText(tempName);
+        }
+        if (MainActivity.infoBundle.containsKey("temp_event_type")) {
+            String tempType = MainActivity.infoBundle.getString("temp_event_type");
+            typeCreate.setText(tempType);
         }
         if (MainActivity.infoBundle.containsKey("temp_event_statuspublic")) {
             String tempStatusPublic = MainActivity.infoBundle.getString("temp_event_statuspublic");

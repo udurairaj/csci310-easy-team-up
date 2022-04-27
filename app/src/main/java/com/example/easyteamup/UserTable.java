@@ -39,6 +39,20 @@ public class UserTable {
                         if (user.getUserID() > lastID) {
                             lastID = user.getUserID();
                         }
+                        DatabaseReference listening = rootRef.child(Integer.toString(user.getUserID()));
+                        listening.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                User user = snapshot.getValue(User.class);
+                                if (user == null) {
+                                    return;
+                                }
+                                map.put(Integer.toString(user.getUserID()), user);
+                            }
+                            public void onCancelled(DatabaseError dbError) {
+                                Log.e("Error", dbError.toString());
+                            }
+                        });
                     }
                     nextID = lastID + 1;
                 }
@@ -125,6 +139,7 @@ public class UserTable {
     public void editUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(user.getUserID()));
         ref.setValue(user);
+        map.put(Integer.toString(user.getUserID()), user);
     }
 
     public void editUser(User user, boolean testing) {

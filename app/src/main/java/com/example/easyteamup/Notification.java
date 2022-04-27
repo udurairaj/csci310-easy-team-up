@@ -1,5 +1,7 @@
 package com.example.easyteamup;
 
+import com.example.easyteamup.ui.MainActivity;
+
 import java.io.Serializable;
 
 public class Notification implements Serializable {
@@ -39,5 +41,22 @@ public class Notification implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getMessage () {
+        if (MainActivity.eventTable.getEvent(eventID) == null) {
+            return "";
+        }
+        String message = "";
+        if (type == 1) {
+            message = "\"" + MainActivity.eventTable.getEvent(eventID).getEventName() + "\" has been edited.";
+        }
+        else if (type == 2) {
+            message = "A participant has withdrawn from your event \"" + MainActivity.eventTable.getEvent(eventID).getEventName() + "\"";
+        }
+        else if (type == 3) {
+            message = "A final event time has been generated for \"" + MainActivity.eventTable.getEvent(eventID).getEventName() + "\"";
+        }
+        return message;
     }
 }

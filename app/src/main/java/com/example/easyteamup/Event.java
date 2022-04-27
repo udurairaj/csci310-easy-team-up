@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Event implements Serializable {
 
@@ -21,6 +22,7 @@ public class Event implements Serializable {
     private int owner;
     private String eventName;
     private Boolean statusPublic;
+    private String type;
     private String description;
     private ArrayList<Integer> participants;
     private TimeSlot dueTime;
@@ -32,8 +34,8 @@ public class Event implements Serializable {
 //    private TimeGenerator generator;
 
     public Event() {
-        if (notificationHandler == null) {
-            notificationHandler = new NotificationHandler();
+        if (this.notificationHandler == null) {
+            this.notificationHandler = new NotificationHandler();
         }
     }
 
@@ -41,6 +43,7 @@ public class Event implements Serializable {
         this.owner = owner;
         this.eventName = eventName;
         this.statusPublic = statusPublic;
+        this.type = null;
         this.description = null;
         this.invitees = new ArrayList<>();
         this.participants = new ArrayList<>();
@@ -56,6 +59,7 @@ public class Event implements Serializable {
     public int getOwner() { return owner; }
     public String getEventName() { return eventName; }
     public Boolean getStatusPublic() { return statusPublic; }
+    public String getType() { return type; }
     public String getDescription() { return description; }
     public ArrayList<Integer> getParticipants() { return participants; }
     public TimeSlot getDueTime() { return dueTime; }
@@ -68,8 +72,11 @@ public class Event implements Serializable {
     public void setEventID(int eventID) { this.eventID = eventID; }
     public void setEventName(String eventName) { this.eventName = eventName; }
     public void setStatusPublic(Boolean statusPublic) { this.statusPublic = statusPublic; }
+    public void setType(String type) { this.type = type; }
     public void setDescription(String description) { this.description = description; }
-    public void setDueTime(TimeSlot dueTime) { this.dueTime = dueTime; }
+    public void setDueTime(TimeSlot dueTime) {
+        this.dueTime = dueTime;
+    }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
     public void setLocation(Location location) { this.location = location; }
     public void setFinalTime(TimeSlot timeslot) { this.finalTime = timeslot; }
@@ -91,6 +98,8 @@ public class Event implements Serializable {
             return;
         }
         participants.remove(participants.indexOf(user.getUserID()));
+
+        notificationHandler.sendWithdrawNotif(this);
     }
 
     public void removeInvitee(User user) {

@@ -1,28 +1,26 @@
 package com.example.easyteamup;
 
-import java.io.Serializable;
+import com.example.easyteamup.ui.MainActivity;
 
-public class TimeGenerator implements Serializable
-{
-    private TimeSlot[] timeSlots;
-    private Event event;
+import java.util.TimerTask;
 
+public class TimeGenerator extends TimerTask {
+    Event event;
 
-    public TimeGenerator(Event event) // constructor
-    {
+    public TimeGenerator() {
+
+    }
+
+    public TimeGenerator(Event event) {
         this.event = event;
     }
 
-    public TimeSlot[] getTimeSlots()
-    {
-        return timeSlots;
+    @Override
+    public void run() {
+        if (event != null) {
+            event = MainActivity.eventTable.getEvent(event.getEventID());
+            event.generateFinalTime();
+            event.getNotificationHandler().sendDueTimeNotif(event);
+        }
     }
-
-    public TimeSlot generate()
-    {
-        // LATER
-        return null;
-    }
-
-
 }
