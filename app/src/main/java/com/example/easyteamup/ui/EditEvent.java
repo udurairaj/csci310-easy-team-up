@@ -386,7 +386,7 @@ public class EditEvent extends Fragment {
         }
         if (MainActivity.infoBundle.containsKey("temp_event_type")) {
             String tempType = MainActivity.infoBundle.getString("temp_event_type");
-            nameCreate.setText(tempType);
+            typeCreate.setText(tempType);
         }
         if (MainActivity.infoBundle.containsKey("temp_event_statuspublic")) {
             String tempStatusPublic = MainActivity.infoBundle.getString("temp_event_statuspublic");
