@@ -79,6 +79,7 @@ public class Event implements Serializable {
     }
     public void setInvitees(ArrayList<Integer> list) { this.invitees = list; }
     public void setLocation(Location location) { this.location = location; }
+    public void setFinalTime(TimeSlot timeslot) { this.finalTime = timeslot; }
 
     public void addParticipant(User user) {
         if (participants == null) {
@@ -127,6 +128,20 @@ public class Event implements Serializable {
     public void generateFinalTime() {
 //        finalTime = generator.generate();
         // FEATURE 1: notification to participants
+        int highestVar = -1;
+        int highestCount = -1;
+        ArrayList<TimeSlot> slots = getTimeOptions();
+        for (int i = 0; i < slots.size(); i++)
+        {
+            if (slots.get(i).getCount() > highestCount)
+            {
+                highestCount = slots.get(i).getCount();
+                highestVar = i;
+            }
+        }
+
+        setFinalTime(slots.get(highestVar));
+        MainActivity.eventTable.editEvent(this);
     }
 
 }
