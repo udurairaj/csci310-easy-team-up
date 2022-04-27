@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.example.easyteamup.R;
 import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
 import com.example.easyteamup.ui.userEventDisplay.UserEventDisplayFragment;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -156,12 +159,15 @@ public class DetailsFragment extends Fragment {
         TextView ownerView = (TextView) view.findViewById(R.id.ownerDetailsView);
         User owner = MainActivity.userTable.getUser(event.getOwner());
         setTextCheck(ownerView, owner.getName());
+        TextView typeView = (TextView)view.findViewById(R.id.typeDetailsView);
+        setTextCheck(typeView, event.getType());
         TextView invitees = (TextView) view.findViewById(R.id.invitedUsersDetailsView);
         invitees.setText(makeCommaString(event.getInvitees()));
         TextView participants = (TextView) view.findViewById(R.id.participantsDetailsView);
         participants.setText(makeCommaString(event.getParticipants()));
         TextView timeSlots = (TextView) view.findViewById(R.id.timeOptionsDetailsView);
         timeSlots.setText(makeTimeString(event.getTimeOptions()));
+        timeSlots.setMovementMethod(new ScrollingMovementMethod());
         TextView location = (TextView) view.findViewById(R.id.locationDetailsView);
         if (event.getLocation() != null) {
             location.setText(event.getLocation().getName());
