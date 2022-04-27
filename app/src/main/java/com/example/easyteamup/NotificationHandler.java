@@ -42,14 +42,16 @@ public class NotificationHandler {
     }
 
     private void sendNotif(User user, int type) {
-        Notification notification = new Notification(event.getEventID(), user.getUserID(), type);
-        ArrayList<Notification> notifications = user.getNotifications();
-        if (notifications == null) {
-            notifications = new ArrayList<>();
+        if (MainActivity.userID == event.getOwner()) {
+            Notification notification = new Notification(event.getEventID(), user.getUserID(), type);
+            ArrayList<Notification> notifications = user.getNotifications();
+            if (notifications == null) {
+                notifications = new ArrayList<>();
+            }
+            notifications.add(notification);
+            user.setNotifications(notifications);
+            MainActivity.userTable.editUser(user);
         }
-        notifications.add(notification);
-        user.setNotifications(notifications);
-        MainActivity.userTable.editUser(user);
     }
 
     public void sendEditNotif() {
