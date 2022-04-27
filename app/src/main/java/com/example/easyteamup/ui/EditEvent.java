@@ -97,7 +97,12 @@ public class EditEvent extends Fragment {
             }
 
             MainActivity.infoBundle.putString("temp_event_otherinfo", event.getDescription());
-            MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", event.getInvitees());
+            if (event.getInvitees() == null) {
+                MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", new ArrayList<>());
+            }
+            else {
+                MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", event.getInvitees());
+            }
             MainActivity.infoBundle.putSerializable("duetime", event.getDueTime());
             if (event.getLocation() != null) {
                 MainActivity.infoBundle.putSerializable("temp_event_location", event.getLocation());

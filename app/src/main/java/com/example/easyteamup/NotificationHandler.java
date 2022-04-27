@@ -30,6 +30,7 @@ public class NotificationHandler {
         this.edit = true;
         this.constructing = true;
         editEventName();
+        editEventType();
         editEventDescription();
         editDueTime();
         editLocation();
@@ -42,20 +43,23 @@ public class NotificationHandler {
     }
 
     private void sendNotif(User user, int type) {
-        if (MainActivity.userID == event.getOwner()) {
-            Notification notification = new Notification(event.getEventID(), user.getUserID(), type);
-            ArrayList<Notification> notifications = user.getNotifications();
-            if (notifications == null) {
-                notifications = new ArrayList<>();
-            }
-            notifications.add(notification);
-            user.setNotifications(notifications);
-            MainActivity.userTable.editUser(user);
+        Notification notification = new Notification(event.getEventID(), user.getUserID(), type);
+        ArrayList<Notification> notifications = user.getNotifications();
+        if (notifications == null) {
+            notifications = new ArrayList<>();
         }
+        notifications.add(notification);
+        user.setNotifications(notifications);
+        MainActivity.userTable.editUser(user);
     }
 
     public void sendEditNotif() {
-        sendNotif(MainActivity.userTable.getUser(MainActivity.userID), 1);
+        event = MainActivity.eventTable.getEvent(event.getEventID());
+        if (event.getParticipants() != null) {
+            if (event.getParticipants().contains(MainActivity.userID)) {
+                sendNotif(MainActivity.userTable.getUser(MainActivity.userID), 1);
+            }
+        }
     }
 
     public void sendWithdrawNotif(Event event) {
@@ -65,15 +69,16 @@ public class NotificationHandler {
     }
 
     public void sendDueTimeNotif(Event event) {
-        this.event = event;
-        User owner = MainActivity.userTable.getUser(event.getOwner());
-        sendNotif(owner, 3);
-
-        if (event.getParticipants() != null) {
-            Log.i("NOTIFY", "participants not null");
-            for (int participant : event.getParticipants()) {
-                Log.i("NOTIFY", "send participant " + participant);
-                sendNotif(MainActivity.userTable.getUser(participant), 3);
+        if (event.getOwner() == MainActivity.userID) {
+            this.event = event;
+            User owner = MainActivity.userTable.getUser(event.getOwner());
+            sendNotif(owner, 3);
+            if (event.getParticipants() != null) {
+                Log.i("NOTIFY", "participants not null");
+                for (int participant : event.getParticipants()) {
+                    Log.i("NOTIFY", "send participant " + participant);
+                    sendNotif(MainActivity.userTable.getUser(participant), 3);
+                }
             }
         }
     }
@@ -106,6 +111,34 @@ public class NotificationHandler {
         });
     }
 
+    public void editEventType() {
+        DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
+                .child(Integer.toString(event.getEventID())).child("type");
+        listening.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!constructing) {
+                    sendEditNotif();
+                }
+                else {
+                    editCounter++;
+                    if (editCounter == 7) {
+                        constructing = false;
+                        editCounter = 0;
+                    }
+                    else {
+                        constructing = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Error", error.toString());
+            }
+        });
+    }
+
     public void editEventDescription() {
         DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
                 .child(Integer.toString(event.getEventID())).child("description");
@@ -117,7 +150,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 6) {
+                    if (editCounter == 7) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -145,7 +178,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 6) {
+                    if (editCounter == 7) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -173,7 +206,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 6) {
+                    if (editCounter == 7) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -201,7 +234,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 6) {
+                    if (editCounter == 7) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -229,7 +262,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 6) {
+                    if (editCounter == 7) {
                         constructing = false;
                         editCounter = 0;
                     }

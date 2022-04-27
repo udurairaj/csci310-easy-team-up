@@ -102,11 +102,15 @@ public class MainActivity extends AppCompatActivity {
                         if (tempUser.getNotifications().get(0).getMessage() != lastNotif) {
                             Notification notification = tempUser.getNotifications().get(0);
                             tempUser.getNotifications().remove(0);
-                            lastNotif = notification.getMessage();
-                            sendNotification(notification);
+                            if (notification.getMessage() != lastNotif) {
+                                sendNotification(notification);
+                                lastNotif = notification.getMessage();
+                            }
                             Log.i("NOTIFY", "sent");
                         }
                         else {
+                            Notification notification = tempUser.getNotifications().get(0);
+                            tempUser.getNotifications().remove(0);
                             Log.i("NOTIFY", "duplicate");
                         }
                     }

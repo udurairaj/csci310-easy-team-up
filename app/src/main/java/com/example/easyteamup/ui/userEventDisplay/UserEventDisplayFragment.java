@@ -93,6 +93,7 @@ public class UserEventDisplayFragment extends Fragment {
         MainActivity.eventTable.setOnIntegerChangeListener(new OnIntegerChangeListener() {
             @Override
             public void onIntegerChanged(int newValue) {
+                Log.i("INFO", "map changed");
                 makeDisplay(filterEvents());
             }
         });
