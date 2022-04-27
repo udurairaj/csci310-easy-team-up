@@ -1,6 +1,7 @@
 package com.example.easyteamup;
 
 import android.util.Log;
+import android.view.View;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -16,6 +17,7 @@ public class TimeSlot implements Serializable
     private int minute;
     private int duration = 0;
     private Calendar cal = null;
+    private int count = 0;
 
     public TimeSlot() {}
 
@@ -45,12 +47,18 @@ public class TimeSlot implements Serializable
         cal.set(year, month, day, hour, minute);
     }
 
+    public void select()
+    {
+        this.count++;
+    }
+
     public int getMonth() { return month; }
     public int getDay() { return day; }
     public int getYear() { return year; }
     public int getHour() { return hour; }
     public int getMinute() { return minute; }
     public int getDuration() { return duration; }
+    public int getCount() {return count; }
 
     public void setMonth(int month) { this.month = month; }
     public void setDay(int day) { this.day = day; }
@@ -78,6 +86,10 @@ public class TimeSlot implements Serializable
         cal.set(Calendar.SECOND, 0);
         return cal.getTime().toString();
     }
+
+
+
+
 
 
 }

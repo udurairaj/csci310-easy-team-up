@@ -21,6 +21,8 @@ import com.example.easyteamup.TimeSlot;
 import com.example.easyteamup.User;
 import com.example.easyteamup.ui.userEventDisplay.UserEventDisplayFragment;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -36,6 +38,9 @@ public class DetailsFragment extends Fragment {
     Button button2 = null;
     Button button3 = null;
     Button button4 = null;
+    Button timeOption1Button = null;
+    Button timeOption2Button = null;
+    Button timeOption3Button = null;
     Button withdrawButton = null;
 
     public DetailsFragment() {
@@ -99,6 +104,10 @@ public class DetailsFragment extends Fragment {
         button3 = root.findViewById(R.id.button3);
         button4 = root.findViewById(R.id.button4);
         withdrawButton = root.findViewById(R.id.withdrawButton);
+        timeOption1Button = (Button) root.findViewById(R.id.button5);
+        timeOption2Button = (Button) root.findViewById(R.id.button6);
+        timeOption3Button = (Button) root.findViewById(R.id.button7);
+
 
         if (event.getParticipants() != null) {
             if (event.getParticipants().contains(user.getUserID())) {
@@ -107,6 +116,24 @@ public class DetailsFragment extends Fragment {
                 button4.setVisibility(View.VISIBLE);
                 withdrawButton.setVisibility(View.VISIBLE);
             }
+        }
+
+        if ((event.getTimeOptions().size() > 0))
+        {
+            timeOption1Button.setVisibility(View.VISIBLE);
+            timeOption1Button.setText(event.getTimeOptions().get(0).toStringDateTime());
+        }
+
+        if ((event.getTimeOptions().size() > 1))
+        {
+            timeOption2Button.setVisibility(View.VISIBLE);
+            timeOption2Button.setText(event.getTimeOptions().get(1).toStringDateTime());
+        }
+
+        if ((event.getTimeOptions().size() > 2))
+        {
+            timeOption3Button.setVisibility(View.VISIBLE);
+            timeOption3Button.setText(event.getTimeOptions().get(2).toStringDateTime());
         }
 
         // Inflate the layout for this fragment
@@ -138,6 +165,30 @@ public class DetailsFragment extends Fragment {
             public void onClick(View view) { onClickWithdraw(view); }
         });
 
+        timeOption1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                event.getTimeOptions().get(0).select();
+            }
+        });
+
+        timeOption2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                event.getTimeOptions().get(1).select();
+            }
+        });
+
+        timeOption3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                event.getTimeOptions().get(2).select();
+            }
+        });
+
         return root;
     }
 
@@ -165,6 +216,16 @@ public class DetailsFragment extends Fragment {
         TextView location = (TextView) view.findViewById(R.id.locationDetailsView);
         if (event.getLocation() != null) {
             location.setText(event.getLocation().getName());
+        }
+        TextView time = (TextView) view.findViewById(R.id.finalTimeDetailsView);
+        if (event.getFinalTime() == null)
+        {
+            time.setText("TBD");
+        }
+
+        else
+        {
+            time.setText(event.getFinalTime().toStringDateTime());
         }
     }
 

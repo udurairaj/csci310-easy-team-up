@@ -104,42 +104,41 @@ public class MapsFragment extends Fragment{
                         allEvents = et.getAllEvents();
                         for (int i = 0; i < allEvents.size(); i++)
                         {
-                            Location loc = allEvents.get(i).getLocation();
-                            if (loc != null) {
-                                String title = allEvents.get(i).getEventName();
-                                double longitude = loc.getLongitude();
-                                double latitude = loc.getLatitude();
-                                Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title));
-                                marker.setTag(marker.getPosition());
-                            }
-                            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                                @Override
-                                public boolean onMarkerClick(Marker marker) {
-                                    LatLng position = (LatLng) marker.getTag();
-                                    eventNames = et.getAllEventNames();
-                                    int pos = 0;
-                                    for (int i = 0; i < allEvents.size(); i++)
-                                    {
-                                        if (allEvents.get(i).getLocation() != null)
-                                        {
-                                            if (position.latitude == allEvents.get(i).getLocation().getLatitude())
-                                            {
-                                                pos = i;
+                            if (allEvents.get(i).getStatusPublic()) {
+                                Location loc = allEvents.get(i).getLocation();
+                                if (loc != null) {
+                                    String title = allEvents.get(i).getEventName();
+                                    double longitude = loc.getLongitude();
+                                    double latitude = loc.getLatitude();
+                                    Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title));
+                                    marker.setTag(marker.getPosition());
+                                }
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+                                        LatLng position = (LatLng) marker.getTag();
+                                        eventNames = et.getAllEventNames();
+                                        int pos = 0;
+                                        for (int i = 0; i < allEvents.size(); i++) {
+                                            if (allEvents.get(i).getLocation() != null) {
+                                                if (position.latitude == allEvents.get(i).getLocation().getLatitude()) {
+                                                    pos = i;
+                                                }
                                             }
                                         }
+                                        MainActivity.infoBundle.putInt("eventID", allEvents.get(pos).getEventID());
+
+                                        Fragment editFrag = new DetailsFragment();
+                                        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
+                                        fragmentTransaction.addToBackStack(null);
+                                        fragmentTransaction.commit();
+
+                                        //Using position get Value from arraylist
+                                        return false;
                                     }
-                                    MainActivity.infoBundle.putInt("eventID", allEvents.get(pos).getEventID());
-
-                                    Fragment editFrag = new DetailsFragment();
-                                    FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main, editFrag);
-                                    fragmentTransaction.addToBackStack(null);
-                                    fragmentTransaction.commit();
-
-                                    //Using position get Value from arraylist
-                                    return false;
-                                }
-                            });
+                                });
+                            }
                         }
                     }
                 });
