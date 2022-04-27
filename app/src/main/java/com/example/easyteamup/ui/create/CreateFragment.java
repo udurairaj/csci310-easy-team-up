@@ -42,6 +42,7 @@ public class CreateFragment extends Fragment {
     Boolean createSuccess = true;
 
     EditText nameCreate = null;
+    EditText typeCreate = null;
     EditText descriptionCreate = null;
     Spinner statusPublicSpinner = null;
     androidx.appcompat.widget.SearchView locationCreate = null;
@@ -74,6 +75,7 @@ public class CreateFragment extends Fragment {
         statusPublicSpinner.setAdapter(adapter);
 
         nameCreate = (EditText)root.findViewById(R.id.nameEventView);
+        typeCreate = (EditText)root.findViewById(R.id.typeEventView);
         descriptionCreate = (EditText)root.findViewById(R.id.descriptionEventView);
         locationCreate = (androidx.appcompat.widget.SearchView)root.findViewById(R.id.locationEventSearch);
         dueTimeTextView = (TextView) root.findViewById(R.id.dueTimeEventView);
@@ -220,6 +222,7 @@ public class CreateFragment extends Fragment {
         else {
             status = false;
         }
+        String type = typeCreate.getText().toString();
         String description = descriptionCreate.getText().toString();
         // READ TIME SLOTS HERE
         duetime = (TimeSlot)MainActivity.infoBundle.getSerializable("duetime");
@@ -237,6 +240,7 @@ public class CreateFragment extends Fragment {
             eventInProgress = new Event(user.getUserID(), createdName, status);
             int eventID = MainActivity.eventTable.addEvent(eventInProgress);
             Event event = MainActivity.eventTable.getEvent(eventID);
+            event.setType(type);
             event.setDescription(description);
             event.setDueTime(duetime);
             event.setInvitees(invitedUsersTemp);
@@ -250,6 +254,7 @@ public class CreateFragment extends Fragment {
             MainActivity.infoBundle.remove("temp_event_name");
             MainActivity.infoBundle.remove("temp_event_statuspublic");
             MainActivity.infoBundle.remove("temp_event_otherinfo");
+            MainActivity.infoBundle.remove("temp_event_type");
             MainActivity.infoBundle.remove("duetime");
             MainActivity.infoBundle.remove("temp_invited_users");
             MainActivity.infoBundle.remove("temp_event_location");
@@ -259,6 +264,7 @@ public class CreateFragment extends Fragment {
             invitedUsersTemp.clear();
             nameCreate.setText("");
             descriptionCreate.setText("");
+            typeCreate.setText("");
             locationCreate.setQuery("", false);
             locationCreate.setQueryHint("");
 
@@ -345,9 +351,11 @@ public class CreateFragment extends Fragment {
     public void savePageEntries() {
         String createdName = nameCreate.getText().toString();
         String createdStatusPublic = statusPublicSpinner.getSelectedItem().toString();
+        String createdType = typeCreate.getText().toString();
         String createdDescription = descriptionCreate.getText().toString();
 
         MainActivity.infoBundle.putString("temp_event_name", createdName);
+        MainActivity.infoBundle.putString("temp_event_type", createdType);
         MainActivity.infoBundle.putString("temp_event_statuspublic", createdStatusPublic);
         MainActivity.infoBundle.putString("temp_event_otherinfo", createdDescription);
         MainActivity.infoBundle.putIntegerArrayList("temp_invited_users", invitedUsersTemp);
@@ -374,6 +382,10 @@ public class CreateFragment extends Fragment {
             else {
                 statusPublicSpinner.setSelection(1);
             }
+        }
+        if (MainActivity.infoBundle.containsKey("temp_event_type")) {
+            String tempType = MainActivity.infoBundle.getString("temp_event_type");
+            typeCreate.setText(tempType);
         }
         if (MainActivity.infoBundle.containsKey("temp_event_otherinfo")) {
             String tempOtherInfo = MainActivity.infoBundle.getString("temp_event_otherinfo");
