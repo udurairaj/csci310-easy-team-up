@@ -67,8 +67,12 @@ public class NotificationHandler {
         User owner = MainActivity.userTable.getUser(event.getOwner());
         sendNotif(owner, 3);
 
-        for (int participant : event.getParticipants()) {
-            sendNotif(MainActivity.userTable.getUser(participant), 3);
+        if (event.getParticipants() != null) {
+            Log.i("NOTIFY", "participants not null");
+            for (int participant : event.getParticipants()) {
+                Log.i("NOTIFY", "send participant " + participant);
+                sendNotif(MainActivity.userTable.getUser(participant), 3);
+            }
         }
     }
 

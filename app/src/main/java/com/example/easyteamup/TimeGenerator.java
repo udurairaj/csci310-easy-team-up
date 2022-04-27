@@ -1,5 +1,7 @@
 package com.example.easyteamup;
 
+import com.example.easyteamup.ui.MainActivity;
+
 import java.util.TimerTask;
 
 public class TimeGenerator extends TimerTask {
@@ -16,12 +18,9 @@ public class TimeGenerator extends TimerTask {
     @Override
     public void run() {
         if (event != null) {
+            event = MainActivity.eventTable.getEvent(event.getEventID());
             event.generateFinalTime();
-<<<<<<< HEAD
-            event.getNotificationHandler().sendDueTimeNotif();
-=======
             event.getNotificationHandler().sendDueTimeNotif(event);
->>>>>>> 6f769013197e21da5c8b0e8c1775cf8224d725a4
         }
     }
 }

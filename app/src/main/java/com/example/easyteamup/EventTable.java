@@ -25,7 +25,7 @@ public class EventTable {
     private int nextID;
     private Map<String, Event> map;
     private OnIntegerChangeListener listener;
-    private Timer timer = new Timer();
+    private Timer timer = null;
 
     public EventTable() {
         this.database = FirebaseDatabase.getInstance();
@@ -41,6 +41,23 @@ public class EventTable {
                     for (DataSnapshot child : task.getResult().getChildren()) {
                         Event event = child.getValue(Event.class);
                         map.put(Integer.toString(event.getEventID()), event);
+                        DatabaseReference listening = rootRef.child(Integer.toString(event.getEventID()));
+                        listening.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Event event = snapshot.getValue(Event.class);
+                                if (event == null) {
+                                    return;
+                                }
+                                map.put(Integer.toString(event.getEventID()), event);
+                                if (listener != null) {
+                                    listener.onIntegerChanged(map.size());
+                                }
+                            }
+                            public void onCancelled(DatabaseError dbError) {
+                                Log.e("Error", dbError.toString());
+                            }
+                        });
                         if (event.getEventID() > lastID) {
                             lastID = event.getEventID();
                         }
@@ -55,7 +72,20 @@ public class EventTable {
                                 }
                             }
                         }
-                        timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                        if (event.getDueTime() != null) {
+                            Date now = new Date();
+                            if (!now.after(event.getDueTime().dateTimeAsDate())) {
+                                if (timer == null) {
+                                    timer = new Timer();
+                                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                                }
+                                else {
+                                    timer.cancel();
+                                    timer = new Timer();
+                                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                                }
+                            }
+                        }
                     }
                     nextID = lastID + 1;
                 }
@@ -83,6 +113,20 @@ public class EventTable {
                                 }
                             }
                         }
+                        if (event.getDueTime() != null) {
+                            Date now = new Date();
+                            if (!now.after(event.getDueTime().dateTimeAsDate())) {
+                                if (timer == null) {
+                                    timer = new Timer();
+                                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                                }
+                                else {
+                                    timer.cancel();
+                                    timer = new Timer();
+                                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -105,7 +149,20 @@ public class EventTable {
     }
 
     public int addEvent(Event event) {
-        timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+        if (event.getDueTime() != null) {
+            Date now = new Date();
+            if (!now.after(event.getDueTime().dateTimeAsDate())) {
+                if (timer == null) {
+                    timer = new Timer();
+                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                }
+                else {
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
+                }
+            }
+        }
         DatabaseReference ref = rootRef.child(Integer.toString(this.nextID));
         event.setEventID(this.nextID);
         ref.setValue(event);
@@ -119,11 +176,9 @@ public class EventTable {
                     return;
                 }
                 map.put(Integer.toString(event.getEventID()), event);
-                if(listener != null)
-                {
+                if (listener != null) {
                     listener.onIntegerChanged(map.size());
                 }
-                timer.schedule(new TimeGenerator(event), event.getDueTime().dateTimeAsDate());
             }
             public void onCancelled(DatabaseError dbError) {
                 Log.e("Error", dbError.toString());
@@ -195,10 +250,6 @@ public class EventTable {
     public void editEvent(Event event) {
         DatabaseReference ref = rootRef.child(Integer.toString(event.getEventID()));
         ref.setValue(event);
-        if(listener != null)
-        {
-            listener.onIntegerChanged(map.size());
-        }
     }
 
     public void editEvent(Event event, boolean testing) {
@@ -383,5 +434,4 @@ public class EventTable {
         }
         return IDList;
     }
-
 }

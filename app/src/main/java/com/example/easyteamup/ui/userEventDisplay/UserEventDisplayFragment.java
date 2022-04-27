@@ -1,5 +1,6 @@
 package com.example.easyteamup.ui.userEventDisplay;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class UserEventDisplayFragment extends Fragment {
     private RadioButton button3;
     private RadioButton button4;
     private View root;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class UserEventDisplayFragment extends Fragment {
         button4 = (RadioButton) root.findViewById(R.id.radioButton4);
 
         l = root.findViewById(R.id.list);
+        context = getContext();
         makeDisplay(filterEvents());
 
         radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
@@ -84,6 +87,13 @@ public class UserEventDisplayFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("ERROR", error.toString());
+            }
+        });
+
+        MainActivity.eventTable.setOnIntegerChangeListener(new OnIntegerChangeListener() {
+            @Override
+            public void onIntegerChanged(int newValue) {
+                makeDisplay(filterEvents());
             }
         });
 
@@ -117,7 +127,7 @@ public class UserEventDisplayFragment extends Fragment {
         ArrayAdapter<String> arr;
         arr
                 = new ArrayAdapter<String>(
-                getContext(),
+                context,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 events);
         l.setAdapter(arr);

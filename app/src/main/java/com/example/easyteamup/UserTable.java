@@ -125,6 +125,7 @@ public class UserTable {
     public void editUser(User user) {
         DatabaseReference ref = rootRef.child(Integer.toString(user.getUserID()));
         ref.setValue(user);
+        map.put(Integer.toString(user.getUserID()), user);
     }
 
     public void editUser(User user, boolean testing) {
