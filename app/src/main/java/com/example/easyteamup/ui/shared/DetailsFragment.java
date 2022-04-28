@@ -1,5 +1,6 @@
 package com.example.easyteamup.ui.shared;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -53,6 +54,7 @@ public class DetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         user = MainActivity.userTable.getUser(MainActivity.userID);
         event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getInt("eventID"));
+
 //        if (MainActivity.infoBundle.containsKey("eventID")) {
 //            event = MainActivity.eventTable.getEvent(MainActivity.infoBundle.getString("eventID"));
 //        }
@@ -112,29 +114,11 @@ public class DetailsFragment extends Fragment {
 
         if (event.getParticipants() != null) {
             if (event.getParticipants().contains(user.getUserID())) {
-                button2.setVisibility(View.VISIBLE);
-                button3.setVisibility(View.VISIBLE);
-                button4.setVisibility(View.VISIBLE);
+//                button2.setVisibility(View.VISIBLE);
+//                button3.setVisibility(View.VISIBLE);
+//                button4.setVisibility(View.VISIBLE);
                 withdrawButton.setVisibility(View.VISIBLE);
             }
-        }
-
-        if ((event.getTimeOptions().size() > 0))
-        {
-            timeOption1Button.setVisibility(View.VISIBLE);
-            timeOption1Button.setText(event.getTimeOptions().get(0).toStringDateTime());
-        }
-
-        if ((event.getTimeOptions().size() > 1))
-        {
-            timeOption2Button.setVisibility(View.VISIBLE);
-            timeOption2Button.setText(event.getTimeOptions().get(1).toStringDateTime());
-        }
-
-        if ((event.getTimeOptions().size() > 2))
-        {
-            timeOption3Button.setVisibility(View.VISIBLE);
-            timeOption3Button.setText(event.getTimeOptions().get(2).toStringDateTime());
         }
 
         // Inflate the layout for this fragment
@@ -152,7 +136,42 @@ public class DetailsFragment extends Fragment {
         Button acceptButton = (Button)root.findViewById(R.id.acceptInviteButton);
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { onClickAccept(view); }
+            public void onClick(View view) {
+                if (event.getTimeOptions() != null) {
+                    TextView voteText = (TextView) root.findViewById(R.id.voteText);
+                    voteText.setVisibility(View.VISIBLE);
+                    Button finishedVotingButton = (Button) root.findViewById(R.id.finishedVoting);
+                    finishedVotingButton.setVisibility(View.VISIBLE);
+                    if ((event.getTimeOptions().size() > 0))
+                    {
+                        timeOption1Button.setVisibility(View.VISIBLE);
+                        timeOption1Button.setText(event.getTimeOptions().get(0).toStringDateTime());
+                    }
+
+                    if ((event.getTimeOptions().size() > 1))
+                    {
+                        timeOption2Button.setVisibility(View.VISIBLE);
+                        timeOption2Button.setText(event.getTimeOptions().get(1).toStringDateTime());
+                    }
+
+                    if ((event.getTimeOptions().size() > 2))
+                    {
+                        timeOption3Button.setVisibility(View.VISIBLE);
+                        timeOption3Button.setText(event.getTimeOptions().get(2).toStringDateTime());
+                    }
+                }
+                else {
+                    onClickAccept(view);
+                }
+            }
+        });
+
+        Button finishedVoting = (Button)root.findViewById(R.id.finishedVoting);
+        finishedVoting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickAccept(view);
+            }
         });
 
         Button rejectButton = (Button)root.findViewById(R.id.rejectInviteButton);
@@ -171,6 +190,8 @@ public class DetailsFragment extends Fragment {
             public void onClick(View view)
             {
                 event.getTimeOptions().get(0).select();
+                timeOption1Button.setBackgroundColor(Color.parseColor("#FFCC00"));
+                timeOption1Button.setTextColor(Color.parseColor("#FFFFFF"));
             }
         });
 
@@ -179,6 +200,8 @@ public class DetailsFragment extends Fragment {
             public void onClick(View view)
             {
                 event.getTimeOptions().get(1).select();
+                timeOption2Button.setBackgroundColor(Color.parseColor("#FFCC00"));
+                timeOption2Button.setTextColor(Color.parseColor("#FFFFFF"));
             }
         });
 
@@ -187,6 +210,8 @@ public class DetailsFragment extends Fragment {
             public void onClick(View view)
             {
                 event.getTimeOptions().get(2).select();
+                timeOption3Button.setBackgroundColor(Color.parseColor("#FFCC00"));
+                timeOption3Button.setTextColor(Color.parseColor("#FFFFFF"));
             }
         });
 

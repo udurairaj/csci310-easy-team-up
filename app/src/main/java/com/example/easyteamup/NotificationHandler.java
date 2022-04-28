@@ -35,7 +35,7 @@ public class NotificationHandler {
         editDueTime();
         editLocation();
         editStatusPublic();
-        editTimeOptions();
+        //editTimeOptions();
     }
 
     public boolean getEditListener() {
@@ -122,7 +122,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 7) {
+                    if (editCounter == 6) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -150,7 +150,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 7) {
+                    if (editCounter == 6) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -178,7 +178,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 7) {
+                    if (editCounter == 6) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -206,7 +206,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 7) {
+                    if (editCounter == 6) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -234,7 +234,7 @@ public class NotificationHandler {
                 }
                 else {
                     editCounter++;
-                    if (editCounter == 7) {
+                    if (editCounter == 6) {
                         constructing = false;
                         editCounter = 0;
                     }
@@ -251,31 +251,31 @@ public class NotificationHandler {
         });
     }
 
-    public void editTimeOptions() {
-        DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
-                .child(Integer.toString(event.getEventID())).child("timeOptions");
-        listening.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!constructing) {
-                    sendEditNotif();
-                }
-                else {
-                    editCounter++;
-                    if (editCounter == 7) {
-                        constructing = false;
-                        editCounter = 0;
-                    }
-                    else {
-                        constructing = true;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Error", error.toString());
-            }
-        });
-    }
+//    public void editTimeOptions() {
+//        DatabaseReference listening = FirebaseDatabase.getInstance().getReference().child("events")
+//                .child(Integer.toString(event.getEventID())).child("timeOptions");
+//        listening.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (!constructing) {
+//                    sendEditNotif();
+//                }
+//                else {
+//                    editCounter++;
+//                    if (editCounter == 7) {
+//                        constructing = false;
+//                        editCounter = 0;
+//                    }
+//                    else {
+//                        constructing = true;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("Error", error.toString());
+//            }
+//        });
+//    }
 }

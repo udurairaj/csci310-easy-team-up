@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationManager manager = null;
     private int notifCount = 0;
     private String lastNotif = "";
+    private ArrayList<Integer> finalTimeGenerated = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         manager = (NotificationManager) getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
         eventTable = new EventTable();
+        finalTimeGenerated = new ArrayList<>();
 
         FirebaseDatabase.getInstance().getReference().child("users").child(Integer.toString(userID))
                 .child("notifications").addValueEventListener(new ValueEventListener() {
@@ -103,8 +105,19 @@ public class MainActivity extends AppCompatActivity {
                             Notification notification = tempUser.getNotifications().get(0);
                             tempUser.getNotifications().remove(0);
                             if (notification.getMessage() != lastNotif) {
-                                sendNotification(notification);
-                                lastNotif = notification.getMessage();
+                                if (!finalTimeGenerated.contains(notification.getEventID())) {
+                                    if (notification.getType() == 3) {
+                                        finalTimeGenerated.add(notification.getEventID());
+                                    }
+                                    sendNotification(notification);
+                                    lastNotif = notification.getMessage();
+                                }
+                                else {
+                                    if (notification.getType() != 3) {
+                                        sendNotification(notification);
+                                        lastNotif = notification.getMessage();
+                                    }
+                                }
                             }
                             Log.i("NOTIFY", "sent");
                         }

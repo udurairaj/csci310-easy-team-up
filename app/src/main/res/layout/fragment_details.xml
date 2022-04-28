@@ -275,6 +275,67 @@
             android:layout_marginLeft="15dp"/>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/voteText"
+        android:text="Vote for event time:"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inviteLayout"
+        />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="125dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="7dp"
+        android:text="Time Option 1"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voteText" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="125dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="12dp"
+        android:text="Time Option 2"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintTop_toBottomOf="@+id/voteText" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="125dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="10dp"
+        android:text="Time Option 3"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/voteText" />
+
+    <Button
+        android:id="@+id/finishedVoting"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFCC00"
+        android:text="Done"
+        android:gravity="center"
+        android:textColor="#990000"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button6"/>
+
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -326,39 +387,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="125dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="100dp"
-        android:text="Time Option 1"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="125dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="100dp"
-        android:text="Time Option 2"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="125dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="100dp"
-        android:text="Time Option 3"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/button6"
         app:layout_constraintTop_toBottomOf="@+id/participantsDetailsView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
